@@ -1,5 +1,5 @@
 #include "header/tes.h"
 
 void tes() {
-    printf("Halo\n");
+    printf("Halo2\n");
 }
