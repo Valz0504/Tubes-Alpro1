@@ -4,6 +4,7 @@
 #ifndef USER_H
 #define USER_H
 
+#include "boolean.h"
 
 /* --- Struct User --- */
 typedef struct
@@ -33,5 +34,16 @@ typedef struct
     User data[100];
     int Neff;
 } UserList;
+
+
+/* --- Setter User --- */
+void SetUsername(User *u, char name[]);
+void SetPassword(User *u, char pass[]);
+
+
+char* findUsernamePassword(UserList l, char username[]); /* cari password yang bersangkutan dengan usernamenya */
+boolean isUsernameExist(UserList l, char username[]); /* cari di list user ada ga usernamenya */
+void AddUser(UserList *l, User u); /* nambahin user baru ke list user */
+
 
 #endif
