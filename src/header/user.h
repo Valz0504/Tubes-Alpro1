@@ -37,11 +37,11 @@ typedef struct
 
 
 /* --- Setter User --- */
-void SetUsername(User *u, char name[]);
+void SetUsername(User *u, char name[]); 
 void SetPassword(User *u, char pass[]);
+void SetNewPassword(UserList *l, char username[], char pass[]);
 
-
-char* findUsernamePassword(UserList l, char username[]); /* cari password yang bersangkutan dengan usernamenya */
+User findUser(UserList l, char username[]); /* cari data User dari usernamenya */
 boolean isUsernameExist(UserList l, char username[]); /* cari di list user ada ga usernamenya */
 void AddUser(UserList *l, User u); /* nambahin user baru ke list user */
 
