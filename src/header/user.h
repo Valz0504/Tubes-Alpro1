@@ -36,6 +36,7 @@ typedef struct
 } UserList;
 
 
+// blabla
 /* --- Setter User --- */
 void SetUsername(User *u, char name[]); 
 void SetPassword(User *u, char pass[]);
