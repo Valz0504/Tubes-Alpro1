@@ -4,6 +4,7 @@
 #ifndef USER_H
 #define USER_H
 
+#include "penyakit.h"
 #include "boolean.h"
 
 typedef enum {
@@ -42,7 +43,7 @@ typedef struct
     int capacity;
 } UserList;
 
-/* --- Prosedur Manajemen User --- */
+/* --- PROSEDUR FITUR PROGRAM --- */
 void login(); // general
 void lupa_password(); // general
 void logout(); // general
@@ -53,7 +54,11 @@ void cariUser(); // manager
 void lihatUser(); // manager
 void tambahDokter(); // manager
 void assignDokter(); // manager
+void LOAD();
+void SAVE();
 
+
+/* --- Fungsi/Prosedur Manajemen User --- */
 void CreateUser(User *u, char name[], char pass[], char role[]);
 User findUser(UserList l, char username[]); /* cari data User dari usernamenya */
 boolean isUsernameExist(UserList l, char username[]); /* cari di list user ada ga usernamenya */
