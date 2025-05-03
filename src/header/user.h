@@ -59,13 +59,14 @@ void SAVE();
 
 
 /* --- Fungsi/Prosedur Manajemen User --- */
-void CreateUser(User *u, char name[], char pass[], char role[]);
-User findUser(UserList l, char username[]); /* cari data User dari usernamenya */
+void CreateUser(User *u, char name[], char pass[], Role role);
+User* findUser(UserList *l, char username[]); /* cari data User dari usernamenya */
 boolean isUsernameExist(UserList l, char username[]); /* cari di list user ada ga usernamenya */
 void AddUser(UserList *l, User u); /* nambahin user baru ke list user */
 
 void CreateListDin(UserList *l, int capacity);
 void dealocateListDin(UserList *l);
+void expandList(UserList *l, int num);
 
 /* --- Setter User --- */
 void SetUsername(User *u, char name[]); 
