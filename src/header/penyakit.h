@@ -1,6 +1,6 @@
 
-#ifndef USER_H
-#define USER_H
+#ifndef PENYAKIT_H
+#define PENYAKIT_H
 
 #include "boolean.h"
 
