@@ -5,6 +5,8 @@
 #include "header/boolean.h"
 
 void login(UserList *list, User *current_user, boolean *isLogin) {
+    printf("=== LOGIN ===\n");
+    
     char username[100], password[100];
 
     printf("Username: ");

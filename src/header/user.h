@@ -44,8 +44,8 @@ typedef struct
 } UserList;
 
 /* --- PROSEDUR FITUR PROGRAM --- */
-void login(UserList *list, User *current_user, boolean *isLogin); // general
-void lupa_password(); // general
+void login(UserList *list, User *current_user, boolean *isLogin); // general (DONE)
+void lupa_password(UserList *list); // general (DONE)
 void logout(); // general
 void exit(); // general
 void registerPasien(); // pasien
@@ -83,6 +83,6 @@ char* roleToStr(Role role); // DONE IMPLEMENT
 /* --- Setter User --- */
 void SetUsername(User *u, char name[]); 
 void SetPassword(User *u, char pass[]);
-void SetNewPassword(UserList *l, char username[], char pass[]);
+void SetNewPassword(UserList *l, char username[], char pass[]); // DONE IMPLEMENT
 
 #endif

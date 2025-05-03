@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "header/user.h"
+#include "user.h"
 
 int main() {
     UserList list_user;
@@ -9,14 +9,16 @@ int main() {
     CreateUser(&list_user, &user1, "emilio", "justin", 1);
     AddUser(&list_user, user1);
     User user2;
-    CreateUser(&list_user, &user2, "keisha", "sakura", 2);
+    CreateUser(&list_user, &user2, "keisha", "sakura", 0);
     AddUser(&list_user, user2);
     User user3;
-    CreateUser(&list_user, &user3, "bob", "sakura", 2);
+    CreateUser(&list_user, &user3, "bob", "sakura", 0);
     AddUser(&list_user, user3);
     User user4;
     CreateUser(&list_user, &user4, "yay", "sakura", 2);
     AddUser(&list_user, user4);
+
+    lupa_password(&list_user);
 
     User current_user;
     boolean isLogin = FALSE;
