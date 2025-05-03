@@ -10,10 +10,10 @@
 typedef struct
 {   
     int id;
-    char *username[100];
-    char *password[100];
-    char *role[7];
-    char *riwayat_penyakit[1000];
+    char username[100];
+    char password[100];
+    char role[7];
+    char riwayat_penyakit[1000];
     float suhu_tubuh;
     int tekanan_darah_tistolik;
     int tekanan_darah_diastolik;
