@@ -46,7 +46,7 @@ typedef struct
 /* --- PROSEDUR FITUR PROGRAM --- */
 void login(UserList *list, User *current_user, boolean *isLogin); // general (DONE)
 void lupa_password(UserList *list); // general (DONE)
-void logout(); // general
+void logout(User *current_user, boolean *isLogin); // general
 void exit(); // general
 void registerPasien(); // pasien
 void helpMenu(); // general
