@@ -6,17 +6,14 @@
 
 #include "boolean.h"
 
-#define MAX_SET_SIZE 100
-
 /* --- Struct Set --- */
 typedef struct 
 {
-    char unique_username[MAX_SET_SIZE][100];
+    char unique_username[100][100];
     int size;
 } Set;
 
-
-boolean isUsernameUnique(Set s, char name[]);
+boolean isUsernameUnique(Set s, char name[]); /* DeNis == denis */
 void insertSet(Set *s, char name[]);
 
 #endif
