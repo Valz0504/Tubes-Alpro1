@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "header/user.h"
-#include "header/set.h"
-#include "header/boolean.h"
+#include "user.h"
+#include "set.h"
+#include "boolean.h"
 
 void registerPasien(UserList *list, Set *set) {
     printf("=== REGISTER ===\n");

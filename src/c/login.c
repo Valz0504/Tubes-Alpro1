@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "header/user.h"
-#include "header/boolean.h"
+#include "user.h"
+#include "boolean.h"
 
 void login(UserList *list, User *current_user, boolean *isLogin) {
     printf("=== LOGIN ===\n");
