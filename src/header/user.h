@@ -4,6 +4,7 @@
 #ifndef USER_H
 #define USER_H
 
+#include "set.h"
 #include "penyakit.h"
 #include "boolean.h"
 
@@ -48,7 +49,7 @@ void login(UserList *list, User *current_user, boolean *isLogin); // general (DO
 void lupa_password(UserList *list); // general (DONE)
 void logout(User *current_user, boolean *isLogin); // general
 void exit(); // general
-void registerPasien(); // pasien
+void registerPasien(UserList *list, Set *set); // pasien
 void helpMenu(); // general
 void cariUser(); // manager
 void lihatUser(); // manager
@@ -79,6 +80,9 @@ void AddUser(UserList *l, User u); // DONE IMPLEMENT
 
 char* roleToStr(Role role); // DONE IMPLEMENT
 /* mengembalikan nama role */
+
+void toLower(char *str); // DONE IMPLEMENT
+/* membuat string menjadi lower case semua */
 
 /* --- Setter User --- */
 void SetUsername(User *u, char name[]); 

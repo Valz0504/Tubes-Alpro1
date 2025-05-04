@@ -4,14 +4,6 @@
 #include "header/user.h"
 #include "header/boolean.h"
 
-void toLower(char *str) {
-    for (int i = 0; str[i] != '\0'; i++) {
-        if (str[i] >= 'A' && str[i] <= 'Z') {
-            str[i] += 32;
-        }
-    }
-}
-
 void logout(User *current_user, boolean *isLogin) {
     if (*isLogin == FALSE) {
         printf("Logout gagal!\n");

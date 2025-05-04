@@ -39,7 +39,7 @@ void dealocateListDin(UserList *l) {
 }
 
 void expandList(UserList *l, int num) {
-    l->capacity += num;
+    l->capacity *= num;
     l->data = (User*) realloc(l->data, (l->capacity)*sizeof(User));
 }
 
@@ -71,7 +71,7 @@ boolean isUsernameExist(UserList l, char username[]) {
 
 void AddUser(UserList *l, User u) {
     if (l->Neff == l->capacity) {
-        expandList(l, 1);
+        expandList(l, 2);
     }
     l->data[l->Neff] = u;
     l->Neff += 1;
@@ -82,6 +82,14 @@ char* roleToStr(Role role) {
         case ROLE_PASIEN: return "Pasien";
         case ROLE_DOKTER: return "Dokter";
         case ROLE_MANAGER: return "Manager";
+    }
+}
+
+void toLower(char *str) {
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (str[i] >= 'A' && str[i] <= 'Z') {
+            str[i] += 32;
+        }
     }
 }
 
