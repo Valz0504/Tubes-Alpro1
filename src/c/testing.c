@@ -26,12 +26,14 @@ int main() {
     AddUser(&list_user, user4);
 
     registerPasien(&list_user, &list_nama_user);
-    // lupa_password(&list_user);
-
+    
     User current_user;
     boolean isLogin = FALSE;
+    lupa_password(&list_user);
+    helpMenu(current_user, &isLogin);
     logout(&current_user, &isLogin);
     login(&list_user, &current_user, &isLogin);
+    helpMenu(current_user, &isLogin);
     logout(&current_user, &isLogin);
     printf("\n");
     for (int i = 0; i < list_user.Neff; i++) {

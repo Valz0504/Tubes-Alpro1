@@ -50,7 +50,7 @@ void lupa_password(UserList *list); // general (DONE)
 void logout(User *current_user, boolean *isLogin); // general
 void exit(); // general
 void registerPasien(UserList *list, Set *set); // pasien
-void helpMenu(); // general
+void helpMenu(User current_user, boolean *isLogin); // general
 void cariUser(); // manager
 void lihatUser(); // manager
 void tambahDokter(); // manager
