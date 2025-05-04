@@ -4,6 +4,7 @@
 #ifndef USER_H
 #define USER_H
 
+#include "set.h"
 #include "penyakit.h"
 #include "boolean.h"
 
@@ -44,11 +45,11 @@ typedef struct
 } UserList;
 
 /* --- PROSEDUR FITUR PROGRAM --- */
-void login(); // general
-void lupa_password(); // general
-void logout(); // general
+void login(UserList *list, User *current_user, boolean *isLogin); // general (DONE)
+void lupa_password(UserList *list); // general (DONE)
+void logout(User *current_user, boolean *isLogin); // general
 void exit(); // general
-void registerPasien(); // pasien
+void registerPasien(UserList *list, Set *set); // pasien
 void helpMenu(); // general
 void cariUser(); // manager
 void lihatUser(); // manager
@@ -58,21 +59,34 @@ void LOAD();
 void SAVE();
 
 
-/* --- Fungsi/Prosedur Manajemen User --- */
-void CreateUser(User *u, char name[], char pass[], Role role);
-User* findUser(UserList *l, char username[]); /* cari data User dari usernamenya */
-boolean isUsernameExist(UserList l, char username[]); /* cari di list user ada ga usernamenya */
-void AddUser(UserList *l, User u); /* nambahin user baru ke list user */
+void CreateListDin(UserList *l, int capacity); // DONE IMPLEMENT
+void dealocateListDin(UserList *l); // DONE IMPLEMENT
+void expandList(UserList *l, int num); // DONE IMPLEMENT
+void copyList(UserList lIn, UserList *lOut); // DONE IMPLEMENT
 
-void CreateListDin(UserList *l, int capacity);
-void dealocateListDin(UserList *l);
-void expandList(UserList *l, int num);
+/* --- Fungsi/Prosedur Manajemen User --- */
+
+void CreateUser(UserList *l, User *u, char name[], char pass[], Role role);  // DONE IMPLEMENT
+/* membuat user dengan nama, pass, role diinisialisasi, sisanya diberi default value*/
+
+User* findUser(UserList *l, char username[]); // DONE IMPLEMENT
+/* cari data User dari usernamenya */
+
+boolean isUsernameExist(UserList l, char username[]); // DONE IMPLEMENT
+/* cari di list user ada ga usernamenya */
+
+void AddUser(UserList *l, User u); // DONE IMPLEMENT
+/* nambahin user baru ke list user */
+
+char* roleToStr(Role role); // DONE IMPLEMENT
+/* mengembalikan nama role */
+
+void toLower(char *str); // DONE IMPLEMENT
+/* membuat string menjadi lower case semua */
 
 /* --- Setter User --- */
 void SetUsername(User *u, char name[]); 
 void SetPassword(User *u, char pass[]);
-void SetNewPassword(UserList *l, char username[], char pass[]);
-
-
+void SetNewPassword(UserList *l, char username[], char pass[]); // DONE IMPLEMENT
 
 #endif
