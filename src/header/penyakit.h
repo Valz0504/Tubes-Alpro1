@@ -29,6 +29,13 @@ typedef struct {
     int trombosit_Max;
 } Penyakit;
 
+typedef struct 
+{
+    Penyakit *data;
+    int Neff;
+    int capacity;
+} PenyakitList;
+
 typedef struct {
     int id;
     char nama[100];
@@ -40,7 +47,7 @@ typedef struct {
     int urutan_minum;
 } Obat_Penyakit;
 
-void diagnosis();
+void diagnosis(User *u, PenyakitList *penyakit);
 void minumObat();
 void minumPenawar();
 void bolehPulangGaa();
