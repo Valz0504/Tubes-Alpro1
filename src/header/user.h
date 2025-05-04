@@ -32,7 +32,7 @@ typedef struct
     int tinggi_badan;
     int kadar_kolesterol;
     int kadar_kolesterol_Ldl;
-    int trombosit;
+    int trombosit;    
 } User;
 
 
