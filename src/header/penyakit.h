@@ -41,11 +41,25 @@ typedef struct {
     char nama[100];
 } Obat;
 
+typedef struct 
+{
+    Obat *data;
+    int Neff;
+    int capacity;
+} ObatList;
+
 typedef struct {
     int id_obat;
     int id_penyakit;
     int urutan_minum;
 } Obat_Penyakit;
+
+typedef struct 
+{
+    Obat_Penyakit *data;
+    int Neff;
+    int capacity;
+} Obat_penyakitList;
 
 void diagnosis(User *u, PenyakitList *penyakit);
 void minumObat();

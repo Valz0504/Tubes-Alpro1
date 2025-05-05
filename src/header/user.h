@@ -23,7 +23,7 @@ typedef struct
     Role role;
     char riwayat_penyakit[100];
     float suhu_tubuh;
-    int tekanan_darah_tistolik;
+    int tekanan_darah_sistolik;
     int tekanan_darah_diastolik;
     int detak_jantung;
     float saturasi_oksigen;
@@ -55,7 +55,9 @@ void cariUser(); // manager
 void lihatUser(); // manager
 void tambahDokter(); // manager
 void assignDokter(); // manager
-void LOAD();
+void LOAD(UserList *userList, PenyakitList *penyakitList, 
+    Obat *obatList, int *jumlahObat, 
+    Obat_Penyakit *relasi, int *jumlahRelasi);
 void SAVE();
 
 
