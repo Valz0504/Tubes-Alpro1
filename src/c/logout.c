@@ -26,10 +26,9 @@ void logout(User *current_user, boolean *isLogin) {
     if (strcmp(answer, "y") == 0) {
         current_user = NULL;
         *isLogin = FALSE;
-        printf("Sampai jumpa!\n");
+        printf("Sampai jumpa!\n\n");
         return;
     } else {
-        printf("Anda tidak jadi logout...\n");
-        printf("Kembali ke menu utama...\n");
+        printf("Anda tidak jadi logout...\n\n");
     }
 }

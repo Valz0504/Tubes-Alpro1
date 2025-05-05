@@ -1,50 +1,45 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "user.h"
 
 int main() {
-    UserList list_user;
-    CreateListDin(&list_user, 3);
 
-    Set list_nama_user;
-    initSet(&list_nama_user, 3);
+    // Inisialisasi Database User
+    UserList database;
+    CreateListDin(&database, 5);
 
-    User user1;
-    CreateUser(&list_user, &user1, "emilio", "justin", 1);
-    insertSet(&list_nama_user, "emilio");
-    AddUser(&list_user, user1);
-    User user2;
-    CreateUser(&list_user, &user2, "peter", "gru", 0);
-    insertSet(&list_nama_user, "peter");
-    AddUser(&list_user, user2);
-    User user3;
-    CreateUser(&list_user, &user3, "bob", "steve", 0);
-    insertSet(&list_nama_user, "bob");
-    AddUser(&list_user, user3);
-    User user4;
-    CreateUser(&list_user, &user4, "yay", "wow", 2);
-    insertSet(&list_nama_user, "yay");
-    AddUser(&list_user, user4);
+    // Inisialisasi Set nama unik User
+    Set nama_unik;
+    initSet(&nama_unik, 5);
 
-    registerPasien(&list_user, &list_nama_user);
-    
+    // Inisialisasi state LOGIN
     User current_user;
     boolean isLogin = FALSE;
-    lupa_password(&list_user);
-    helpMenu(current_user, &isLogin);
-    logout(&current_user, &isLogin);
-    login(&list_user, &current_user, &isLogin);
-    helpMenu(current_user, &isLogin);
-    logout(&current_user, &isLogin);
-    printf("\n");
-    for (int i = 0; i < list_user.Neff; i++) {
-        printf("name: %s, pass: %s, role: %s\n", list_user.data[i].username, list_user.data[i].password, roleToStr(list_user.data[i].role));
-    }
-    printf("neff: %d, capacity: %d\n\n", list_user.Neff, list_user.capacity);
 
-    for (int i = 0; i < list_nama_user.size; i++) {
-        printf("nama_unik: %s\n", list_nama_user.unique_username[i]);
+    while (1) {
+        char prompt[100];
+        printf(">>> ");
+        scanf("%s", prompt);
+    
+        if (strcmp(prompt, "LOGIN") == 0) {
+            system("clear");
+            login(&database, &current_user, &isLogin);
+        } else if (strcmp(prompt, "REGISTER") == 0) {
+            system("clear");
+            registerPasien(&database, &nama_unik);
+        } else if (strcmp(prompt, "LUPA_PASSWORD") == 0) {
+            system("clear");
+            lupa_password(&database);
+        } else if (strcmp(prompt, "LOGOUT") == 0) {
+            system("clear");
+            logout(&current_user, &isLogin);
+        } else if (strcmp(prompt, "HELP") == 0) {
+            system("clear");
+            helpMenu(current_user, &isLogin);
+        } else {
+            break;
+        }
     }
 
-    return 0;   
+    return 0;
 }
-
