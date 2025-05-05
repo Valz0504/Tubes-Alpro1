@@ -63,6 +63,7 @@ void CreateListDin(UserList *l, int capacity); // DONE IMPLEMENT
 void dealocateListDin(UserList *l); // DONE IMPLEMENT
 void expandList(UserList *l, int num); // DONE IMPLEMENT
 void copyList(UserList lIn, UserList *lOut); // DONE IMPLEMENT
+void RemoveUser(UserList *l, User *user); //DONE IMPLEMENT
 
 /* --- Fungsi/Prosedur Manajemen User --- */
 
