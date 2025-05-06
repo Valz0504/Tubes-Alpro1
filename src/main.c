@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "user.h"
 
-int main() {
+int main(int argc, char* argv[]) {
 
     // Inisialisasi Database User
     UserList database;
@@ -11,6 +11,9 @@ int main() {
     // Inisialisasi Set nama unik User
     Set nama_unik;
     initSet(&nama_unik, 5);
+
+    // LOAD DATA from file folder
+    /* belum ada */
 
     // Inisialisasi state LOGIN
     User current_user;
@@ -37,7 +40,7 @@ int main() {
             system("clear");
             helpMenu(current_user, &isLogin);
         } else {
-            break;
+            printf("Nama fungsi tidak terdaftar atau kesalahan pengetikan nama fungsi!\n\n");
         }
     }
 
