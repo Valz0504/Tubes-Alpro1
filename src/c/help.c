@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "header/user.h"
+#include "user.h"
 
 void helpMenu(User current_user, boolean *isLogin) {
     printf("=========== HELP ===========\n\n");

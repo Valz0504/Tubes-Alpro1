@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "header/user.h"
+#include "user.h"
 
 #define true 1
 #define false 0
@@ -83,6 +83,7 @@ char* roleToStr(Role role) {
         case ROLE_DOKTER: return "Dokter";
         case ROLE_MANAGER: return "Manager";
     }
+    return "Unknown";
 }
 
 void toLower(char *str) {
