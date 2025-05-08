@@ -19,6 +19,6 @@ typedef struct
 } Matrix;
 
 void CreateMatrix(int rows, int cols, Matrix *M);
-
+void denahRumahSakit(Matrix M); //denah rumah sakit
 
 #endif
