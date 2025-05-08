@@ -48,6 +48,12 @@ typedef struct {
     int urutan_minum;
 } Obat_Penyakit;
 
+typedef struct {
+    int pasienId;
+    int obatId[100];
+    int jumlahObat;
+} Inventory;
+
 void minumObat();
 void minumPenawar();
 void bolehPulangGaa();

@@ -58,7 +58,7 @@ void lihatUser(); // manager
 void tambahDokter(UserList *list, Set *set); // manager
 void diagnosis(User *u, PenyakitList *penyakit); // dokter
 void assignDokter(); // manager
-void LOAD();
+void LOAD(UserList *userList, PenyakitList *penyakitList, Obat *obatList, Obat_Penyakit *relasiList);
 void SAVE();
 
 
