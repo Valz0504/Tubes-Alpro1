@@ -53,7 +53,7 @@ void registerPasien(UserList *list, Set *set); // pasien
 void helpMenu(User current_user, boolean *isLogin); // general
 void cariUser(); // manager
 void lihatUser(); // manager
-void tambahDokter(); // manager
+void tambahDokter(UserList *list, Set *set); // manager
 void assignDokter(); // manager
 void LOAD();
 void SAVE();
