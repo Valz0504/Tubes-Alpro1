@@ -59,7 +59,7 @@ typedef struct
     Obat_Penyakit *data;
     int Neff;
     int capacity;
-} Obat_penyakitList;
+} Obat_PenyakitList;
 
 void diagnosis(User *u, PenyakitList *penyakit);
 void minumObat();
