@@ -32,7 +32,7 @@ typedef struct
     int tinggi_badan;
     int kadar_kolesterol;
     int kadar_kolesterol_Ldl;
-    int trombosit;
+    int trombosit;    
 } User;
 
 
@@ -53,7 +53,7 @@ void registerPasien(UserList *list, Set *set); // pasien
 void helpMenu(User current_user, boolean *isLogin); // general
 void cariUser(); // manager
 void lihatUser(); // manager
-void tambahDokter(); // manager
+void tambahDokter(UserList *list, Set *set); // manager
 void assignDokter(); // manager
 void LOAD();
 void SAVE();
@@ -63,6 +63,7 @@ void CreateListDin(UserList *l, int capacity); // DONE IMPLEMENT
 void dealocateListDin(UserList *l); // DONE IMPLEMENT
 void expandList(UserList *l, int num); // DONE IMPLEMENT
 void copyList(UserList lIn, UserList *lOut); // DONE IMPLEMENT
+void RemoveUser(UserList *l, User *user); //DONE IMPLEMENT
 
 /* --- Fungsi/Prosedur Manajemen User --- */
 
