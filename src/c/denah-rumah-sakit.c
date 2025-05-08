@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "header\matrix.h"
+#include "user.h"
 
 void denahRumahSakit(Matrix M) {
     printf("== Denah Rumah Sakit ==\n\n");

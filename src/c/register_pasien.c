@@ -6,9 +6,7 @@
 #include "boolean.h"
 
 void registerPasien(UserList *list, Set *set, boolean *isLogin) {
-    if (*isLogin) {
-        printf("Anda sedang login!\n\n");
-    } else {
+    if (!(*isLogin)) {
         printf("=== REGISTER ===\n");
         char username[100], password[100];
         
@@ -27,8 +25,10 @@ void registerPasien(UserList *list, Set *set, boolean *isLogin) {
             
             printf("Pasien %s berhasil ditambahkan!\n\n", username);
         } else {
-            printf("Registrasi gagal! Pasien dengan nama %s sudah terdaftar.\n\n", username);
+            printf("Registrasi gagal! User dengan nama %s sudah terdaftar.\n\n", username);
         }
+    } else {
+        printf("Anda sedang login!\n\n");
     }
 }
 

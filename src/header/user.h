@@ -4,6 +4,7 @@
 #ifndef USER_H
 #define USER_H
 
+#include "matrix.h"
 #include "set.h"
 #include "penyakit.h"
 #include "boolean.h"
@@ -46,14 +47,16 @@ typedef struct
 
 /* --- PROSEDUR FITUR PROGRAM --- */
 void login(UserList *list, User *current_user, boolean *isLogin); // general (DONE)
-void lupa_password(UserList *list); // general (DONE)
+void lupa_password(UserList *list, boolean *isLogin); // general (DONE)
 void logout(User *current_user, boolean *isLogin); // general
-void exit(); // general
-void registerPasien(UserList *list, Set *set); // pasien
+void EXIT(User *current_user, UserList *list, boolean *run_program); // general
+void registerPasien(UserList *list, Set *set, boolean *isLogin); // pasien
 void helpMenu(User current_user, boolean *isLogin); // general
+void denahRumahSakit(Matrix M); // general
 void cariUser(); // manager
 void lihatUser(); // manager
 void tambahDokter(UserList *list, Set *set); // manager
+void diagnosis(User *u, PenyakitList *penyakit); // dokter
 void assignDokter(); // manager
 void LOAD();
 void SAVE();

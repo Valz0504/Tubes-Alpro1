@@ -1,4 +1,4 @@
-#include "header/queue.h"
+#include "queue.h"
 #include <stdio.h>
 
 void initQueue(Queue *q) {

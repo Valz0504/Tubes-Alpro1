@@ -2,6 +2,7 @@
 #ifndef PENYAKIT_H
 #define PENYAKIT_H
 
+#include "user.h"
 #include "boolean.h"
 
 typedef struct {
@@ -47,7 +48,6 @@ typedef struct {
     int urutan_minum;
 } Obat_Penyakit;
 
-void diagnosis(User *u, PenyakitList *penyakit);
 void minumObat();
 void minumPenawar();
 void bolehPulangGaa();

@@ -1,4 +1,4 @@
-#include "header/matrix.h"
+#include "matrix.h"
 #include <string.h>
 
 void CreateMatrix(int rows, int cols, Matrix *M) {
