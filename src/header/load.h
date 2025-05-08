@@ -8,5 +8,6 @@ void loadDataUser(const char *filename, UserList *list);
 void loadDataPenyakit(const char *filename, PenyakitList *list);
 void loadDataObat(const char *filename, Obat *obatList);
 void loadDataObatPenyakit(const char *filename, Obat_Penyakit *relasi);
-void loadDataKonfig();
+void loadDataConfig();
+
 #endif

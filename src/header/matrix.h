@@ -16,6 +16,7 @@ typedef struct
   Ruangan data[MAX_ROWS][MAX_COLS];
   int rows;
   int cols;
+  int kapasitasRuangan;
 } Matrix;
 
 void CreateMatrix(int rows, int cols, Matrix *M);

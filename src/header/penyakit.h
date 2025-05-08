@@ -3,6 +3,7 @@
 #define PENYAKIT_H
 
 #include "boolean.h"
+#include "user.h"
 
 typedef struct {
     int id;
@@ -60,6 +61,12 @@ typedef struct
     int Neff;
     int capacity;
 } Obat_PenyakitList;
+
+typedef struct {
+    int pasienId;
+    int obat[100];
+    int jumlahObat;
+} Inventory;
 
 void diagnosis(User *u, PenyakitList *penyakit);
 void minumObat();

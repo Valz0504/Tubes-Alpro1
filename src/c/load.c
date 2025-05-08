@@ -10,6 +10,7 @@
 #define maxChar 100
 #define MAX_RELASI 1000
 
+
 void loadDataUser(const char *filename, UserList *userList) {
     FILE *fileUser = fopen(filename, "r");
     if (fileUser == NULL) {
@@ -241,6 +242,18 @@ void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasiList) {
     }
 
     fclose(fileOP);
+}
+void loadDataConfig();
+void load(UserList *userList, PenyakitList *penyakitList, Obat *obatList, Obat_Penyakit *relasiList){
+    loadDataUser("file/user.csv", userList);
+    loadDataPenyakit("file/penyakit.csv", penyakitList);
+    loadDataObat("file/obat.csv", obatList);
+    loadDataObatPenyakit("file/obat_penyakit.csv", relasiList);
+
+
+
+    
+
 }
 
 
