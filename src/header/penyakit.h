@@ -2,8 +2,8 @@
 #ifndef PENYAKIT_H
 #define PENYAKIT_H
 
-#include "user.h"
 #include "boolean.h"
+#include "user.h"
 
 typedef struct {
     int id;
@@ -42,21 +42,30 @@ typedef struct {
     char nama[100];
 } Obat;
 
+typedef struct 
+{
+    Obat *data;
+    int Neff;
+    int capacity;
+} ObatList;
+
 typedef struct {
     int id_obat;
     int id_penyakit;
     int urutan_minum;
 } Obat_Penyakit;
 
+typedef struct 
+{
+    Obat_Penyakit *data;
+    int Neff;
+    int capacity;
+} Obat_PenyakitList;
+
 typedef struct {
     int pasienId;
-    int obatId[100];
+    int obat[100];
     int jumlahObat;
 } Inventory;
-
-void minumObat();
-void minumPenawar();
-void bolehPulangGaa();
-void ngobatin();
 
 #endif

@@ -4,27 +4,32 @@
 
 int main(int argc, char* argv[]) {
 
-    // Inisialisasi Database User
-    UserList database;
-    CreateListDin(&database, 5);
-
-    // Inisialisasi Set nama unik Pasien dan Dokter
+    // Inisialisasi semua Database yang diperlukan
+    UserList dataBaseUser;
+    PenyakitList dataPenyakit;
+    ObatList dataObat;
+    Obat_PenyakitList dataObatPenyakit;
+    Matrix denah_rs;
     Set nama_unik;
+    
+    CreateListDin(&dataBaseUser, 5);
     initSet(&nama_unik, 5);
 
     // LOAD DATA from file folder
-    /* belum ada */
+    loadDataUser("./file/user.csv", &dataBaseUser);
+    loadDataPenyakit("./file/penyakit.csv", &dataPenyakit);
+    loadDataObat("./file/obat.csv", &dataObat);
+    loadDataObatPenyakit("./file/obat_penyakit.csv", &dataObatPenyakit);
 
     // Inisialisasi state LOGIN
     User current_user;
     boolean isLogin = FALSE;
 
     // Inisialisasi Denah
-    Matrix denah_rs;
     denah_rs.rows = 5;
     denah_rs.cols = 5;
 
-    // Inisialisasi INFINITELOOP program
+    // Program Utama
     boolean run_program = TRUE;
     while (run_program) {
         char prompt[100];
@@ -33,13 +38,13 @@ int main(int argc, char* argv[]) {
     
         if (strcmp(prompt, "LOGIN") == 0) {
             system("clear");
-            login(&database, &current_user, &isLogin);
+            login(&dataBaseUser, &current_user, &isLogin);
         } else if (strcmp(prompt, "REGISTER") == 0) {
             system("clear");
-            registerPasien(&database, &nama_unik, &isLogin);
+            registerPasien(&dataBaseUser, &nama_unik, &isLogin);
         } else if (strcmp(prompt, "LUPA_PASSWORD") == 0) {
             system("clear");
-            lupa_password(&database, &isLogin);
+            lupa_password(&dataBaseUser, &isLogin);
         } else if (strcmp(prompt, "LOGOUT") == 0) {
             system("clear");
             logout(&current_user, &isLogin);
@@ -51,10 +56,10 @@ int main(int argc, char* argv[]) {
             denahRumahSakit(denah_rs);
         } else if (strcmp(prompt, "EXIT") == 0) {
             system("clear");
-            EXIT(&current_user, &database, &run_program);
+            EXIT(&current_user, &dataBaseUser, &run_program);
         } else if (strcmp(prompt, "TAMBAH_DOKTER") == 0) {
             system("clear");
-            tambahDokter(&database, &nama_unik);
+            tambahDokter(&dataBaseUser, &nama_unik);
         }
         else {
             printf("Nama fungsi tidak terdaftar atau kesalahan pengetikan nama fungsi!\n\n");

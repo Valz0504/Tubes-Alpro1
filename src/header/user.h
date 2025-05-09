@@ -24,7 +24,7 @@ typedef struct
     Role role;
     char riwayat_penyakit[100];
     float suhu_tubuh;
-    int tekanan_darah_tistolik;
+    int tekanan_darah_sistolik;
     int tekanan_darah_diastolik;
     int detak_jantung;
     float saturasi_oksigen;
@@ -57,9 +57,21 @@ void cariUser(); // manager
 void lihatUser(); // manager
 void tambahDokter(UserList *list, Set *set); // manager
 void diagnosis(User *u, PenyakitList *penyakit); // dokter
+void minumObat();
+void minumPenawar();
+void bolehPulangGaa();
+void ngobatin();
 void assignDokter(); // manager
 void LOAD(UserList *userList, PenyakitList *penyakitList, Obat *obatList, Obat_Penyakit *relasiList);
 void SAVE();
+
+
+/* LOAD */
+void loadDataUser(const char *filename, UserList *list);
+void loadDataPenyakit(const char *filename, PenyakitList *list);
+void loadDataObat(const char *filename, ObatList *obatList);
+void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasi);
+void loadDataConfig();
 
 
 void CreateListDin(UserList *l, int capacity); // DONE IMPLEMENT

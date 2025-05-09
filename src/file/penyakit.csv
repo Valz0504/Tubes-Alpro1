@@ -1,0 +1,2 @@
+id,nama,suhuMin,suhuMax,teksMin,teksMax,tekdMin,tekdMax,detakMin,detakMax,saturMin,saturMax,gulaMin,gulaMax,beratMin,beratMax,tinggiMin,tinggiMax,kolMin,kolMax,trombMin,trombMax
+1,demam,10.0,100.0,20,30,15,35,100,10,120.0,150.5,80,100,30.0,70.0,150,190,100,150,60,100

@@ -16,7 +16,7 @@ void diagnosis(User *u, PenyakitList *listPenyakit) {
     
             if (
                 u->suhu_tubuh >= p.suhu_tubuh_Min && u->suhu_tubuh <= p.suhu_tubuh_Max &&
-                u->tekanan_darah_tistolik >= p.tekanan_sistolik_Min && u->tekanan_darah_tistolik <= p.tekanan_sistolik_Max &&
+                u->tekanan_darah_sistolik >= p.tekanan_sistolik_Min && u->tekanan_darah_sistolik <= p.tekanan_sistolik_Max &&
                 u->tekanan_darah_diastolik >= p.tekanan_diastolik_Min && u->tekanan_darah_diastolik <= p.tekanan_diastolik_Max &&
                 u->detak_jantung >= p.detak_jantung_Min && u->detak_jantung <= p.detak_jantung_Max &&
                 u->saturasi_oksigen >= p.saturasi_Min && u->saturasi_oksigen <= p.saturasi_Max &&
