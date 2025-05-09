@@ -3,7 +3,6 @@
 #define PENYAKIT_H
 
 #include "boolean.h"
-#include "user.h"
 
 typedef struct {
     int id;

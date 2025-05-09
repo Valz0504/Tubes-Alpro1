@@ -1,5 +1,5 @@
-#include "../header/queue.h"
 #include <stdio.h>
+#include "../header/queue.h"
 
 void initQueue(Queue *q) {
     q->front = -1;

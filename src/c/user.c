@@ -93,16 +93,3 @@ void toLower(char *str) {
         }
     }
 }
-
-void SetUsername(User *u, char name[]); 
-void SetPassword(User *u, char pass[]);
-
-void SetNewPassword(UserList *l, char username[], char pass[]) {
-    for (int i = 0; i < l->Neff; i++) {
-        if (strcmp(l->data[i].username, username) == 0) {
-            strcpy(l->data[i].password, pass);
-        }
-    }
-}
-
-

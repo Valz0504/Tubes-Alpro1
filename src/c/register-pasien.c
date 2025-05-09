@@ -2,8 +2,6 @@
 #include <string.h>
 
 #include "../header/user.h"
-#include "../header/set.h"
-#include "../header/boolean.h"
 
 void registerPasien(UserList *list, Set *set, boolean *isLogin) {
     if (!(*isLogin)) {
@@ -28,7 +26,7 @@ void registerPasien(UserList *list, Set *set, boolean *isLogin) {
             printf("Registrasi gagal! User dengan nama %s sudah terdaftar.\n\n", username);
         }
     } else {
-        printf("Anda sedang login!\n\n");
+        printf("Anda sedang login! Logout terlebih dahulu!\n\n");
     }
 }
 

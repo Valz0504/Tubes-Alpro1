@@ -18,12 +18,16 @@ void helpMenu(User current_user, boolean *isLogin) {
                 printf("\t4. MINUM_OBAT: Meminum obat yang kamu miliki di inventori\n");
                 printf("\t5. MINUM_PENAWAR: Mengeluarkan obat terakhir yang diminum\n");
                 printf("\t6. BOLEH_PULANG_GA: Konsultasi ulang ke dokter untuk mendapatkan izin pulang\n");
-                printf("\t7. EXIT: Keluar dari Rumah Sakit\n");
+                printf("\t7. LIHAT_DENAH: Melihat keseluruhan bangunan dari rumah sakit\n");
+                printf("\t8. LIHAT_RUANGAN <<nama_ruangan>>: Melihat nama dokter dan pasien yang ada di dalam ruangan tersebut\n");
+                printf("\t9. EXIT: Keluar dari Rumah Sakit\n");
             } else if (current_user.role == 1) {
                 printf("\t1. LOGOUT: Keluar dari akun yang sedang digunakan\n");
                 printf("\t2. DIAGNOSIS: Melakukan diagnosis penyakit pasien berdasarkan kondisi tubuh pasien\n");
                 printf("\t3. NGOBATIN: Memberikan obat-obat yang sesuai dengan penyakit kepada pasien\n");
-                printf("\t4. EXIT: Keluar dari Rumah Sakit\n");
+                printf("\t4. LIHAT_DENAH: Melihat keseluruhan bangunan dari rumah sakit\n");
+                printf("\t5. LIHAT_RUANGAN <<nama_ruangan>>: Melihat nama dokter dan pasien yang ada di dalam ruangan tersebut\n");
+                printf("\t6. EXIT: Keluar dari Rumah Sakit\n");
             }
         } else if (current_user.role == 2) {
             printf("Halo Manager %s. Kenapa kamu memanggil command HELP? Kan kamu manager, tapi yasudahlah kamu pasti sedang kebingungan.\n", current_user.username);
@@ -34,6 +38,9 @@ void helpMenu(User current_user, boolean *isLogin) {
             printf("\t4. LIHAT_USER: Melihat data pengguna dan memilih metode penampilan data pengguna\n");
             printf("\t5. LIHAT_ANTRIAN: Melihat rincian seluruh ruangan di Rumah Sakit\n");
             printf("\t6. CARI_USER: Mencari data pengguna secara spesifik\n");
+            printf("\t7. LIHAT_DENAH: Melihat keseluruhan bangunan dari rumah sakit\n");
+            printf("\t8. LIHAT_RUANGAN <<nama_ruangan>>: Melihat nama dokter dan pasien yang ada di dalam ruangan tersebut\n");
+            printf("\t9. EXIT: Keluar dari Rumah Sakit\n");
         }
     }
     printf("Footnote: \n");

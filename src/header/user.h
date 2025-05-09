@@ -46,27 +46,33 @@ typedef struct
 } UserList;
 
 /* --- PROSEDUR FITUR PROGRAM --- */
-void login(UserList *list, User *current_user, boolean *isLogin); // general (DONE)
-void lupa_password(UserList *list, boolean *isLogin); // general (DONE)
+void login(UserList *list, User *current_user, boolean *isLogin); // general
+void lupa_password(UserList *list, boolean *isLogin); // general
 void logout(User *current_user, boolean *isLogin); // general
-void EXIT(User *current_user, UserList *list, boolean *run_program); // general
 void registerPasien(UserList *list, Set *set, boolean *isLogin); // pasien
 void helpMenu(User current_user, boolean *isLogin); // general
 void denahRumahSakit(Matrix M); // general
+void lihatRuangan(); // general
+void lihatAntrian(); // manager
 void cariUser(); // manager
 void lihatUser(); // manager
+void assignDokter(Matrix *denah, UserList *list, User *current_user, boolean *isLogin); // manager
 void tambahDokter(UserList *list, User *current_user, Set *set, boolean *isLogin); // manager
+void lihatUser(); // manager
+void cariUser(); // manager
 void diagnosis(User *u, PenyakitList *penyakit); // dokter
-void minumObat();
-void minumPenawar();
-void bolehPulangGaa();
-void ngobatin();
-void assignDokter(); // manager
-void SAVE();
+void ngobatin(); // dokter
+void daftarCheckUp(); // pasien
+void antrianSaya(); // pasien
+void minumObat(); // pasien
+void minumPenawar(); // pasien
+void bolehPulangGaa(); // pasien
+void SAVE(); // general
+void EXIT(User *current_user, UserList *list, boolean *run_program); // general
+void LOAD(UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList);
 
 
 /* LOAD */
-void LOAD(UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList);
 void loadDataUser(const char *filename, UserList *list);
 void loadDataPenyakit(const char *filename, PenyakitList *list);
 void loadDataObat(const char *filename, ObatList *obatList);
@@ -74,35 +80,19 @@ void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasi);
 void loadDataConfig();
 
 
-void CreateListDin(UserList *l, int capacity); // DONE IMPLEMENT
-void dealocateListDin(UserList *l); // DONE IMPLEMENT
-void expandList(UserList *l, int num); // DONE IMPLEMENT
-void copyList(UserList lIn, UserList *lOut); // DONE IMPLEMENT
-void RemoveUser(UserList *l, User *user); //DONE IMPLEMENT
+/* ADT List Dinamis */
+void CreateListDin(UserList *l, int capacity); 
+void dealocateListDin(UserList *l); 
+void expandList(UserList *l, int num); 
+void copyList(UserList lIn, UserList *lOut);
+
 
 /* --- Fungsi/Prosedur Manajemen User --- */
-
-void CreateUser(UserList *l, User *u, char name[], char pass[], Role role);  // DONE IMPLEMENT
-/* membuat user dengan nama, pass, role diinisialisasi, sisanya diberi default value*/
-
-User* findUser(UserList *l, char username[]); // DONE IMPLEMENT
-/* cari data User dari usernamenya */
-
-boolean isUsernameExist(UserList l, char username[]); // DONE IMPLEMENT
-/* cari di list user ada ga usernamenya */
-
-void AddUser(UserList *l, User u); // DONE IMPLEMENT
-/* nambahin user baru ke list user */
-
-char* roleToStr(Role role); // DONE IMPLEMENT
-/* mengembalikan nama role */
-
-void toLower(char *str); // DONE IMPLEMENT
-/* membuat string menjadi lower case semua */
-
-/* --- Setter User --- */
-void SetUsername(User *u, char name[]); 
-void SetPassword(User *u, char pass[]);
-void SetNewPassword(UserList *l, char username[], char pass[]); // DONE IMPLEMENT
+void CreateUser(UserList *l, User *u, char name[], char pass[], Role role);  
+User* findUser(UserList *l, char username[]);
+boolean isUsernameExist(UserList l, char username[]);
+void AddUser(UserList *l, User u);
+char* roleToStr(Role role); 
+void toLower(char *str);
 
 #endif

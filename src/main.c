@@ -21,6 +21,7 @@ int main(int argc, char* argv[]) {
     Set nama_unik;
     
     CreateListDin(&dataBaseUser, 5);
+    CreateMatrix(10, 10, &denah_rs);
     initSet(&nama_unik, 5);
 
     // LOAD DATA from file folder
@@ -30,15 +31,11 @@ int main(int argc, char* argv[]) {
     User current_user;
     boolean isLogin = FALSE;
 
-    // Inisialisasi Denah
-    denah_rs.rows = 5;
-    denah_rs.cols = 5;
-
     // Program Utama
     boolean run_program = TRUE;
     while (run_program) {
         char prompt[100];
-        printf(">>> ");
+        printf(">>> Command: ");
         scanf("%s", prompt);
     
         if (strcmp(prompt, "LOGIN") == 0) {
@@ -65,9 +62,12 @@ int main(int argc, char* argv[]) {
         } else if (strcmp(prompt, "TAMBAH_DOKTER") == 0) {
             system("clear");
             tambahDokter(&dataBaseUser, &current_user, &nama_unik, &isLogin);
+        } else if (strcmp(prompt, "ASSIGN_DOKTER") == 0) {
+            system("clear");
+            assignDokter(&denah_rs, &dataBaseUser, &current_user, &isLogin);
         }
         else {
-            printf("Nama fungsi tidak terdaftar atau kesalahan pengetikan nama fungsi!\n\n");
+            printf("Nama fungsi tidak terdaftar atau kesalahan pengetikan command!\n\n");
         }
     }
 

@@ -3,8 +3,6 @@
 #include <string.h>
 
 #include "../header/user.h"
-#include "../header/penyakit.h"
-#include "../header/boolean.h"
 
 #define initialCap 10
 #define maxChar 100
