@@ -5,6 +5,8 @@
     "user.h": "c",
     "set.h": "c",
     "stdio.h": "c",
-    "stdlib.h": "c"
+    "stdlib.h": "c",
+    "array": "c",
+    "string": "c"
   }
 }
