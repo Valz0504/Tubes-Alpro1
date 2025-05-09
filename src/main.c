@@ -4,6 +4,14 @@
 
 int main(int argc, char* argv[]) {
 
+    if (argv[1] == NULL) {
+        printf("Tidak ada nama folder yang diberikan!\n");
+        printf("Usage: ./main <<nama_folder>>\n");
+        return 0;
+    }
+    // masih harus ada pengecekan kalo foldernya gaada
+
+
     // Inisialisasi semua Database yang diperlukan
     UserList dataBaseUser;
     PenyakitList dataPenyakit;
@@ -16,10 +24,7 @@ int main(int argc, char* argv[]) {
     initSet(&nama_unik, 5);
 
     // LOAD DATA from file folder
-    loadDataUser("./file/user.csv", &dataBaseUser);
-    loadDataPenyakit("./file/penyakit.csv", &dataPenyakit);
-    loadDataObat("./file/obat.csv", &dataObat);
-    loadDataObatPenyakit("./file/obat_penyakit.csv", &dataObatPenyakit);
+    LOAD(&dataBaseUser, &dataPenyakit, &dataObat, &dataObatPenyakit);
 
     // Inisialisasi state LOGIN
     User current_user;
@@ -59,7 +64,7 @@ int main(int argc, char* argv[]) {
             EXIT(&current_user, &dataBaseUser, &run_program);
         } else if (strcmp(prompt, "TAMBAH_DOKTER") == 0) {
             system("clear");
-            tambahDokter(&dataBaseUser, &nama_unik);
+            tambahDokter(&dataBaseUser, &current_user, &nama_unik, &isLogin);
         }
         else {
             printf("Nama fungsi tidak terdaftar atau kesalahan pengetikan nama fungsi!\n\n");

@@ -1,3 +1,3 @@
-id,username,password,role,riwayat_penyakit,suhu_tubuh,tekanan_darah_sistolik,tekanan_darah_diastolik,detak_jantung,saturasi_oksigen,kadar_gula,berat_badan,tinggi_badan,kadar_kolesterol,trombosit
-12,kei,kk,ROLE_MANAGER
-13524073,keisha,keishaaa,ROLE_DOKTER
+id,username,password,role,riwayat_penyakit,suhu_tubuh,tekanan_darah_sistolik,tekanan_darah_diastolik,detak_jantung,saturasi_oksigen,kadar_gula,berat_badan,tinggi_badan,kadar_kolesterol,trombosit,
+12,kei,kk,ROLE_MANAGER,
+13524073,keisha,keishaaa,ROLE_DOKTER,

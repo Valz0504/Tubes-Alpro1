@@ -55,18 +55,18 @@ void helpMenu(User current_user, boolean *isLogin); // general
 void denahRumahSakit(Matrix M); // general
 void cariUser(); // manager
 void lihatUser(); // manager
-void tambahDokter(UserList *list, Set *set); // manager
+void tambahDokter(UserList *list, User *current_user, Set *set, boolean *isLogin); // manager
 void diagnosis(User *u, PenyakitList *penyakit); // dokter
 void minumObat();
 void minumPenawar();
 void bolehPulangGaa();
 void ngobatin();
 void assignDokter(); // manager
-void LOAD(UserList *userList, PenyakitList *penyakitList, Obat *obatList, Obat_Penyakit *relasiList);
 void SAVE();
 
 
 /* LOAD */
+void LOAD(UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList);
 void loadDataUser(const char *filename, UserList *list);
 void loadDataPenyakit(const char *filename, PenyakitList *list);
 void loadDataObat(const char *filename, ObatList *obatList);

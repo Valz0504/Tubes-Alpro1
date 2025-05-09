@@ -40,7 +40,17 @@ void loadDataUser(const char *filename, UserList *userList) {
                     case 0: u.id = atoi(buffer); break;
                     case 1: strncpy(u.username, buffer, sizeof(u.username)); break;
                     case 2: strncpy(u.password, buffer, sizeof(u.password)); break;
-                    case 3: u.role = atoi(buffer); break;
+                    case 3: 
+                        if (strcmp(buffer, "ROLE_PASIEN") == 0) {
+                            u.role = ROLE_PASIEN;
+                            break;
+                        } else if (strcmp(buffer, "ROLE_DOKTER") == 0) {
+                            u.role = ROLE_DOKTER;
+                            break;
+                        } else if (strcmp(buffer, "ROLE_MANAGER") == 0) {
+                            u.role = ROLE_MANAGER;
+                            break;
+                        }
                     case 4: strncpy(u.riwayat_penyakit, buffer, sizeof(u.riwayat_penyakit)); break;
                     case 5: u.suhu_tubuh = atof(buffer); break;
                     case 6: u.tekanan_darah_sistolik = atoi(buffer); break;
@@ -245,11 +255,9 @@ void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasiList) {
 }
 void loadDataConfig();
 
-void load(UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList){
-    loadDataUser("file/user.csv", userList);
-    loadDataPenyakit("file/penyakit.csv", penyakitList);
-    loadDataObat("file/obat.csv", obatList);
-    loadDataObatPenyakit("file/obat_penyakit.csv", relasiList);
+void LOAD(UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList){
+    loadDataUser("./file/user.csv", userList);
+    loadDataPenyakit("./file/penyakit.csv", penyakitList);
+    loadDataObat("./file/obat.csv", obatList);
+    loadDataObatPenyakit("./file/obat_penyakit.csv", relasiList);
 }
-
-
