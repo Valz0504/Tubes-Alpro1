@@ -1,4 +1,4 @@
-#include "set.h"
+#include "../header/set.h"
 
 void initSet(Set *set, int capacity) {
     set->unique_username = (char**) malloc(sizeof(char*) * capacity);

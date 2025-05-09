@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "user.h" 
-#include "boolean.h"
+#include "../header/user.h" 
+#include "../header/boolean.h"
 
 void logout(User *current_user, boolean *isLogin) {
     if (*isLogin == FALSE) {

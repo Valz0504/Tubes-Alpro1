@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "user.h"
+#include "../header/user.h"
 
 void diagnosis(User *u, PenyakitList *listPenyakit) {
     printf("=== DIAGNOSIS PASIEN ===\n");

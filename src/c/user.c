@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "user.h"
+#include "../header/user.h"
 
 #define true 1
 #define false 0

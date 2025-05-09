@@ -1,26 +1,43 @@
+# Compiler and flags
 CC = gcc
-CFLAGS = -Wall -I./header
-SRCDIR = .
-IMPLDIR = c
-SRC = $(SRCDIR)/main.c $(wildcard $(IMPLDIR)/*.c)
-OBJ = $(SRC:.c=.o)
-EXEC = main
+CFLAGS = -g -Wall
 
-.PHONY: all clean run test
+# Directories
+CDIR = c
+BUILD_DIR = build
+CBUILD_DIR = $(BUILD_DIR)/c
 
-all: $(EXEC)
+# Source and object files
+MAIN_SRCS = $(wildcard *.c)
+C_SRCS = $(wildcard $(CDIR)/*.c)
 
-$(EXEC): $(OBJ)
-	$(CC) -o $@ $^
+MAIN_OBJS = $(patsubst %.c, $(BUILD_DIR)/%.o, $(MAIN_SRCS))
+C_OBJS = $(patsubst $(CDIR)/%.c, $(CBUILD_DIR)/%.o, $(C_SRCS))
 
-%.o: %.c
+OBJS = $(MAIN_OBJS) $(C_OBJS)
+
+# Executable
+TARGET = main
+
+# Default target
+all: prepare_dirs $(TARGET)
+
+# Prepare required directories
+prepare_dirs:
+	mkdir -p $(BUILD_DIR) $(CBUILD_DIR)
+
+# Linking
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $^
+
+# Compile main .c files
+$(BUILD_DIR)/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-run: all
-	./$(EXEC)
+# Compile c/*.c files
+$(CBUILD_DIR)/%.o: $(CDIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-test: all
-	./$(EXEC) test
-
+# Clean
 clean:
-	rm -f $(IMPLDIR)/*.o *.o $(EXEC)
+	rm -rf $(BUILD_DIR) $(TARGET)
