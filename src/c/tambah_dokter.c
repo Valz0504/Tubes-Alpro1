@@ -10,9 +10,9 @@ void tambahDokter(UserList *list, Set *set) {
     char username[100], password[100];
     
     printf("Username: ");
-    scanf("%s", username);
+    scanf(" %[^\n]s", username);
     printf("Password: ");
-    scanf("%s", password);
+    scanf(" %[^\n]s", password);
 
     toLower(username);
     if (isUsernameUnique(*set, username)) {
