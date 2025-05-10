@@ -3,45 +3,57 @@
 #include "./header/user.h"
 
 int main(int argc, char* argv[]) {
+    system("clear");
 
-    // Inisialisasi Database User
-    UserList database;
-    CreateListDin(&database, 5);
+    if (argv[1] == NULL) {
+        printf("Tidak ada nama folder yang diberikan!\n");
+        printf("Usage: ./main <<nama_folder>>\n");
+        return 0;
+    }
+    // masih harus ada pengecekan kalo foldernya gaada
 
-    // Inisialisasi Set nama unik Pasien dan Dokter
+
+    // Inisialisasi semua Database yang diperlukan
+    UserList dataBaseUser;
+    PenyakitList dataPenyakit;
+    ObatList dataObat;
+    Obat_PenyakitList dataObatPenyakit;
+    Matrix denah_rs;
     Set nama_unik;
+    
+    CreateListDin(&dataBaseUser, 5);
+    CreateMatrix(10, 10, &denah_rs);
     initSet(&nama_unik, 5);
 
     // LOAD DATA from file folder
-    /* belum ada */
+    LOAD(&dataBaseUser, &dataPenyakit, &dataObat, &dataObatPenyakit, &nama_unik);
 
     // Inisialisasi state LOGIN
     User current_user;
     boolean isLogin = FALSE;
 
-    // Inisialisasi Denah
-    Matrix denah_rs;
-    denah_rs.rows = 5;
-    denah_rs.cols = 5;
 
-    // Inisialisasi INFINITELOOP program
+    // Opening Program
+    printf("=== SELAMAT DATANG ===\n");
+    printf("Ketik command HELP untuk melihat apa saja yang dapat kamu lakukan sekarang!\n\n");
+
+    // Program Utama
     boolean run_program = TRUE;
     while (run_program) {
         char prompt[100];
-        printf(">>> ");
+        printf(">>> Command: ");
         scanf("%s", prompt);
     
         if (strcmp(prompt, "LOGIN") == 0) {
             system("clear");
-            login(&database, &current_user, &isLogin);
+            login(&dataBaseUser, &current_user, &isLogin);
         } else if (strcmp(prompt, "REGISTER") == 0) {
             system("clear");
-            registerPasien(&database, &nama_unik, &isLogin);
+            registerPasien(&dataBaseUser, &nama_unik, &isLogin);
         } else if (strcmp(prompt, "LUPA_PASSWORD") == 0) {
             system("clear");
-            lupa_password(&database, &isLogin);
+            lupa_password(&dataBaseUser, &isLogin);
         } else if (strcmp(prompt, "LOGOUT") == 0) {
-            system("clear");
             logout(&current_user, &isLogin);
         } else if (strcmp(prompt, "HELP") == 0) {
             system("clear");
@@ -51,13 +63,16 @@ int main(int argc, char* argv[]) {
             denahRumahSakit(denah_rs);
         } else if (strcmp(prompt, "EXIT") == 0) {
             system("clear");
-            EXIT(&current_user, &database, &run_program);
+            EXIT(&current_user, &dataBaseUser, &run_program);
         } else if (strcmp(prompt, "TAMBAH_DOKTER") == 0) {
             system("clear");
-            tambahDokter(&database, &nama_unik);
+            tambahDokter(&dataBaseUser, &current_user, &nama_unik, &isLogin);
+        } else if (strcmp(prompt, "ASSIGN_DOKTER") == 0) {
+            system("clear");
+            assignDokter(&denah_rs, &dataBaseUser, &current_user, &isLogin);
         }
         else {
-            printf("Nama fungsi tidak terdaftar atau kesalahan pengetikan nama fungsi!\n\n");
+            printf("Nama fungsi tidak terdaftar atau kesalahan pengetikan command!\n\n");
         }
     }
 

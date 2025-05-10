@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "../header/user.h"
-#include "../header/boolean.h"
 
 void login(UserList *list, User *current_user, boolean *isLogin) {
     if (!(*isLogin)) {

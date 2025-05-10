@@ -1,6 +1,7 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
+#include "boolean.h"
 #include "queue.h"
 
 #define MAX_ROWS 30
@@ -20,6 +21,8 @@ typedef struct
 } Matrix;
 
 void CreateMatrix(int rows, int cols, Matrix *M);
-void denahRumahSakit(Matrix M); //denah rumah sakit
+boolean isRuanganKosong(Ruangan r);
+boolean getPosisiRuangan(Matrix *denah, char ruang[], int *row, int *col);
+boolean isDokterSudahAssign(Matrix *denah, char nama_dokter[]);
 
 #endif

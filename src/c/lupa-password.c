@@ -2,7 +2,6 @@
 #include <string.h>
 
 #include "../header/user.h"
-#include "../header/boolean.h"
 
 #define MAX_SIZE 100
 
@@ -46,6 +45,14 @@ char* RunLengthEncoding(char username[]) {
         strncat(rle, keys[i], 1);
     }
     return rle;
+}
+
+void SetNewPassword(UserList *l, char username[], char pass[]) {
+    for (int i = 0; i < l->Neff; i++) {
+        if (strcmp(l->data[i].username, username) == 0) {
+            strcpy(l->data[i].password, pass);
+        }
+    }
 }
 
 void lupa_password(UserList *list, boolean *isLogin) {

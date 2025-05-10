@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "../header/user.h"
-#include "../header/boolean.h"
 
 void EXIT(User *current_user, UserList *list, boolean *run_program){
     char input[2];

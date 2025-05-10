@@ -14,7 +14,7 @@ void CreateUser(UserList *l, User *u, char name[], char pass[], Role role) {
     u->role = role;
     strcpy(u->riwayat_penyakit, "-");
     u->suhu_tubuh = 0.0;
-    u->tekanan_darah_tistolik = -1;
+    u->tekanan_darah_sistolik = -1;
     u->tekanan_darah_diastolik = -1;
     u->detak_jantung = -1;
     u->saturasi_oksigen = 0.0;
@@ -93,16 +93,3 @@ void toLower(char *str) {
         }
     }
 }
-
-void SetUsername(User *u, char name[]); 
-void SetPassword(User *u, char pass[]);
-
-void SetNewPassword(UserList *l, char username[], char pass[]) {
-    for (int i = 0; i < l->Neff; i++) {
-        if (strcmp(l->data[i].username, username) == 0) {
-            strcpy(l->data[i].password, pass);
-        }
-    }
-}
-
-
