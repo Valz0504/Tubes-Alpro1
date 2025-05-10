@@ -3,9 +3,6 @@
 #include <string.h>
 
 #include "../header/user.h"
-#include "../header/penyakit.h"
-#include "../header/matrix.h"
-#include "../header/queue.h"
 
 #define initialCap 10
 #define maxChar 100
@@ -34,7 +31,7 @@ void loadDataUser(const char *filename, UserList *userList) {
         memset(&u, 0, sizeof(User)); // Inisialisasi semua field jadi nol
 
         while (line[i] != '\0' && line[i] != '\n') {
-            if (line[i] == ',') {
+            if (line[i] == ';') {
                 buffer[idx] = '\0';
 
                 switch (field) {
@@ -114,7 +111,7 @@ void loadDataPenyakit(const char *filename, PenyakitList *listPenyakit) {
         memset(p, 0, sizeof(Penyakit));
 
         while (line[i] != '\0' && line[i] != '\n') {
-            if (line[i] == ',') {
+            if (line[i] == ';') {
                 buffer[idx] = '\0';
 
                 switch (field) {
@@ -186,7 +183,7 @@ void loadDataObat(const char *filename, ObatList *listObat){
         int i = 0, j = 0, field = 0;
 
         while (line[i] != '\0' && line[i] != '\n') {
-            if (line[i] == ',') {
+            if (line[i] == ';') {
                 buffer[j] = '\0';
                 o.id = atoi(buffer);  // field pertama: id
                 field++;
@@ -228,7 +225,7 @@ void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasiList) {
         int i = 0, j = 0, field = 0;
 
         while (line[i] != '\0' && line[i] != '\n') {
-            if (line[i] == ',') {
+            if (line[i] == ';') {
                 buffer[j] = '\0';
                 if (field == 0) r.id_obat = atoi(buffer);
                 else if (field == 1) r.id_penyakit = atoi(buffer);
@@ -254,72 +251,73 @@ void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasiList) {
 
     fclose(fileOP);
 }
-void loadDataConfig(const char *filename, Matrix *rumahSakit, Inventory *daftarInventory, int *jumlahInventory) {
-    FILE *fileConfig = fopen(filename, "r");
-    if (!fileConfig) {
-        printf("Gagal membuka file konfigurasi.\n");
-        return;
-    }
 
-    // Baris 1: ukuran denah
-    rumahSakit->rows = readInt(fileConfig);
-    fgetc(fileConfig);  // Buang spasi
-    rumahSakit->cols = readInt(fileConfig);
+// void loadDataConfig(const char *filename, Matrix *rumahSakit, Inventory *daftarInventory, int *jumlahInventory) {
+//     FILE *fileConfig = fopen(filename, "r");
+//     if (!fileConfig) {
+//         printf("Gagal membuka file konfigurasi.\n");
+//         return;
+//     }
+
+//     // Baris 1: ukuran denah
+//     rumahSakit->rows = readInt(fileConfig);
+//     fgetc(fileConfig);  // Buang spasi
+//     rumahSakit->cols = readInt(fileConfig);
     
-    // Baris 2: kapasitas ruangan
-    rumahSakit->kapasitasRuangan = readInt(fileConfig);
+//     // Baris 2: kapasitas ruangan
+//     rumahSakit->kapasitasRuangan = readInt(fileConfig);
 
-    // Baris 3-8: ruangan
-    for (int i = 0; i < rumahSakit->rows * rumahSakit->cols; i++) {
-        int dokterId = readInt(fileConfig);
+//     // Baris 3-8: ruangan
+//     for (int i = 0; i < rumahSakit->rows * rumahSakit->cols; i++) {
+//         int dokterId = readInt(fileConfig);
 
-        int row = i / rumahSakit->cols;
-        int col = i % rumahSakit->cols;
+//         int row = i / rumahSakit->cols;
+//         int col = i % rumahSakit->cols;
 
-        initQueue(&rumahSakit->data[row][col].antrian);
+//         initQueue(&rumahSakit->data[row][col].antrian);
 
-        if (dokterId == 0) {
-            strcpy(rumahSakit->data[row][col].nama_dokter, "-");
-            while (fgetc(fileConfig) != '\n'); // Skip to next line
-            continue;
-        }
+//         if (dokterId == 0) {
+//             strcpy(rumahSakit->data[row][col].nama_dokter, "-");
+//             while (fgetc(fileConfig) != '\n'); // Skip to next line
+//             continue;
+//         }
 
-        sprintf(rumahSakit->data[row][col].nama_dokter, "Dokter %d", dokterId);
+//         sprintf(rumahSakit->data[row][col].nama_dokter, "Dokter %d", dokterId);
 
-        int pasienId;
-        while ((pasienId = readInt(fileConfig)) != -1) {
-            enqueue(&rumahSakit->data[row][col].antrian, pasienId);
+//         int pasienId;
+//         while ((pasienId = readInt(fileConfig)) != -1) {
+//             enqueue(&rumahSakit->data[row][col].antrian, pasienId);
 
-            int c = fgetc(fileConfig);
-            if (c == '\n' || c == EOF) break;
-            else ungetc(c, fileConfig);  // Put back character to be read again
-        }
-    }
+//             int c = fgetc(fileConfig);
+//             if (c == '\n' || c == EOF) break;
+//             else ungetc(c, fileConfig);  // Put back character to be read again
+//         }
+//     }
 
-    // Baris 9: jumlah inventory
-    *jumlahInventory = readInt(fileConfig);
+//     // Baris 9: jumlah inventory
+//     *jumlahInventory = readInt(fileConfig);
 
-    // Baris 10+: daftar inventory
-    for (int i = 0; i < *jumlahInventory; i++) {
-        int pasienId = readInt(fileConfig);
-        daftarInventory[i].pasienId = pasienId;
-        daftarInventory[i].jumlahObat = 0;
+//     // Baris 10+: daftar inventory
+//     for (int i = 0; i < *jumlahInventory; i++) {
+//         int pasienId = readInt(fileConfig);
+//         daftarInventory[i].pasienId = pasienId;
+//         daftarInventory[i].jumlahObat = 0;
 
-        while (1) {
-            int obatId = readInt(fileConfig);
-            if (obatId == -1) break;
+//         while (1) {
+//             int obatId = readInt(fileConfig);
+//             if (obatId == -1) break;
 
-            daftarInventory[i].obat[daftarInventory[i].jumlahObat++] = obatId;
+//             daftarInventory[i].obat[daftarInventory[i].jumlahObat++] = obatId;
 
-            int c = fgetc(fileConfig);
-            if (c == '\n' || c == EOF) break;
-            else ungetc(c, fileConfig);  // Put back character to be read again
-        }
-    }
+//             int c = fgetc(fileConfig);
+//             if (c == '\n' || c == EOF) break;
+//             else ungetc(c, fileConfig);  // Put back character to be read again
+//         }
+//     }
 
-    fclose(fileConfig);
-    printf("Data konfigurasi berhasil dimuat.\n");
-}
+//     fclose(fileConfig);
+//     printf("Data konfigurasi berhasil dimuat.\n");
+// }
 
 void LOAD(UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList){
     loadDataUser("./file/user.csv", userList);
