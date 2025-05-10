@@ -7,6 +7,7 @@ void helpMenu(User current_user, boolean *isLogin) {
         printf("Kamu belum login sebagai role apapun. Silahkan login terlebih dahulu.\n");
         printf("\t1. LOGIN: Masuk ke dalam akun yang sudah terdaftar\n");
         printf("\t2. REGISTER: Membuat akun baru\n");
+        printf("\t3. LUPA_PASSWORD: Lupa password akun? Gunakan command ini\n");
     } else {
         if (current_user.role == 0 || current_user.role == 1) {
             printf("Halo %s %s. Kamu memanggil command HELP. Kamu pasti sedang kebingungan.\n", roleToStr(current_user.role), current_user.username);
@@ -44,6 +45,7 @@ void helpMenu(User current_user, boolean *isLogin) {
         }
     }
     printf("Footnote: \n");
-    printf("\t1. Untuk menggunakan aplikasi, silahkan masukkan nama fungsi yang terdaftar\n");
-    printf("\t2. Jangan lupa untuk memasukkan input yang valid\n\n");
+    printf("\t1. Untuk menggunakan aplikasi, silakan masukkan nama fungsi yang terdaftar\n");
+    printf("\t2. Jangan lupa untuk memasukkan input yang valid\n");
+    printf("\t3. Command HELP dapat kamu akses kapan saja!\n\n");
 }

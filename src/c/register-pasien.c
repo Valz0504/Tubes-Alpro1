@@ -23,7 +23,7 @@ void registerPasien(UserList *list, Set *set, boolean *isLogin) {
             
             printf("Pasien %s berhasil ditambahkan!\n\n", username);
         } else {
-            printf("Registrasi gagal! User dengan nama %s sudah terdaftar.\n\n", username);
+            printf("Registrasi gagal! Sudah ada User dengan nama %s.\n\n", username);
         }
     } else {
         printf("Anda sedang login! Logout terlebih dahulu!\n\n");

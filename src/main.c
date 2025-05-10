@@ -3,6 +3,7 @@
 #include "./header/user.h"
 
 int main(int argc, char* argv[]) {
+    system("clear");
 
     if (argv[1] == NULL) {
         printf("Tidak ada nama folder yang diberikan!\n");
@@ -25,11 +26,16 @@ int main(int argc, char* argv[]) {
     initSet(&nama_unik, 5);
 
     // LOAD DATA from file folder
-    LOAD(&dataBaseUser, &dataPenyakit, &dataObat, &dataObatPenyakit);
+    LOAD(&dataBaseUser, &dataPenyakit, &dataObat, &dataObatPenyakit, &nama_unik);
 
     // Inisialisasi state LOGIN
     User current_user;
     boolean isLogin = FALSE;
+
+
+    // Opening Program
+    printf("=== SELAMAT DATANG ===\n");
+    printf("Ketik command HELP untuk melihat apa saja yang dapat kamu lakukan sekarang!\n\n");
 
     // Program Utama
     boolean run_program = TRUE;
@@ -48,7 +54,6 @@ int main(int argc, char* argv[]) {
             system("clear");
             lupa_password(&dataBaseUser, &isLogin);
         } else if (strcmp(prompt, "LOGOUT") == 0) {
-            system("clear");
             logout(&current_user, &isLogin);
         } else if (strcmp(prompt, "HELP") == 0) {
             system("clear");

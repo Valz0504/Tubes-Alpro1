@@ -21,6 +21,11 @@ void assignDokter(Matrix *denah, UserList *list, User *current_user, boolean *is
                 return;
             }
 
+            if (dokter->role != ROLE_DOKTER) {
+                printf("%s bukan dokter!\n\n", dokter->username);
+                return;
+            }
+
             int row,col;
             if (getPosisiRuangan(denah, ruang, &row, &col)) {
                 boolean kosong = FALSE;
@@ -61,7 +66,9 @@ void tambahDokter(UserList *list, User *current_user, Set *set, boolean *isLogin
             scanf(" %[^\n]s", username);
             printf("Password: ");
             scanf(" %[^\n]s", password);
-    
+            
+            User *temp_user = findUser(list, username);
+
             toLower(username);
             if (isUsernameUnique(*set, username)) {
                 insertSet(set, username);
@@ -72,7 +79,13 @@ void tambahDokter(UserList *list, User *current_user, Set *set, boolean *isLogin
                 
                 printf("Dokter %s berhasil ditambahkan!\n\n", username);
             } else {
-                printf("Sudah ada Dokter bernama %s!\n\n", username);
+                if (temp_user != NULL) {
+                    if (temp_user->role == ROLE_DOKTER) {
+                        printf("Sudah ada Dokter bernama %s!\n\n", username);
+                    } else {
+                        printf("Sudah ada User bernama %s!\n\n", username);
+                    }
+                }
             }
         } else {
             printf("Anda bukan manager! Tidak bisa tambah dokter!\n\n");

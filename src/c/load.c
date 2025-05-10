@@ -9,7 +9,7 @@
 #define MAX_RELASI 1000
 
 
-void loadDataUser(const char *filename, UserList *userList) {
+void loadDataUser(const char *filename, UserList *userList, Set *set) {
     FILE *fileUser = fopen(filename, "r");
     if (fileUser == NULL) {
         perror("Gagal membuka file User!\n");
@@ -36,7 +36,10 @@ void loadDataUser(const char *filename, UserList *userList) {
 
                 switch (field) {
                     case 0: u.id = atoi(buffer); break;
-                    case 1: strncpy(u.username, buffer, sizeof(u.username)); break;
+                    case 1: 
+                        strncpy(u.username, buffer, sizeof(u.username)); 
+                        insertSet(set, buffer);
+                        break;
                     case 2: strncpy(u.password, buffer, sizeof(u.password)); break;
                     case 3: 
                         if (strcmp(buffer, "ROLE_PASIEN") == 0) {
@@ -319,8 +322,8 @@ void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasiList) {
 //     printf("Data konfigurasi berhasil dimuat.\n");
 // }
 
-void LOAD(UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList){
-    loadDataUser("./file/user.csv", userList);
+void LOAD(UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList, Set *nama_unik){
+    loadDataUser("./file/user.csv", userList, nama_unik);
     loadDataPenyakit("./file/penyakit.csv", penyakitList);
     loadDataObat("./file/obat.csv", obatList);
     loadDataObatPenyakit("./file/obat_penyakit.csv", relasiList);

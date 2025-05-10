@@ -70,11 +70,11 @@ void minumPenawar(); // pasien
 void bolehPulangGaa(); // pasien
 void SAVE(); // general
 void EXIT(User *current_user, UserList *list, boolean *run_program); // general
-void LOAD(UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList);
+void LOAD(UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList, Set *nama_unik);
 
 
 /* LOAD */
-void loadDataUser(const char *filename, UserList *list);
+void loadDataUser(const char *filename, UserList *list, Set *nama_unik);
 void loadDataPenyakit(const char *filename, PenyakitList *list);
 void loadDataObat(const char *filename, ObatList *obatList);
 void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasi);
