@@ -28,6 +28,13 @@ void insertToMap(char key[]) {
 }
 
 char* RunLengthEncoding(char username[]) {
+    // reset keys values
+    size = 0;
+    for (int i = 0; i < MAX_SIZE; i++) {
+        keys[i][0] = '\0';
+        values[i] = 0;
+    }
+
     /* Generate RLE dari username */
     for (int i = 0; i < strlen(username); i++) {
         char key[2] = {username[i], '\0'};
