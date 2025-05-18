@@ -93,3 +93,16 @@ void toLower(char *str) {
         }
     }
 }
+
+void insertLast(Inventory *inventory, int id) {
+    inventory->obat[inventory->jumlahObat] = id;
+    inventory->jumlahObat += 1;
+}
+
+void deleteAt(Inventory *inventory, int *id, int idx) {
+    *id = inventory->obat[idx];
+    for (int i = idx; i < inventory->jumlahObat -1; i++) {
+        inventory->obat[i] = inventory->obat[i+1];
+    }
+    inventory->jumlahObat -= 1;
+}

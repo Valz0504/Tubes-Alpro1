@@ -10,9 +10,9 @@ void assignDokter(Matrix *denah, UserList *list, User *current_user, boolean *is
     
             char nama_dokter[100], ruang[100];    
             printf("Username: ");
-            scanf(" %[^\n]s", nama_dokter);
+            scanf(" %[^\n]", nama_dokter);
             printf("Ruangan: ");
-            scanf(" %[^\n]s", ruang);
+            scanf(" %[^\n]", ruang);
             
             // cek apakah nama_dokter nya ada 
             User *dokter = findUser(list, nama_dokter);
@@ -63,9 +63,9 @@ void tambahDokter(UserList *list, User *current_user, Set *set, boolean *isLogin
             char username[100], password[100];
             
             printf("Username: ");
-            scanf(" %[^\n]s", username);
+            scanf(" %[^\n]", username);
             printf("Password: ");
-            scanf(" %[^\n]s", password);
+            scanf(" %[^\n]", password);
             
             User *temp_user = findUser(list, username);
 

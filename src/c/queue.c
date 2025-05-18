@@ -1,37 +1,40 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "../header/queue.h"
 
 void initQueue(Queue *q) {
-    q->front = -1;
-    q->rear = -1;
+    q->head = NULL;
+    q->tail = NULL;
 }
 
 // masih bisa diubah
 void enqueue(Queue *q, int value) {
-    if ((q->rear + 1) % MAX_QUEUE == q->front) {
-        printf("Queue penuh!\n");
-        return;
-    }
+    Node *newNode = (Node*) malloc(sizeof(Node));
+    newNode->info = value;
+    newNode->next = NULL;
 
-    if (q->front == -1) {
-        q->front = 0;
+    if (q->head == NULL) {
+        q->head = newNode;
+        q->tail = newNode;
+    } else {
+        q->tail->next = newNode;
+        q->tail = newNode;
     }
-
-    q->rear = (q->rear + 1) % MAX_QUEUE;
-    q->data[q->rear] = value;
 }
 
 void dequeue(Queue *q, int *value) {
-    if (q->front == -1) {
-        printf("Queue kosong!\n");
+    if (q->head == NULL) {
+        printf("Antrian kosong!\n\n");
         return;
     }
 
-    *value = q->data[q->front];
+    Node *temp = q->head;
+    *value = temp->info;
 
-    if (q->front == q->rear) {
-        q->front = q->rear = -1;
-    } else {
-        q->front = (q->front + 1) % MAX_QUEUE;
+    q->head = q->head->next;
+    if (q->head == NULL) {
+        q->tail = NULL;
     }
+
+    free(temp);
 }

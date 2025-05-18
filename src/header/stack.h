@@ -10,7 +10,7 @@ typedef struct {
 
 void initStack(Stack *s);
 void push(Stack *s, int value);
-void pop(Stack *s, int value);
+void pop(Stack *s, int *value);
 
 #endif
 

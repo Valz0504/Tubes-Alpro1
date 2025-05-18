@@ -9,15 +9,16 @@ void registerPasien(UserList *list, Set *set, boolean *isLogin) {
         char username[100], password[100];
         
         printf("Username: ");
-        scanf(" %[^\n]s", username);
+        scanf(" %[^\n]", username);
         printf("Password: ");
-        scanf(" %[^\n]s", password);
+        scanf(" %[^\n]", password);
 
         toLower(username);
         if (isUsernameUnique(*set, username)) {
             insertSet(set, username);
 
             User new_user;
+            initStack(&new_user.inventory.urutanObat);
             CreateUser(list, &new_user, username, password, 0);
             AddUser(list, new_user);
             

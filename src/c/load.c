@@ -101,6 +101,7 @@ void loadDataPenyakit(const char *filename, PenyakitList *listPenyakit) {
     listPenyakit->data = malloc(listPenyakit->capacity * sizeof(Penyakit));
 
     char line[1024];
+    fgets(line, sizeof(line), filePenyakit); 
     while (fgets(line, sizeof(line), filePenyakit)) {
         if (listPenyakit->Neff >= listPenyakit->capacity) {
             listPenyakit->capacity *= 2;
@@ -188,7 +189,16 @@ void loadDataObat(const char *filename, ObatList *listObat){
         while (line[i] != '\0' && line[i] != '\n') {
             if (line[i] == ';') {
                 buffer[j] = '\0';
-                o.id = atoi(buffer);  // field pertama: id
+                // o.id = atoi(buffer);  // field pertama: id
+                // field++;
+                // j = 0;
+
+                if (field == 0) {
+                    o.id = atoi(buffer);
+                } else if (field == 1) {
+                    strncpy(o.nama, buffer, sizeof(o.nama));
+                }
+
                 field++;
                 j = 0;
             } else {

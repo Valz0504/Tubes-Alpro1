@@ -1,12 +1,14 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#define MAX_QUEUE 10
+typedef struct Node{
+    int info;
+    struct Node* next;
+} Node;
 
 typedef struct {
-    int data[MAX_QUEUE];
-    int front;
-    int rear;
+    Node *head;
+    Node *tail;
 } Queue;
 
 void initQueue(Queue *q);

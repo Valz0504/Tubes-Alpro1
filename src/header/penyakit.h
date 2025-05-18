@@ -2,6 +2,7 @@
 #ifndef PENYAKIT_H
 #define PENYAKIT_H
 
+#include "stack.h"
 #include "boolean.h"
 
 typedef struct {
@@ -65,6 +66,10 @@ typedef struct {
     int pasienId;
     int obat[100];
     int jumlahObat;
+    Stack urutanObat; // ini keknya perlu diinisialisasi di load sama register kalo pasien doang
 } Inventory;
+
+
+char* getObatName(ObatList *dataPenyakit, int id);
 
 #endif
