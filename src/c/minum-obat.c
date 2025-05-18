@@ -12,7 +12,8 @@ void minumObat(User *current_user, ObatList *dataObat, boolean *isLogin) {
         printf("==== DAFTAR OBAT ====\n");
         
         if (current_user->inventory.jumlahObat == 0) {
-            printf("Anda tidak memiliki obat apapun di inventory!\n");
+            printf("Anda tidak memiliki obat apapun di inventory!\n\n");
+            return;
         }
 
         for (int i = 0; i < current_user->inventory.jumlahObat; i++) {
