@@ -25,5 +25,6 @@ void CreateMatrix(int rows, int cols, Matrix *M);
 boolean isRuanganKosong(Ruangan r);
 boolean getPosisiRuangan(Matrix *denah, char ruang[], int *row, int *col);
 boolean isDokterSudahAssign(Matrix *denah, char nama_dokter[]);
+void getRuanganDokter(Matrix *denah, char nama_dokter[], char *ruangan);
 
 #endif
