@@ -55,7 +55,7 @@ void logout(User *current_user, boolean *isLogin); // general
 void registerPasien(UserList *list, Set *set, boolean *isLogin); // pasien
 void helpMenu(User current_user, boolean *isLogin); // general
 void denahRumahSakit(Matrix M); // general
-void lihatRuangan(); // general
+void lihatRuangan(Matrix denah, UserList dataBaseUser, User current_user, boolean isLogin); // general
 void lihatAntrian(); // manager
 void cariUser(); // manager
 void lihatUser(); // manager
@@ -98,6 +98,7 @@ void deleteAt(Inventory *inventory, int *id, int idx);
 /* --- Fungsi/Prosedur Manajemen User --- */
 void CreateUser(UserList *l, User *u, char name[], char pass[], Role role);  
 User* findUser(UserList *l, char username[]);
+User* findUserByID(UserList *l, int id);
 boolean isUsernameExist(UserList l, char username[]);
 void AddUser(UserList *l, User u);
 char* roleToStr(Role role); 

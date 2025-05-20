@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "../header/boolean.h"
 #include "../header/queue.h"
 
 void initQueue(Queue *q) {
@@ -36,4 +37,8 @@ void dequeue(Queue *q, int *value) {
     }
 
     free(temp);
+}
+
+boolean isEmpty(Queue q) {
+    return (q.head == NULL && q.tail == NULL);
 }

@@ -55,6 +55,8 @@ int main(int argc, char* argv[]) {
             helpMenu(current_user, &isLogin);
         } else if (strcmp(prompt, "LIHAT_DENAH") == 0) {
             denahRumahSakit(denah_rs);
+        } else if (strcmp(prompt, "LIHAT_RUANGAN") == 0){
+            lihatRuangan(denah_rs, dataBaseUser, current_user, isLogin);
         } else if (strcmp(prompt, "EXIT") == 0) {
             EXIT(&current_user, &dataBaseUser, &run_program);
         } else if (strcmp(prompt, "TAMBAH_DOKTER") == 0) {

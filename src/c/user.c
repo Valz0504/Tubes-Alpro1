@@ -59,6 +59,20 @@ User* findUser(UserList *l, char username[]) {
     }
     return NULL;
 }
+User* findUserByID(UserList *l, int id) {
+    int left = 0, right = l->Neff;
+    while (left <= right) {
+        int mid = (left + right) / 2;
+        if (id > l->data[mid].id) {
+            left = mid + 1;
+        } else if (id < l->data[mid].id) {
+            right = mid - 1;
+        } else {
+            return &l->data[mid];
+        }
+    }
+    return NULL;
+}
 
 boolean isUsernameExist(UserList l, char username[]) {
     for (int i = 0; i < l.Neff; i++) {
