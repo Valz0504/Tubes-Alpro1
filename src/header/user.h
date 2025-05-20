@@ -72,8 +72,8 @@ void antrianSaya(); // pasien
 void minumObat(User *current_user, ObatList *dataObat, boolean *isLogin); // pasien
 void minumPenawar(); // pasien
 void bolehPulangGaa(); // pasien
-void SAVE(); // general
-void EXIT(User *current_user, UserList *list, boolean *run_program); // general
+void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitList *obat_penyakit, Matrix *Hospital); // general
+void EXIT(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitList *obat_penyakit, Matrix *Hospital, boolean *exit);
 void LOAD(UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList, Set *nama_unik);
 
 

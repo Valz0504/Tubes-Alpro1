@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
         } else if (strcmp(prompt, "LIHAT_DENAH") == 0) {
             denahRumahSakit(denah_rs);
         } else if (strcmp(prompt, "EXIT") == 0) {
-            EXIT(&current_user, &dataBaseUser, &run_program);
+            EXIT(&dataBaseUser, &dataObat, &dataPenyakit, &dataObatPenyakit, &denah_rs, &run_program);
         } else if (strcmp(prompt, "TAMBAH_DOKTER") == 0) {
             tambahDokter(&dataBaseUser, &current_user, &nama_unik, &isLogin);
         } else if (strcmp(prompt, "ASSIGN_DOKTER") == 0) {
