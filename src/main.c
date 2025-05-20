@@ -5,7 +5,7 @@
 int main(int argc, char* argv[]) {
     system("clear");
 
-    if (argv[1] == NULL) {
+    if (argc < 2) { 
         printf("Tidak ada nama folder yang diberikan!\n");
         printf("Usage: ./main <<nama_folder>>\n");
         return 0;
@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
     initSet(&nama_unik, 5);
 
     // LOAD DATA from file folder
-    LOAD(&dataBaseUser, &dataPenyakit, &dataObat, &dataObatPenyakit, &nama_unik);
+    LOAD(argv[1], &dataBaseUser, &dataPenyakit, &dataObat, &dataObatPenyakit, &nama_unik, &denah_rs);
 
     // Inisialisasi state LOGIN
     User current_user;

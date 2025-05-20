@@ -61,8 +61,8 @@ void cariUser(); // manager
 void lihatUser(); // manager
 void assignDokter(Matrix *denah, UserList *list, User *current_user, boolean *isLogin); // manager
 void tambahDokter(UserList *list, User *current_user, Set *set, boolean *isLogin); // manager
-void lihatUser(); // manager
-void cariUser(); // manager
+// void lihatUser(); // manager
+// void cariUser(); // manager
 void diagnosis(User *current_user, PenyakitList *penyakit, boolean *isLogin); // dokter
 void ngobatin(User *current_user, PenyakitList *penyakitList, Obat_PenyakitList *obatPenyakitList, boolean *isLogin); // dokter
 void daftarCheckUp(); // pasien
@@ -72,15 +72,20 @@ void minumPenawar(); // pasien
 void bolehPulangGaa(); // pasien
 void SAVE(); // general
 void EXIT(User *current_user, UserList *list, boolean *run_program); // general
-void LOAD(UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList, Set *nama_unik);
+void LOAD(const char *folderName, UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList, Set *nama_unik, Matrix *denah);
 
 
 /* LOAD */
-void loadDataUser(const char *filename, UserList *list, Set *nama_unik);
-void loadDataPenyakit(const char *filename, PenyakitList *list);
+void loadDataUser(const char *filename, UserList *userList, Set *nama_unik);
+void loadDataPenyakit(const char *filename, PenyakitList *penyakitList);
 void loadDataObat(const char *filename, ObatList *obatList);
-void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasi);
 void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasiList);
+void loadConfig(const char *filename, Matrix *denah, UserList *userList);
+// void loadDataUser(const char *filename, UserList *list, Set *nama_unik);
+// void loadDataPenyakit(const char *filename, PenyakitList *list);
+// void loadDataObat(const char *filename, ObatList *obatList);
+// void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasi);
+// void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasiList);
 
 
 /* List Dinamis untuk UserList */
