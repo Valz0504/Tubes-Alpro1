@@ -65,6 +65,8 @@ int main(int argc, char* argv[]) {
             minumObat(&current_user, &dataObat, &isLogin);
         } else if (strcmp(prompt, "MINUM_PENAWAR") == 0) {
             minumPenawar(&current_user, &isLogin);
+        } else if (strcmp(prompt, "DIAGNOSIS") == 0) {
+            diagnosis (&current_user, &dataBaseUser, &dataPenyakit, &isLogin, &denah_rs);
         }
         else {
             printf("Nama fungsi tidak terdaftar atau kesalahan pengetikan command!\n\n");

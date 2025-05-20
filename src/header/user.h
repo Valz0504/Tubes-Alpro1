@@ -63,8 +63,8 @@ void assignDokter(Matrix *denah, UserList *list, User *current_user, boolean *is
 void tambahDokter(UserList *list, User *current_user, Set *set, boolean *isLogin); // manager
 void lihatUser(); // manager
 void cariUser(); // manager
-void diagnosis(User *current_user, PenyakitList *penyakit, boolean *isLogin); // dokter
-void ngobatin(User *current_user, PenyakitList *penyakitList, Obat_PenyakitList *obatPenyakitList, boolean *isLogin); // dokter
+void diagnosis(User *current_user, UserList *listUser, PenyakitList *listPenyakit, boolean *isLogin, Matrix *denah); // dokter
+// void ngobatin(User *current_user, PenyakitList *penyakitList, Obat_PenyakitList *obatPenyakitList, boolean *isLogin); // dokter
 void daftarCheckUp(); // pasien
 void antrianSaya(); // pasien
 void minumObat(User *current_user, ObatList *dataObat, boolean *isLogin); // pasien
