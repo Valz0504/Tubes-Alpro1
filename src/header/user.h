@@ -36,6 +36,7 @@ typedef struct
     int kadar_kolesterol_Ldl;
     int trombosit;    
     Inventory inventory;
+    Stack perut;
 } User;
 
 

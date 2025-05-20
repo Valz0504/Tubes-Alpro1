@@ -83,7 +83,7 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
             userList->data = (User *)realloc(userList->data, userList->capacity * sizeof(User));
         }
         
-        initStack(&u.inventory.urutanObat);
+        initStack(&u.perut);
         userList->data[userList->Neff++] = u;
     }
 

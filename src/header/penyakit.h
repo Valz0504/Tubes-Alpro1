@@ -66,7 +66,6 @@ typedef struct {
     int pasienId;
     int obat[100];
     int jumlahObat;
-    Stack urutanObat; // ini keknya perlu diinisialisasi di load sama register kalo pasien doang
 } Inventory;
 
 

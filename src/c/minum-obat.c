@@ -36,7 +36,7 @@ void minumObat(User *current_user, ObatList *dataObat, boolean *isLogin) {
         deleteAt(&current_user->inventory, &obat_id, choice - 1);
 
         // masukin ke stack (ntar berhubungan sama minum penawar)
-        push(&current_user->inventory.urutanObat, obat_id);
+        push(&current_user->perut, obat_id);
     } else {
         printf("Anda bukan pasien! Tidak bisa minum obat!\n\n");
     }

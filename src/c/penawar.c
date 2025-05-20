@@ -9,7 +9,7 @@ void minumPenawar(User *current_user, boolean *isLogin) {
 
     if (current_user->role == ROLE_PASIEN) {
         char answer[100];
-        if (current_user->inventory.urutanObat.top == -1) {
+        if (current_user->perut.top == -1) {
             printf("Anda belum minum obat apapun!\n\n");
             return;
         }
@@ -29,7 +29,7 @@ void minumPenawar(User *current_user, boolean *isLogin) {
 
         if (strcmp(answer, "y") == 0) {
             int value;
-            pop(&current_user->inventory.urutanObat, &value);
+            pop(&current_user->perut, &value);
             insertLast(&current_user->inventory, value);
         } else {
             printf("Tidak jadi minum penawar...\n\n");
