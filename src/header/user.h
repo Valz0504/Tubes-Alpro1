@@ -61,7 +61,6 @@ void cariUser(); // manager
 void lihatUser(); // manager
 void assignDokter(Matrix *denah, UserList *list, User *current_user, boolean *isLogin); // manager
 void tambahDokter(UserList *list, User *current_user, Set *set, boolean *isLogin); // manager
-void lihatUser(); // manager
 void cariUser(UserList *dataBaseUser, User *current_user, boolean *isLogin); // manager
 void cariPasien(UserList *dataBaseUser, User *current_user, boolean *isLogin); // manager
 void cariDokter(UserList *dataBaseUser, User *current_user, boolean *isLogin); // manager

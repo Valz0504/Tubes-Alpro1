@@ -33,7 +33,6 @@ int file_exist(const char *folderPath) {//cari keberadaan file
 }
 int folder(const char *folderName){//membuat folder
     if (mkdir(folderName, 0777) == 0) {
-        printf("Folder '%s' berhasil dibuat.\n", folderName);
         return 0;
     } 
     else {
@@ -155,8 +154,9 @@ void FileConfig(const char *filePath, Matrix *Hospital, UserList *user1){ //BELU
                 User *I = findUser(user1, Hospital->data[i][j].nama_dokter);
                 if(I != NULL){
                     fprintf(fp, "%d ", I->id);
+                    terisi++;
                 }
-                terisi++;
+                
             }
             else{
                 Node *A = Hospital->data[i][j].antrian.head;
@@ -166,8 +166,9 @@ void FileConfig(const char *filePath, Matrix *Hospital, UserList *user1){ //BELU
                         A = A->next;
 
                     }
+                    terisi++;
                 }
-                terisi++;
+                
             }
             
         }
@@ -220,7 +221,7 @@ void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitLis
     snprintf(pathObatPenyakit, sizeof(pathObatPenyakit), "%s/%s/obat_penyakit.csv", base, nama_folder);
     snprintf(pathConfig, sizeof(pathConfig), "%s/%s/config.txt", base, nama_folder);
     if(folder_exist(FullFolder) == 1 && file_exist(FullFolder) == 1){//butuh FileObat, dll tidak?
-        printf("Saving...\n");
+        printf("Saving...\n\n");
         printf("Membuat folder data...\n");
         //folder(nama_folder);
         printf("Membuat folder data/%s\n", nama_folder);
@@ -229,7 +230,7 @@ void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitLis
         printf("Berhasil menyimpan data di folder data/%s!\n", nama_folder);
     }
     else if (folder_exist(FullFolder) == 1 && file_exist(FullFolder) == 0){
-        printf("Saving...\n");
+        printf("Saving...\n\n");
         FileUser(pathUser, user1);
         FileObat(pathObat, Obat);
         FilePenyakit(pathPenyakit, sakit);
@@ -238,7 +239,7 @@ void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitLis
         printf("Berhasil menyimpan data di folder data/%s!\n", nama_folder);
     }
     else{
-        printf("Saving...\n");
+        printf("Saving...\n\n");
         folder(FullFolder);
         printf("Membuat folder data/%s\n", nama_folder);
         FileUser(pathUser, user1);

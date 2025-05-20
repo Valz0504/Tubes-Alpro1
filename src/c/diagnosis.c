@@ -2,17 +2,55 @@
 #include <string.h>
 #include "../header/user.h"
 
-void diagnosis(User *current_user, PenyakitList *listPenyakit, boolean *isLogin) {
+void diagnosis(User *current_user, UserList *listUser, PenyakitList *listPenyakit, boolean *isLogin, Matrix *denah) {
     if (!(*isLogin)) {
         printf("Login sebagai Dokter terlebih dahulu!\n\n");
         return;
     }
 
+    int row, col;
+    boolean foundRuangan = FALSE;
     if (current_user->role == ROLE_DOKTER) {
+        for (int i = 0; i < denah->rows; i++){
+            for (int j = 0; j < denah->cols; j++){
+                if (strcmp(current_user->username, denah->data[i][j].nama_dokter)){
+                    row =  i;
+                    col = j;
+                    foundRuangan = TRUE;
+                }
+            }
+        }
+
+        if (!foundRuangan) {
+        printf("Dokter %s belum ditugaskan ke ruangan manapun.\n\n", current_user->username);
+        return;
+        }
+
+        Queue *antrian = &denah->data[row][col].antrian;
+
+        
+        if (antrian->head == NULL) {
+            printf("Tidak ada pasien dalam antrian untuk diperiksa!\n\n");
+            return;
+        }
+
+        int idPasien = antrian->head->info;
+
+        // Cari User dengan ID sesuai
+        User *pasien = NULL;
+        for (int i = 0; i < listUser->Neff; i++) {
+            if (listUser->data[i].id == idPasien) {
+                pasien = &listUser->data[i];
+                break;
+            }
+        }
+
+
         printf("=== DIAGNOSIS PASIEN ===\n");
 
-        if(current_user == NULL){
-            printf("Tidak ada pasien untuk diperiksa!\n");
+        if (pasien == NULL) {
+            printf("Data pasien tidak ditemukan.\n\n");
+            return;
         }
         else{
             boolean found = FALSE;
