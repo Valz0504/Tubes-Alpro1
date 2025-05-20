@@ -66,7 +66,7 @@ int main(int argc, char* argv[]) {
         } else if (strcmp(prompt, "MINUM_PENAWAR") == 0) {
             minumPenawar(&current_user, &isLogin);
         } else if (strcmp(prompt, "DIAGNOSIS") == 0) {
-            diagnosis (&current_user, &dataBaseUser, &dataPenyakit, &isLogin, &denah_rs);
+            diagnosis(&current_user, &dataBaseUser, &dataPenyakit, &isLogin, &denah_rs);
         } else if (strcmp(prompt, "LIHAT_SEMUA_ANTRIAN") == 0) {
             lihatAntrian(&dataBaseUser, &current_user, &denah_rs, &isLogin);
         } else if (strcmp(prompt, "CARI_USER") == 0) {

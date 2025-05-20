@@ -64,7 +64,7 @@ void tambahDokter(UserList *list, User *current_user, Set *set, boolean *isLogin
 void cariUser(UserList *dataBaseUser, User *current_user, boolean *isLogin); // manager
 void cariPasien(UserList *dataBaseUser, User *current_user, boolean *isLogin); // manager
 void cariDokter(UserList *dataBaseUser, User *current_user, boolean *isLogin); // manager
-void diagnosis(User *current_user, PenyakitList *penyakit, boolean *isLogin); // dokter
+void diagnosis(User *current_user, UserList *dataBaseUser, PenyakitList *penyakit, boolean *isLogin, Matrix *denah); // dokter
 void ngobatin(User *current_user, PenyakitList *penyakitList, Obat_PenyakitList *obatPenyakitList, boolean *isLogin); // dokter
 void daftarCheckUp(); // pasien
 void antrianSaya(); // pasien
