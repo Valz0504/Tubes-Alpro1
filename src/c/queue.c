@@ -7,7 +7,6 @@ void initQueue(Queue *q) {
     q->tail = NULL;
 }
 
-// masih bisa diubah
 void enqueue(Queue *q, int value) {
     Node *newNode = (Node*) malloc(sizeof(Node));
     newNode->info = value;
