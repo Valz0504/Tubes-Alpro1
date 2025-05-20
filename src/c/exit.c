@@ -5,7 +5,7 @@ void EXIT(User *current_user, UserList *list, boolean *run_program){
     char input[2];
     do {
         printf("Apakah Anda mau melakukan penyimpanan file yang sudah diubah? (y/n) ");
-        scanf(" %[^\n]s", input);
+        scanf(" %[^\n]", input);
         toLower(input);
     } while (strcmp(input, "y") != 0 && strcmp(input, "n") != 0);
     // if(strcmp(input, "y") == 0){

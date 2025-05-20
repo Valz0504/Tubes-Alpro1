@@ -71,9 +71,9 @@ void lupa_password(UserList *list, boolean *isLogin) {
         char username[100];
         char kode_unik[100];
         printf("Username: ");
-        scanf(" %[^\n]s", username);
+        scanf(" %[^\n]", username);
         printf("Kode Unik: ");
-        scanf(" %[^\n]s", kode_unik);
+        scanf(" %[^\n]", kode_unik);
     
         if (isUsernameExist(*list, username)) {
             User *user = findUser(list, username);

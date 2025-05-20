@@ -11,9 +11,9 @@ void login(UserList *list, User *current_user, boolean *isLogin) {
         char username[100], password[100];
         
         printf("Username: ");
-        scanf(" %[^\n]s", username);
+        scanf(" %[^\n]", username);
         printf("Password: ");
-        scanf(" %[^\n]s", password);
+        scanf(" %[^\n]", password);
     
         User *user = findUser(list, username);   // nampung user yang sudah dicari
         if (user == NULL) {
