@@ -35,6 +35,8 @@ typedef struct
     int kadar_kolesterol;
     int kadar_kolesterol_Ldl;
     int trombosit;    
+    Inventory inventory;
+    Stack perut;
 } User;
 
 
@@ -61,15 +63,15 @@ void assignDokter(Matrix *denah, UserList *list, User *current_user, boolean *is
 void tambahDokter(UserList *list, User *current_user, Set *set, boolean *isLogin); // manager
 void lihatUser(); // manager
 void cariUser(); // manager
-void diagnosis(User *u, PenyakitList *penyakit); // dokter
-void ngobatin(); // dokter
+void diagnosis(User *current_user, PenyakitList *penyakit, boolean *isLogin); // dokter
+void ngobatin(User *current_user, PenyakitList *penyakitList, Obat_PenyakitList *obatPenyakitList, boolean *isLogin); // dokter
 void daftarCheckUp(); // pasien
 void antrianSaya(); // pasien
-void minumObat(); // pasien
+void minumObat(User *current_user, ObatList *dataObat, boolean *isLogin); // pasien
 void minumPenawar(); // pasien
 void bolehPulangGaa(); // pasien
-void SAVE(); // general
-void EXIT(User *current_user, UserList *list, boolean *run_program); // general
+void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitList *obat_penyakit, Matrix *Hospital); // general
+void EXIT(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitList *obat_penyakit, Matrix *Hospital, boolean *exit);
 void LOAD(UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList, Set *nama_unik);
 
 
@@ -81,12 +83,16 @@ void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasi);
 void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasiList);
 
 
-
-/* ADT List Dinamis */
+/* List Dinamis untuk UserList */
 void CreateListDin(UserList *l, int capacity); 
 void dealocateListDin(UserList *l); 
 void expandList(UserList *l, int num); 
 void copyList(UserList lIn, UserList *lOut);
+
+
+/* Prosedur untuk manajemen Inventory User */
+void insertLast(Inventory *inventory, int id);
+void deleteAt(Inventory *inventory, int *id, int idx);
 
 
 /* --- Fungsi/Prosedur Manajemen User --- */

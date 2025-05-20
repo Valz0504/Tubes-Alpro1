@@ -31,8 +31,7 @@ int main(int argc, char* argv[]) {
     // Inisialisasi state LOGIN
     User current_user;
     boolean isLogin = FALSE;
-
-
+    
     // Opening Program
     printf("=== SELAMAT DATANG ===\n");
     printf("Ketik command HELP untuk melihat apa saja yang dapat kamu lakukan sekarang!\n\n");
@@ -45,31 +44,27 @@ int main(int argc, char* argv[]) {
         scanf("%s", prompt);
     
         if (strcmp(prompt, "LOGIN") == 0) {
-            system("clear");
             login(&dataBaseUser, &current_user, &isLogin);
         } else if (strcmp(prompt, "REGISTER") == 0) {
-            system("clear");
             registerPasien(&dataBaseUser, &nama_unik, &isLogin);
         } else if (strcmp(prompt, "LUPA_PASSWORD") == 0) {
-            system("clear");
             lupa_password(&dataBaseUser, &isLogin);
         } else if (strcmp(prompt, "LOGOUT") == 0) {
             logout(&current_user, &isLogin);
         } else if (strcmp(prompt, "HELP") == 0) {
-            system("clear");
             helpMenu(current_user, &isLogin);
         } else if (strcmp(prompt, "LIHAT_DENAH") == 0) {
-            system("clear");
             denahRumahSakit(denah_rs);
         } else if (strcmp(prompt, "EXIT") == 0) {
-            system("clear");
-            EXIT(&current_user, &dataBaseUser, &run_program);
+            EXIT(&dataBaseUser, &dataObat, &dataPenyakit, &dataObatPenyakit, &denah_rs, &run_program);
         } else if (strcmp(prompt, "TAMBAH_DOKTER") == 0) {
-            system("clear");
             tambahDokter(&dataBaseUser, &current_user, &nama_unik, &isLogin);
         } else if (strcmp(prompt, "ASSIGN_DOKTER") == 0) {
-            system("clear");
             assignDokter(&denah_rs, &dataBaseUser, &current_user, &isLogin);
+        } else if (strcmp(prompt, "MINUM_OBAT") == 0) {
+            minumObat(&current_user, &dataObat, &isLogin);
+        } else if (strcmp(prompt, "MINUM_PENAWAR") == 0) {
+            minumPenawar(&current_user, &isLogin);
         }
         else {
             printf("Nama fungsi tidak terdaftar atau kesalahan pengetikan command!\n\n");

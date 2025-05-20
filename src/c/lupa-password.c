@@ -28,6 +28,13 @@ void insertToMap(char key[]) {
 }
 
 char* RunLengthEncoding(char username[]) {
+    // reset keys values
+    size = 0;
+    for (int i = 0; i < MAX_SIZE; i++) {
+        keys[i][0] = '\0';
+        values[i] = 0;
+    }
+
     /* Generate RLE dari username */
     for (int i = 0; i < strlen(username); i++) {
         char key[2] = {username[i], '\0'};
@@ -64,9 +71,9 @@ void lupa_password(UserList *list, boolean *isLogin) {
         char username[100];
         char kode_unik[100];
         printf("Username: ");
-        scanf(" %[^\n]s", username);
+        scanf(" %[^\n]", username);
         printf("Kode Unik: ");
-        scanf(" %[^\n]s", kode_unik);
+        scanf(" %[^\n]", kode_unik);
     
         if (isUsernameExist(*list, username)) {
             User *user = findUser(list, username);

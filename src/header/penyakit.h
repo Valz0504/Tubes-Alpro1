@@ -2,6 +2,7 @@
 #ifndef PENYAKIT_H
 #define PENYAKIT_H
 
+#include "stack.h"
 #include "boolean.h"
 
 typedef struct {
@@ -66,5 +67,8 @@ typedef struct {
     int obat[100];
     int jumlahObat;
 } Inventory;
+
+
+char* getObatName(ObatList *dataPenyakit, int id);
 
 #endif
