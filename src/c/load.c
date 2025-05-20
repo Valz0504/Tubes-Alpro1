@@ -19,7 +19,7 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
     FILE *fileUser = fopen(filename, "r");
     if (fileUser == NULL) {
         perror("Gagal membuka file User!\n");
-        return;
+        exit(1);
     }
 
     userList->data = (User *)malloc(initialCap * sizeof(User));
@@ -58,6 +58,7 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
                             u.role = ROLE_MANAGER;
                             break;
                         }
+                        break;
                     case 4: strncpy(u.riwayat_penyakit, buffer, sizeof(u.riwayat_penyakit)); break;
                     case 5: u.suhu_tubuh = atof(buffer); break;
                     case 6: u.tekanan_darah_sistolik = atoi(buffer); break;
@@ -350,93 +351,27 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList){
     // Untuk setiap pasien inventory, baca id pasien dan daftar obat
     // (kalau mau disimpan ke struktur data pasien, di luar scope prosedur ini)
     for (int i = 0; i < jumlahPasienInventory; i++) {
-    char line[256];
-    if (fgets(line, sizeof(line), fileConfig) == NULL) break;
-    line[strcspn(line, "\r\n")] = 0;
+        char line[256];
+        if (fgets(line, sizeof(line), fileConfig) == NULL) break;
+        line[strcspn(line, "\r\n")] = 0;
 
-    char *token = strtok(line, " ");
-    if (token == NULL) continue;
-    int pasienId = atoi(token);
+        char *token = strtok(line, " ");
+        if (token == NULL) continue;
+        int pasienId = atoi(token);
 
-    // Cari User sesuai pasienId
-    User *user = findUserById(userList, pasienId);
-    if (user == NULL) continue; // pasien tidak ditemukan, skip
+        // Cari User sesuai pasienId
+        User *user = findUserById(userList, pasienId);
+        if (user == NULL) continue; // pasien tidak ditemukan, skip
 
-    user->inventory.jumlahObat = 0;
-    while ((token = strtok(NULL, " ")) != NULL) {
-        int idObat = atoi(token);
-        user->inventory.obat[user->inventory.jumlahObat++] = idObat;
+        user->inventory.jumlahObat = 0;
+        while ((token = strtok(NULL, " ")) != NULL) {
+            int idObat = atoi(token);
+            user->inventory.obat[user->inventory.jumlahObat++] = idObat;
+        }
     }
-}
 
     fclose(fileConfig);
 }
-// void loadDataConfig(const char *filename, Matrix *rumahSakit, Inventory *daftarInventory, int *jumlahInventory) {
-//     FILE *fileConfig = fopen(filename, "r");
-//     if (!fileConfig) {
-//         printf("Gagal membuka file konfigurasi.\n");
-//         return;
-//     }
-
-//     // Baris 1: ukuran denah
-//     rumahSakit->rows = readInt(fileConfig);
-//     fgetc(fileConfig);  // Buang spasi
-//     rumahSakit->cols = readInt(fileConfig);
-    
-//     // Baris 2: kapasitas ruangan
-//     rumahSakit->kapasitasRuangan = readInt(fileConfig);
-
-//     // Baris 3-8: ruangan
-//     for (int i = 0; i < rumahSakit->rows * rumahSakit->cols; i++) {
-//         int dokterId = readInt(fileConfig);
-
-//         int row = i / rumahSakit->cols;
-//         int col = i % rumahSakit->cols;
-
-//         initQueue(&rumahSakit->data[row][col].antrian);
-
-//         if (dokterId == 0) {
-//             strcpy(rumahSakit->data[row][col].nama_dokter, "-");
-//             while (fgetc(fileConfig) != '\n'); // Skip to next line
-//             continue;
-//         }
-
-//         sprintf(rumahSakit->data[row][col].nama_dokter, "Dokter %d", dokterId);
-
-//         int pasienId;
-//         while ((pasienId = readInt(fileConfig)) != -1) {
-//             enqueue(&rumahSakit->data[row][col].antrian, pasienId);
-
-//             int c = fgetc(fileConfig);
-//             if (c == '\n' || c == EOF) break;
-//             else ungetc(c, fileConfig);  // Put back character to be read again
-//         }
-//     }
-
-//     // Baris 9: jumlah inventory
-//     *jumlahInventory = readInt(fileConfig);
-
-//     // Baris 10+: daftar inventory
-//     for (int i = 0; i < *jumlahInventory; i++) {
-//         int pasienId = readInt(fileConfig);
-//         daftarInventory[i].pasienId = pasienId;
-//         daftarInventory[i].jumlahObat = 0;
-
-//         while (1) {
-//             int obatId = readInt(fileConfig);
-//             if (obatId == -1) break;
-
-//             daftarInventory[i].obat[daftarInventory[i].jumlahObat++] = obatId;
-
-//             int c = fgetc(fileConfig);
-//             if (c == '\n' || c == EOF) break;
-//             else ungetc(c, fileConfig);  // Put back character to be read again
-//         }
-//     }
-
-//     fclose(fileConfig);
-//     printf("Data konfigurasi berhasil dimuat.\n");
-// }
 
 void LOAD(const char *folderName, UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList, Set *nama_unik, Matrix *denah){
     char path[256];
@@ -448,7 +383,7 @@ void LOAD(const char *folderName, UserList *userList, PenyakitList *penyakitList
     // Validasi apakah folder ada
     if (stat(path, &sb) != 0 || !S_ISDIR(sb.st_mode)) {
         printf("Folder '%s' tidak ditemukan di dalam folder 'file/'\n", folderName);
-        return;
+        exit(1);
     }
 
     // Bangun path masing-masing file CSV
