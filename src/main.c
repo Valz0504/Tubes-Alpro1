@@ -67,6 +67,14 @@ int main(int argc, char* argv[]) {
             minumPenawar(&current_user, &isLogin);
         } else if (strcmp(prompt, "DIAGNOSIS") == 0) {
             diagnosis (&current_user, &dataBaseUser, &dataPenyakit, &isLogin, &denah_rs);
+        } else if (strcmp(prompt, "LIHAT_SEMUA_ANTRIAN") == 0) {
+            lihatAntrian(&dataBaseUser, &current_user, &denah_rs, &isLogin);
+        } else if (strcmp(prompt, "CARI_USER") == 0) {
+            cariUser(&dataBaseUser, &current_user, &isLogin);
+        } else if (strcmp(prompt, "CARI_PASIEN") == 0) {
+            cariPasien(&dataBaseUser, &current_user, &isLogin);
+        } else if (strcmp(prompt, "CARI_DOKTER") == 0) {
+            cariDokter(&dataBaseUser, &current_user, &isLogin);
         }
         else {
             printf("Nama fungsi tidak terdaftar atau kesalahan pengetikan command!\n\n");
