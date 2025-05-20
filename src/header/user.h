@@ -73,15 +73,20 @@ void minumPenawar(); // pasien
 void bolehPulangGaa(); // pasien
 void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitList *obat_penyakit, Matrix *Hospital); // general
 void EXIT(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitList *obat_penyakit, Matrix *Hospital, boolean *exit);
-void LOAD(UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList, Set *nama_unik);
+void LOAD(const char *folderName, UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList, Set *nama_unik, Matrix *denah);
 
 
 /* LOAD */
-void loadDataUser(const char *filename, UserList *list, Set *nama_unik);
-void loadDataPenyakit(const char *filename, PenyakitList *list);
+void loadDataUser(const char *filename, UserList *userList, Set *nama_unik);
+void loadDataPenyakit(const char *filename, PenyakitList *penyakitList);
 void loadDataObat(const char *filename, ObatList *obatList);
-void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasi);
 void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasiList);
+void loadConfig(const char *filename, Matrix *denah, UserList *userList);
+// void loadDataUser(const char *filename, UserList *list, Set *nama_unik);
+// void loadDataPenyakit(const char *filename, PenyakitList *list);
+// void loadDataObat(const char *filename, ObatList *obatList);
+// void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasi);
+// void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasiList);
 
 
 /* List Dinamis untuk UserList */
