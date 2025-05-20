@@ -56,13 +56,15 @@ void registerPasien(UserList *list, Set *set, boolean *isLogin); // pasien
 void helpMenu(User current_user, boolean *isLogin); // general
 void denahRumahSakit(Matrix M); // general
 void lihatRuangan(); // general
-void lihatAntrian(); // manager
+void lihatAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, boolean *isLogin); // manager
 void cariUser(); // manager
 void lihatUser(); // manager
 void assignDokter(Matrix *denah, UserList *list, User *current_user, boolean *isLogin); // manager
 void tambahDokter(UserList *list, User *current_user, Set *set, boolean *isLogin); // manager
 void lihatUser(); // manager
-void cariUser(); // manager
+void cariUser(UserList *dataBaseUser, User *current_user, boolean *isLogin); // manager
+void cariPasien(UserList *dataBaseUser, User *current_user, boolean *isLogin); // manager
+void cariDokter(UserList *dataBaseUser, User *current_user, boolean *isLogin); // manager
 void diagnosis(User *current_user, PenyakitList *penyakit, boolean *isLogin); // dokter
 void ngobatin(User *current_user, PenyakitList *penyakitList, Obat_PenyakitList *obatPenyakitList, boolean *isLogin); // dokter
 void daftarCheckUp(); // pasien
@@ -88,6 +90,7 @@ void CreateListDin(UserList *l, int capacity);
 void dealocateListDin(UserList *l); 
 void expandList(UserList *l, int num); 
 void copyList(UserList lIn, UserList *lOut);
+void sortListByUsername(UserList *l, boolean asc);
 
 
 /* Prosedur untuk manajemen Inventory User */
@@ -98,6 +101,7 @@ void deleteAt(Inventory *inventory, int *id, int idx);
 /* --- Fungsi/Prosedur Manajemen User --- */
 void CreateUser(UserList *l, User *u, char name[], char pass[], Role role);  
 User* findUser(UserList *l, char username[]);
+User* findUserByID(UserList *l, int id);
 boolean isUsernameExist(UserList l, char username[]);
 void AddUser(UserList *l, User u);
 char* roleToStr(Role role); 

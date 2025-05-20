@@ -51,10 +51,44 @@ void copyList(UserList lIn, UserList *lOut) {
     }
 }
 
+void sortListByUsername(UserList *l, boolean asc) {
+    for (int i = 0; i < l->Neff; i++) {
+        for (int j = 0; j < l->Neff-i-1; j++) {
+            boolean kondisi;
+            if (asc) {
+                kondisi = strcmp(l->data[j].username, l->data[j+1].username) > 0;
+            } else {
+                kondisi = strcmp(l->data[j].username, l->data[j+1].username) < 0;
+            }
+
+            if (kondisi) {
+                User temp = l->data[j];
+                l->data[j] = l->data[j + 1];
+                l->data[j + 1] = temp;
+            }
+        }
+    }
+}
+
 User* findUser(UserList *l, char username[]) {
     for (int i = 0; i < l->Neff; i++) {
         if (strcmp(l->data[i].username, username) == 0) {
             return &l->data[i];
+        }
+    }
+    return NULL;
+}
+
+User* findUserByID(UserList *l, int id) {
+    int left = 0, right = l->Neff;
+    while (left <= right) {
+        int mid = (left + right) / 2;
+        if (id > l->data[mid].id) {
+            left = mid + 1;
+        } else if (id < l->data[mid].id) {
+            right = mid - 1;
+        } else {
+            return &l->data[mid];
         }
     }
     return NULL;

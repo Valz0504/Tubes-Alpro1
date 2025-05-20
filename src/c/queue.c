@@ -38,3 +38,7 @@ void dequeue(Queue *q, int *value) {
 
     free(temp);
 }
+
+boolean isEmpty(Queue q) {
+    return (q.head == NULL && q.tail == NULL);
+}

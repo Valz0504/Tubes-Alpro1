@@ -28,6 +28,11 @@ void assignDokter(Matrix *denah, UserList *list, User *current_user, boolean *is
 
             int row,col;
             if (getPosisiRuangan(denah, ruang, &row, &col)) {
+                if (strcmp(nama_dokter, denah->data[row][col].nama_dokter) == 0) {
+                    printf("Dokter %s sudah diassign ke ruangan ini!\n\n", nama_dokter);
+                    return;
+                }
+
                 boolean kosong = FALSE;
                 if (isRuanganKosong(denah->data[row][col])) {
                     kosong = TRUE;
@@ -37,12 +42,17 @@ void assignDokter(Matrix *denah, UserList *list, User *current_user, boolean *is
                     strcpy(denah->data[row][col].nama_dokter, nama_dokter);
                     printf("Dokter %s berhasil ditugaskan ke ruangan %s!\n\n", nama_dokter, ruang);
                 } else if (kosong && isDokterSudahAssign(denah, nama_dokter)) {
-                    printf("Dokter %s sudah diassign ke ruangan %s!\n\n", nama_dokter, ruang);
+                    char ruangan_asal[10];
+                    getRuanganDokter(denah, nama_dokter, ruangan_asal);
+                    printf("Dokter %s sudah diassign ke ruangan %s!\n", nama_dokter, ruangan_asal);
                 } else if (!kosong && !isDokterSudahAssign(denah, nama_dokter)) {
                     printf("Dokter %s sudah menempati ruangan %s!\n", denah->data[row][col].nama_dokter, ruang);
                     printf("Silakan cari ruangan lain untuk dokter %s.\n\n", nama_dokter);
                 } else if (!kosong && isDokterSudahAssign(denah, nama_dokter)) {
-                    printf("Dokter %s sudah diassign ke ruangan lain!\n", nama_dokter);
+                    char ruangan_asal[10];
+                    getRuanganDokter(denah, nama_dokter, ruangan_asal);
+
+                    printf("Dokter %s sudah diassign ke ruangan %s!\n", nama_dokter, ruangan_asal);
                     printf("Ruangan %s juga sudah ditempati dokter %s!\n\n", ruang, denah->data[row][col].nama_dokter);
                 }
             } else {

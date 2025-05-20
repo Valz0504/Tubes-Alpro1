@@ -19,19 +19,21 @@ boolean isRuanganKosong(Ruangan r) {
 }
 
 boolean getPosisiRuangan(Matrix *denah, char ruang[], int *row, int *col) {
-    if (strlen(ruang) < 2 || strlen(ruang) > 2) return FALSE;
+    if (strlen(ruang) < 2 || strlen(ruang) > 3) return FALSE;
 
     char first_char = ruang[0];
     if (first_char < 'A' || first_char > 'Z') return FALSE;
 
-    *row = first_char - 'A';
-    int col_temp = atoi(&ruang[1]);
-    if (col_temp < 1 || col_temp > 10) return FALSE;
+    *col = first_char - 'A'; 
 
-    *col = col_temp - 1;
+    int row_temp = atoi(&ruang[1]);
+    if (row_temp < 1 || row_temp > denah->rows) return FALSE;
+
+    *row = row_temp - 1;
 
     return TRUE;
 }
+
 
 boolean isDokterSudahAssign(Matrix *denah, char nama_dokter[]) {
     for (int i = 0; i < denah->rows; i++) {
@@ -42,4 +44,17 @@ boolean isDokterSudahAssign(Matrix *denah, char nama_dokter[]) {
         }
     }
     return FALSE;
+}
+
+void getRuanganDokter(Matrix *denah, char nama_dokter[], char *ruangan) {
+    for (int i = 0; i < denah->rows; i++) {
+        for (int j = 0; j < denah->cols; j++) {
+            if (strcmp(denah->data[i][j].nama_dokter, nama_dokter) == 0) {
+                ruangan[0] = 'A' + j;
+                sprintf(ruangan + 1, "%d", i + 1);
+                return;
+            }
+        }
+    }
+    ruangan[0] = '\0';
 }
