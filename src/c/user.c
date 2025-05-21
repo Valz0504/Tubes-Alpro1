@@ -70,6 +70,25 @@ void sortListByUsername(UserList *l, boolean asc) {
     }
 }
 
+void sortListByID(UserList *l, boolean asc) {
+    for (int i = 0; i < l->Neff - 1; i++) {
+        for (int j = 0; j < l->Neff - i - 1; j++) {
+            boolean kondisi;
+            if (asc) {
+                kondisi = (l->data[j].id > l->data[j+1].id);
+            } else {
+                kondisi = (l->data[j].id < l->data[j+1].id);
+            }
+
+            if (kondisi) {
+                User temp = l->data[j];
+                l->data[j] = l->data[j + 1];
+                l->data[j + 1] = temp;
+            }
+        }
+    }
+}
+
 User* findUser(UserList *l, char username[]) {
     for (int i = 0; i < l->Neff; i++) {
         if (strcmp(l->data[i].username, username) == 0) {

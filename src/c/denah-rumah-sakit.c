@@ -6,7 +6,7 @@ void denahRumahSakit(Matrix M) {
     printf("== Denah Rumah Sakit ==\n\n");
 
     // Header kolom
-    printf("    ");
+    printf("   ");
     for (int col = 0; col < M.cols; col++) {
         printf("     %d     ", col + 1);
     }
