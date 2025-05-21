@@ -281,6 +281,7 @@ void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasiList) {
     fclose(fileOP);
 }
 
+
 void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
     FILE *fileConfig = fopen(filename, "r");
     if (fileConfig == NULL) {
@@ -293,6 +294,7 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
 
     // --- BACA BARIS 1: ukuran denah ---
     fgets(buffer, sizeof(buffer), fileConfig);
+    buffer[strcspn(buffer, "\r\n")] = 0;
     int rows = 0, cols = 0;
     index = 0;
     while (buffer[index] >= '0' && buffer[index] <= '9') {
@@ -305,8 +307,9 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
     denah->rows = rows;
     denah->cols = cols;
 
-    // --- BACA BARIS 2: kapasitas pasien ruangan dan antrian luar ---
+    // --- BACA BARIS 2: kapasitas ruangan dan antrian luar ---
     fgets(buffer, sizeof(buffer), fileConfig);
+    buffer[strcspn(buffer, "\r\n")] = 0;
     int kapasitasDalam = 0, kapasitasLuar = 0;
     index = 0;
     while (buffer[index] >= '0' && buffer[index] <= '9') {
@@ -316,7 +319,7 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
     while (buffer[index] >= '0' && buffer[index] <= '9') {
         kapasitasLuar = kapasitasLuar * 10 + (buffer[index++] - '0');
     }
-    denah->kapasitasRuangan = kapasitasDalam; // simpan salah satunya, atau buat dua field
+    denah->kapasitasRuangan = kapasitasDalam;
 
     // --- Inisialisasi ruangan ---
     for (int i = 0; i < rows; i++) {
@@ -326,25 +329,41 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
         }
     }
 
-    // --- BACA STATE RUANGAN (rows * cols baris) ---
+    // --- BACA KONFIGURASI RUANGAN ---
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            if (fgets(buffer, sizeof(buffer), fileConfig) == NULL) break;
-            buffer[strcspn(buffer, "\r\n")] = 0;
+            if (fgets(buffer, sizeof(buffer), fileConfig) == NULL) {
+                printf("Baris config untuk ruangan [%d][%d] tidak cukup!\n", i, j);
+                return;
+            }
+            buffer[strcspn(buffer, "\r\n")] = 0; // Hapus newline
 
             if (strcmp(buffer, "0") == 0) {
                 denah->data[i][j].nama_dokter[0] = '\0';
+                initQueue(&(denah->data[i][j].antrian));
                 continue;
             }
 
-            int index = 0, dokterId = 0;
+            // --- BACA ID DOKTER ---
+            int dokterId = 0;
+            index = 0;
+            while (buffer[index] == ' ') index++; // skip spasi
             while (buffer[index] >= '0' && buffer[index] <= '9') {
                 dokterId = dokterId * 10 + (buffer[index++] - '0');
             }
 
             User *temp = findUserByID(userList, dokterId);
+            if (temp == NULL) {
+                printf("⚠️  Dokter dengan ID %d tidak ditemukan untuk ruangan [%d][%d]\n", dokterId, i, j);
+                denah->data[i][j].nama_dokter[0] = '\0';
+                initQueue(&(denah->data[i][j].antrian));
+                continue;
+            }
+
+            // --- Simpan nama dokter ke ruangan ---
             sprintf(denah->data[i][j].nama_dokter, "%s", temp->username);
 
+            // --- BACA ID PASIEN DALAM ANTRIAN ---
             int currentNumber = 0;
             boolean readingNumber = FALSE;
             while (buffer[index]) {
@@ -364,21 +383,24 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
         }
     }
 
-    // --- BACA JUMLAH PASIEN DENGAN OBAT DI INVENTORY ---
+    // --- BACA JUMLAH PASIEN DENGAN OBAT ---
     int jumlahPasienInventory = 0;
     if (fgets(buffer, sizeof(buffer), fileConfig) != NULL) {
+        buffer[strcspn(buffer, "\r\n")] = 0;
         index = 0;
         while (buffer[index] >= '0' && buffer[index] <= '9') {
             jumlahPasienInventory = jumlahPasienInventory * 10 + (buffer[index++] - '0');
         }
     }
 
-    // --- BACA DATA INVENTORY MASING-MASING PASIEN ---
+    // --- BACA INVENTORY OBAT PASIEN ---
     for (int i = 0; i < jumlahPasienInventory; i++) {
         if (fgets(buffer, sizeof(buffer), fileConfig) == NULL) break;
         buffer[strcspn(buffer, "\r\n")] = 0;
 
-        int pasienId = 0, index = 0;
+        int pasienId = 0;
+        index = 0;
+        while (buffer[index] == ' ') index++;
         while (buffer[index] >= '0' && buffer[index] <= '9') {
             pasienId = pasienId * 10 + (buffer[index++] - '0');
         }
@@ -407,6 +429,52 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
 
     fclose(fileConfig);
 }
+
+
+
+//     // --- BACA JUMLAH PASIEN DENGAN OBAT DI INVENTORY ---
+//     int jumlahPasienInventory = 0;
+//     if (fgets(buffer, sizeof(buffer), fileConfig) != NULL) {
+//         index = 0;
+//         while (buffer[index] >= '0' && buffer[index] <= '9') {
+//             jumlahPasienInventory = jumlahPasienInventory * 10 + (buffer[index++] - '0');
+//         }
+//     }
+
+//     // --- BACA DATA INVENTORY MASING-MASING PASIEN ---
+//     for (int i = 0; i < jumlahPasienInventory; i++) {
+//         if (fgets(buffer, sizeof(buffer), fileConfig) == NULL) break;
+//         buffer[strcspn(buffer, "\r\n")] = 0;
+
+//         int pasienId = 0, index = 0;
+//         while (buffer[index] >= '0' && buffer[index] <= '9') {
+//             pasienId = pasienId * 10 + (buffer[index++] - '0');
+//         }
+
+//         User *user = findUserByID(userList, pasienId);
+//         if (user == NULL) continue;
+
+//         user->inventory.jumlahObat = 0;
+//         int currentObat = 0;
+//         boolean reading = FALSE;
+//         while (buffer[index]) {
+//             if (buffer[index] >= '0' && buffer[index] <= '9') {
+//                 currentObat = currentObat * 10 + (buffer[index] - '0');
+//                 reading = TRUE;
+//             } else if (reading) {
+//                 user->inventory.obat[user->inventory.jumlahObat++] = currentObat;
+//                 currentObat = 0;
+//                 reading = FALSE;
+//             }
+//             index++;
+//         }
+//         if (reading) {
+//             user->inventory.obat[user->inventory.jumlahObat++] = currentObat;
+//         }
+//     }
+
+//     fclose(fileConfig);
+// }
 
 // void loadConfig(const char *filename, Matrix *denah, UserList *userList){
 //     FILE *fileConfig = fopen(filename, "r");
@@ -517,5 +585,8 @@ void LOAD(const char *folderName, UserList *userList, PenyakitList *penyakitList
     loadDataPenyakit(pathPenyakit, penyakitList);
     loadDataObat(pathObat, obatList);
     loadDataObatPenyakit(pathRelasi, relasiList);
+
+    // Sort sebelum laod config
+    sortUserListByID(userList);
     loadConfig(pathConfig, denah, userList);
 }
