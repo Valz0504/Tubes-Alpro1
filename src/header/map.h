@@ -19,5 +19,6 @@ typedef struct {
 } Obat_PenyakitList;
 
 void initObatPenyakitList(Obat_PenyakitList *list);
+int getMapIndexByPenyakit(Obat_PenyakitList *list, int idPenyakit);
 
 #endif

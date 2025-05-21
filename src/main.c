@@ -75,6 +75,8 @@ int main(int argc, char* argv[]) {
             cariPasien(&dataBaseUser, &current_user, &isLogin);
         } else if (strcmp(prompt, "CARI_DOKTER") == 0) {
             cariDokter(&dataBaseUser, &current_user, &isLogin);
+        } else if (strcmp(prompt, "PULANGDOK") == 0) {
+            bolehPulangGaa(&current_user, &dataPenyakit, &dataObat, &dataObatPenyakit, &isLogin);
         }
         else {
             printf("Nama fungsi tidak terdaftar atau kesalahan pengetikan command!\n\n");
