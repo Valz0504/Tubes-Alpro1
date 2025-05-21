@@ -4,6 +4,7 @@
 #ifndef USER_H
 #define USER_H
 
+#include "map.h"
 #include "matrix.h"
 #include "set.h"
 #include "penyakit.h"

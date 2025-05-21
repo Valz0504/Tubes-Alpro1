@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
     // Inisialisasi state LOGIN
     User current_user;
     boolean isLogin = FALSE;
-    
+
     // Opening Program
     printf("=== SELAMAT DATANG ===\n");
     printf("Ketik command HELP untuk melihat apa saja yang dapat kamu lakukan sekarang!\n\n");

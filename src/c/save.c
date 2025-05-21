@@ -110,19 +110,28 @@ void FilePenyakit(const char *filePath, PenyakitList *sakit){// membuat/overwrit
     }
     fclose(fp);
 }
-void FileObat_Penyakit(const char *filePath, Obat_PenyakitList *obat_penyakit){// membuat/overwrite file obat-penyakit
+void FileObat_Penyakit(const char *filePath, Obat_PenyakitList *obat_penyakit) {
     FILE *fp = fopen(filePath, "w");
     if (fp == NULL) {
         printf("Gagal membuat file di path: %s\n", filePath);
         return;
     }
-    fprintf(fp, "obat_id,penyakit_id,urutan_minum\n");
-    for(int i = 0; i <obat_penyakit->Neff; i++){
-        Obat_Penyakit OP = obat_penyakit->data[i];
-        fprintf(fp, "%d;%d;%d;\n", OP.id_obat, OP.id_penyakit, OP.urutan_minum);
+
+    fprintf(fp, "idObat;idPenyakit;urutanMinum;\n");
+
+    for (int i = 0; i < obat_penyakit->length; i++) {
+        MapEntryList *entry = &obat_penyakit->buffer[i];
+        for (int j = 0; j < entry->jumlah_obat; j++) {
+            int idObat = entry->urutan_obat[j];
+            int idPenyakit = entry->id_penyakit;
+            int urutanMinum = j + 1;
+            fprintf(fp, "%d;%d;%d\n", idObat, idPenyakit, urutanMinum);
+        }
     }
+
     fclose(fp);
 }
+
 int JmlhInventory_ada(UserList user1, int PasienObat[][100]){
     int Adainventory = 0;
     for(int x = 0; x < user1.Neff; x++){//ngeloop pasien
