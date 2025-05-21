@@ -22,7 +22,6 @@ int main(int argc, char* argv[]) {
     Set nama_unik;
     
     CreateListDin(&dataBaseUser, 5);
-    CreateMatrix(10, 10, &denah_rs);
     initSet(&nama_unik, 5);
 
     // LOAD DATA from file folder
