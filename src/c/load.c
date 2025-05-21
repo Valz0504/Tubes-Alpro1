@@ -22,9 +22,7 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
         exit(1);
     }
 
-    userList->data = (User *)malloc(initialCap * sizeof(User));
-    userList->Neff = 0;
-    userList->capacity = initialCap;
+    CreateListDin(userList, initialCap);
 
     char line[1024];
     fgets(line, sizeof(line), fileUser); // Lewati header
@@ -48,13 +46,13 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
                         break;
                     case 2: strncpy(u.password, buffer, sizeof(u.password)); break;
                     case 3: 
-                        if (strcmp(buffer, "ROLE_PASIEN") == 0) {
+                        if (strcmp(buffer, "pasien") == 0) {
                             u.role = ROLE_PASIEN;
                             break;
-                        } else if (strcmp(buffer, "ROLE_DOKTER") == 0) {
+                        } else if (strcmp(buffer, "dokter") == 0) {
                             u.role = ROLE_DOKTER;
                             break;
-                        } else if (strcmp(buffer, "ROLE_MANAGER") == 0) {
+                        } else if (strcmp(buffer, "manager") == 0) {
                             u.role = ROLE_MANAGER;
                             break;
                         }
@@ -84,14 +82,9 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
         // Ambil field terakhir (setelah koma terakhir)
         buffer[idx] = '\0';
         if (field == 15) u.trombosit = atoi(buffer);
-
-        if (userList->Neff >= userList->capacity) {
-            userList->capacity *= 2;
-            userList->data = (User *)realloc(userList->data, userList->capacity * sizeof(User));
-        }
         
         initStack(&u.perut);
-        userList->data[userList->Neff++] = u;
+        AddUser(userList, u);
     }
 
     fclose(fileUser);
@@ -233,23 +226,27 @@ void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasiList) {
         return;
     }
 
-    relasiList->data = malloc(initialCap * sizeof(Obat_Penyakit));
-    relasiList->Neff = 0;
-    relasiList->capacity = initialCap;
+    typedef struct {
+        int idObat;
+        int idPenyakit;
+        int urutanMinum;
+    } Temp;
+
+    initObatPenyakitList(relasiList);
 
     char line[256];
     fgets(line, sizeof(line), fileOP);  // Lewati header
 
     while (fgets(line, sizeof(line), fileOP)) {
-        Obat_Penyakit r;
+        Temp temp;
         char buffer[64];
         int i = 0, j = 0, field = 0;
 
         while (line[i] != '\0' && line[i] != '\n') {
             if (line[i] == ';') {
                 buffer[j] = '\0';
-                if (field == 0) r.id_obat = atoi(buffer);
-                else if (field == 1) r.id_penyakit = atoi(buffer);
+                if (field == 0) temp.idObat = atoi(buffer);
+                else if (field == 1) temp.idPenyakit = atoi(buffer);
                 field++;
                 j = 0;
             } else {
@@ -259,28 +256,31 @@ void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasiList) {
         }
 
         buffer[j] = '\0';
-        if (field == 2) r.urutan_minum = atoi(buffer);
+        if (field == 2) temp.urutanMinum = atoi(buffer);
 
-        // Tambah ke list
-        if (relasiList->Neff >= relasiList->capacity) {
-            relasiList->capacity *= 2;
-            relasiList->data = realloc(relasiList->data, relasiList->capacity * sizeof(Obat_Penyakit));
+        // Cari apakah penyakit sudah ada
+        int index = -1;
+        for (int i = 0; i < relasiList->length; i++) {
+            if (relasiList->buffer[i].id_penyakit == temp.idPenyakit) {
+                index = i;
+                break;
+            }
         }
 
-        relasiList->data[relasiList->Neff++] = r;
-    }
+        // Kalau belum ada, tambah entry baru
+        if (index == -1) {
+            index = relasiList->length++;
+            relasiList->buffer[index].id_penyakit = temp.idPenyakit;
+        }
 
+        // Masukkan obat ke urutan yang benar
+        int pos = temp.urutanMinum - 1;
+        relasiList->buffer[index].urutan_obat[pos] = temp.idObat;
+        relasiList->buffer[index].jumlah_obat++;
+    }
     fclose(fileOP);
 }
 
-User* findUserById(UserList *userList, int id) {
-    for (int i = 0; i < userList->Neff; i++) {
-        if (userList->data[i].id == id) {
-            return &(userList->data[i]);
-        }
-    }
-    return NULL;  // Tidak ditemukan
-}
 
 void loadConfig(const char *filename, Matrix *denah, UserList *userList){
     FILE *fileConfig = fopen(filename, "r");
@@ -291,21 +291,12 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList){
 
     int rows, cols;
     fscanf(fileConfig, "%d %d\n", &rows, &cols);
-    denah->rows = rows;
-    denah->cols = cols;
 
     // Baca kapasitas maksimal pasien per ruangan
     int kapasitas;
     fscanf(fileConfig, "%d\n", &kapasitas);
+    CreateMatrix(rows, cols, kapasitas, denah);
     denah->kapasitasRuangan = kapasitas;
-
-    // Inisialisasi seluruh matrix ruangan
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            denah->data[i][j].nama_dokter[0] = '\0'; // kosongkan nama dokter
-            initQueue(&(denah->data[i][j].antrian)); // inisialisasi antrian pasien
-        }
-    }
 
     // Baca data antrian per ruangan sebanyak rows*cols baris
     for (int i = 0; i < rows * cols; i++) {
@@ -360,7 +351,7 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList){
         int pasienId = atoi(token);
 
         // Cari User sesuai pasienId
-        User *user = findUserById(userList, pasienId);
+        User *user = findUserByID(userList, pasienId);
         if (user == NULL) continue; // pasien tidak ditemukan, skip
 
         user->inventory.jumlahObat = 0;

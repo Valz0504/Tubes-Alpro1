@@ -13,16 +13,18 @@ void registerPasien(UserList *list, Set *set, boolean *isLogin) {
         printf("Password: ");
         scanf(" %[^\n]", password);
 
+        char usernameTemp[100];
+        strcpy(usernameTemp, username);
         toLower(username);
         if (isUsernameUnique(*set, username)) {
             insertSet(set, username);
 
             User new_user;
             initStack(&new_user.perut);
-            CreateUser(list, &new_user, username, password, 0);
+            CreateUser(list, &new_user, usernameTemp, password, 0);
             AddUser(list, new_user);
             
-            printf("Pasien %s berhasil ditambahkan!\n\n", username);
+            printf("Pasien %s berhasil ditambahkan!\n\n", usernameTemp);
         } else {
             printf("Registrasi gagal! Sudah ada User dengan nama %s.\n\n", username);
         }

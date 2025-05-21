@@ -21,8 +21,6 @@ int main(int argc, char* argv[]) {
     Matrix denah_rs;
     Set nama_unik;
     
-    CreateListDin(&dataBaseUser, 5);
-    CreateMatrix(10, 10, &denah_rs);
     initSet(&nama_unik, 5);
 
     // LOAD DATA from file folder
@@ -31,7 +29,7 @@ int main(int argc, char* argv[]) {
     // Inisialisasi state LOGIN
     User current_user;
     boolean isLogin = FALSE;
-    
+
     // Opening Program
     printf("=== SELAMAT DATANG ===\n");
     printf("Ketik command HELP untuk melihat apa saja yang dapat kamu lakukan sekarang!\n\n");
@@ -55,6 +53,8 @@ int main(int argc, char* argv[]) {
             helpMenu(current_user, &isLogin);
         } else if (strcmp(prompt, "LIHAT_DENAH") == 0) {
             denahRumahSakit(denah_rs);
+        } else if (strcmp(prompt, "LIHAT_RUANGAN") == 0){
+            lihatRuangan(denah_rs, dataBaseUser, current_user, &isLogin);
         } else if (strcmp(prompt, "EXIT") == 0) {
             EXIT(&dataBaseUser, &dataObat, &dataPenyakit, &dataObatPenyakit, &denah_rs, &run_program);
         } else if (strcmp(prompt, "TAMBAH_DOKTER") == 0) {
@@ -83,7 +83,9 @@ int main(int argc, char* argv[]) {
             lihatDokter(&dataBaseUser, &current_user, &isLogin);
         } else if (strcmp(prompt, "ANTRIAN") == 0) {
             antrianSaya(&current_user, &denah_rs, &isLogin);
-        } 
+        } else if (strcmp(prompt, "PULANGDOK") == 0) {
+            bolehPulangGaa(&current_user, &dataPenyakit, &dataObat, &dataObatPenyakit, &isLogin);
+        }
         else {
             printf("Nama fungsi tidak terdaftar atau kesalahan pengetikan command!\n\n");
         }

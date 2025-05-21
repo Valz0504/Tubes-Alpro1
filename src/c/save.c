@@ -46,6 +46,7 @@ void FileUser(const char *filePath, UserList *users){// membuat/overwrite file u
         printf("Gagal membuat file di path: %s\n", filePath);
         return;
     }
+    char peran[100];
     fprintf(fp,
         "id,username,password,role,riwayat_penyakit,suhu_tubuh,"
         "tekanan_darah_sistolik,tekanan_darah_diastolik,detak_jantung,"
@@ -53,14 +54,32 @@ void FileUser(const char *filePath, UserList *users){// membuat/overwrite file u
         "kadar_kolesterol,kadar_kolesterol_ldl,trombosit\n");
     for (int i = 0; i < users->Neff; i++) {
         User u = users->data[i];
-        fprintf(fp,
-            "%d;%s;%s;%d;%s;%.1f;%d;%d;%d;%.1f;%d;%.1f;%d;%d;%d;%d\n",
-            u.id, u.username, u.password, u.role, u.riwayat_penyakit,
-            u.suhu_tubuh, u.tekanan_darah_sistolik, u.tekanan_darah_diastolik,
-            u.detak_jantung, u.saturasi_oksigen, u.kadar_gula_darah,
-            u.berat_badan, u.tinggi_badan, u.kadar_kolesterol,
-            u.kadar_kolesterol_Ldl, u.trombosit
-        );
+        if (u.role == 0) {
+            strcpy(peran, "pasien");
+            fprintf(fp,
+                "%d;%s;%s;%s;%s;%.1f;%d;%d;%d;%.1f;%d;%.1f;%d;%d;%d;%d\n",
+                u.id, u.username, u.password, peran, u.riwayat_penyakit,
+                u.suhu_tubuh, u.tekanan_darah_sistolik, u.tekanan_darah_diastolik,
+                u.detak_jantung, u.saturasi_oksigen, u.kadar_gula_darah,
+                u.berat_badan, u.tinggi_badan, u.kadar_kolesterol,
+                u.kadar_kolesterol_Ldl, u.trombosit
+            );
+        } 
+        else if (u.role == 1) {
+            strcpy(peran, "dokter");
+            fprintf(fp,
+                "%d;%s;%s;%s\n",
+                u.id, u.username, u.password, peran
+            );
+        } 
+        else if (u.role == 2) {
+            strcpy(peran, "manager");
+            fprintf(fp,
+                "%d;%s;%s;%s\n",
+                u.id, u.username, u.password, peran
+            );
+        }
+
     }
     fclose(fp);
 }
@@ -74,7 +93,7 @@ void FileObat(const char *filePath, ObatList *obat){// membuat/overwrite file ob
         "obat_id,nama_obat\n");
     for(int i = 0; i < obat->Neff; i++){
         Obat o = obat->data[i];
-        fprintf(fp, "%d;%s\n", o.id, o.nama);
+        fprintf(fp, "%d;%s;\n", o.id, o.nama);
     }
     fclose(fp);
 }
@@ -100,27 +119,36 @@ void FilePenyakit(const char *filePath, PenyakitList *sakit){// membuat/overwrit
     }
     fclose(fp);
 }
-void FileObat_Penyakit(const char *filePath, Obat_PenyakitList *obat_penyakit){// membuat/overwrite file obat-penyakit
+void FileObat_Penyakit(const char *filePath, Obat_PenyakitList *obat_penyakit) {
     FILE *fp = fopen(filePath, "w");
     if (fp == NULL) {
         printf("Gagal membuat file di path: %s\n", filePath);
         return;
     }
-    fprintf(fp, "obat_id,penyakit_id,urutan_minum\n");
-    for(int i = 0; i <obat_penyakit->Neff; i++){
-        Obat_Penyakit OP = obat_penyakit->data[i];
-        fprintf(fp, "%d;%d;%d\n", OP.id_obat, OP.id_penyakit, OP.urutan_minum);
+
+    fprintf(fp, "idObat;idPenyakit;urutanMinum\n");
+
+    for (int i = 0; i < obat_penyakit->length; i++) {
+        MapEntryList *entry = &obat_penyakit->buffer[i];
+        for (int j = 0; j < entry->jumlah_obat; j++) {
+            int idObat = entry->urutan_obat[j];
+            int idPenyakit = entry->id_penyakit;
+            int urutanMinum = j + 1;
+            fprintf(fp, "%d;%d;%d\n", idObat, idPenyakit, urutanMinum);
+        }
     }
+
     fclose(fp);
 }
+
 int JmlhInventory_ada(UserList user1, int PasienObat[][100]){
     int Adainventory = 0;
     for(int x = 0; x < user1.Neff; x++){//ngeloop pasien
         Inventory Pasien = user1.data[x].inventory;
         if(Pasien.jumlahObat != 0){
             for(int j = 0; j <= Pasien.jumlahObat; j++){
-                if(j==0){
-                    PasienObat[Adainventory][j] = Pasien.pasienId;
+                if(j == 0){
+                    PasienObat[Adainventory][j] = user1.data[x].id;
                 }
                 else if(j-1 < Pasien.jumlahObat){
                     PasienObat[Adainventory][j] = Pasien.obat[j-1];
@@ -138,6 +166,17 @@ int JmlhInventory_ada(UserList user1, int PasienObat[][100]){
 
     return Adainventory;
 }
+int isiRuangan(Matrix Hospital, int i, int j){
+    int count = 0;
+    Node *A = Hospital.data[i][j].antrian.head;
+    if(A != NULL){
+        while(A != NULL){
+            count++;
+            A = A->next;
+        }
+    }
+    return count;
+}
 
 void FileConfig(const char *filePath, Matrix *Hospital, UserList *user1){ //BELUM SELESAI, belum ada data ruangan? // membuat/overwrite file config
     FILE *fp = fopen(filePath, "w");
@@ -146,36 +185,40 @@ void FileConfig(const char *filePath, Matrix *Hospital, UserList *user1){ //BELU
         return;
     }
     int terisi = 0;
+    int nol = 0;
+    int dokter;
     fprintf(fp, "%d %d\n", Hospital->rows, Hospital->cols);
     fprintf(fp, "%d\n", Hospital->kapasitasRuangan);
     for(int i = 0; i < Hospital->rows; i++){
-        for(int j = 0; j < 2; j++){
-            if(j == 0){
-                User *I = findUser(user1, Hospital->data[i][j].nama_dokter);
-                if(I != NULL){
-                    fprintf(fp, "%d ", I->id);
-                    terisi++;
-                }
-                
-            }
-            else{
-                Node *A = Hospital->data[i][j].antrian.head;
-                if(A != NULL){
-                    while(A != NULL){
-                        fprintf(fp, "%d ", A->info);
-                        A = A->next;
-
+        for(int j = 0; j < Hospital->cols ; j++){
+            for(int k = 0; k < isiRuangan(*Hospital, i, j)+1 ; k++){
+                if(k == 0){
+                    User *I = findUser(user1, Hospital->data[i][j].nama_dokter);
+                    if(I != NULL){
+                        printf("%d", I->id);
+                        fprintf(fp, "%d ", I->id);
+                        dokter = I->id;
                     }
-                    terisi++;
+                    else{
+                        fprintf(fp, "%d ", nol);
+                        dokter = 0;
+                    }
                 }
-                
+                else if(dokter != 0){
+                    Node *A = Hospital->data[i][j].antrian.head;
+                    if(A != NULL){
+                        while(A != NULL){
+                            fprintf(fp, "%d ", A->info);
+                            A = A->next;
+                        }
+                    }
+                    
+                }
+                terisi++;
             }
-            
-        }
-        if(terisi > 0){
             fprintf(fp, "\n");
+            terisi = 0;
         }
-        terisi = 0;
     }
     int PasienObat[100][100];
     int X = JmlhInventory_ada(*user1, PasienObat);
@@ -183,10 +226,16 @@ void FileConfig(const char *filePath, Matrix *Hospital, UserList *user1){ //BELU
     fprintf(fp, "%d\n", X);
     for(int i = 0; i < X; i++){
         for(int j = 0; j < 100; j++){
-            if(PasienObat[i][j] != 0){
+            if(j == 0){
                 fprintf(fp, "%d ", PasienObat[i][j]);
-                terisi++;
             }
+            else{
+                if(PasienObat[i][j] != 0){
+                    fprintf(fp, "%d ", PasienObat[i][j]);
+                    terisi++;
+                }
+            }
+            
         }
         if(terisi > 0){
             fprintf(fp, "\n");

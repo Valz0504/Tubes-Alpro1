@@ -37,11 +37,13 @@ void helpMenu(User current_user, boolean *isLogin) {
             printf("\t2. TAMBAH_DOKTER: Mendaftarkan dokter baru ke sistem\n");
             printf("\t3. ASSIGN_DOKTER: Melakukan assign ruangan ke dokter tertentu\n");
             printf("\t4. LIHAT_USER: Melihat data pengguna dan memilih metode penampilan data pengguna\n");
-            printf("\t5. LIHAT_ANTRIAN: Melihat rincian seluruh ruangan di Rumah Sakit\n");
-            printf("\t6. CARI_USER: Mencari data pengguna secara spesifik\n");
-            printf("\t7. LIHAT_DENAH: Melihat keseluruhan bangunan dari rumah sakit\n");
-            printf("\t8. LIHAT_RUANGAN <<nama_ruangan>>: Melihat nama dokter dan pasien yang ada di dalam ruangan tersebut\n");
-            printf("\t9. EXIT: Keluar dari Rumah Sakit\n");
+            printf("\t5. LIHAT_SEMUA_ANTRIAN: Melihat rincian seluruh ruangan di Rumah Sakit\n");
+            printf("\t6. CARI_USER: Menampilkan data pengguna secara spesifik\n");
+            printf("\t7. CARI_PASIEN: Menampilkan data pasien secara spesifik\n");
+            printf("\t8. CARI_DOKTER: Menampilkan data dokter secara spesifik\n");
+            printf("\t9. LIHAT_DENAH: Melihat keseluruhan bangunan dari rumah sakit\n");
+            printf("\t10. LIHAT_RUANGAN <<nama_ruangan>>: Melihat nama dokter dan pasien yang ada di dalam ruangan tersebut\n");
+            printf("\t11. EXIT: Keluar dari Rumah Sakit\n");
         }
     }
     printf("Footnote: \n");

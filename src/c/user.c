@@ -8,7 +8,7 @@
 #define false 0
 
 void CreateUser(UserList *l, User *u, char name[], char pass[], Role role) {
-    u->id = l->Neff;
+    u->id = l->Neff + 1;
     strcpy(u->username, name);
     strcpy(u->password, pass);
     u->role = role;
@@ -97,7 +97,6 @@ User* findUser(UserList *l, char username[]) {
     }
     return NULL;
 }
-
 User* findUserByID(UserList *l, int id) {
     int left = 0, right = l->Neff;
     while (left <= right) {

@@ -6,11 +6,13 @@
 typedef struct {
     int data[MAX_STACK];
     int top;
+    int length;
 } Stack;
 
 void initStack(Stack *s);
 void push(Stack *s, int value);
 void pop(Stack *s, int *value);
+void emptyStack(Stack *s);
 
 #endif
 

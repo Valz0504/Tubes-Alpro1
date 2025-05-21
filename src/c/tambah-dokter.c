@@ -78,22 +78,24 @@ void tambahDokter(UserList *list, User *current_user, Set *set, boolean *isLogin
             scanf(" %[^\n]", password);
             
             User *temp_user = findUser(list, username);
-
+            
+            char usernameTemp[100];
+            strcpy(usernameTemp, username);
             toLower(username);
             if (isUsernameUnique(*set, username)) {
                 insertSet(set, username);
     
                 User new_user;
-                CreateUser(list, &new_user, username, password, 1);
+                CreateUser(list, &new_user, usernameTemp, password, 1);
                 AddUser(list, new_user);
                 
-                printf("Dokter %s berhasil ditambahkan!\n\n", username);
+                printf("Dokter %s berhasil ditambahkan!\n\n", usernameTemp);
             } else {
                 if (temp_user != NULL) {
                     if (temp_user->role == ROLE_DOKTER) {
-                        printf("Sudah ada Dokter bernama %s!\n\n", username);
+                        printf("Sudah ada Dokter bernama %s!\n\n", usernameTemp);
                     } else {
-                        printf("Sudah ada User bernama %s!\n\n", username);
+                        printf("Sudah ada User bernama %s!\n\n", usernameTemp);
                     }
                 }
             }
