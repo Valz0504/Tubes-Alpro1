@@ -69,8 +69,8 @@ void ngobatin(User *current_user, PenyakitList *penyakitList, Obat_PenyakitList 
 void daftarCheckUp(); // pasien
 void antrianSaya(); // pasien
 void minumObat(User *current_user, ObatList *dataObat, boolean *isLogin); // pasien
-void minumPenawar(); // pasien
-void bolehPulangGaa(); // pasien
+void minumPenawar(User *current_user, boolean *isLogin); // pasien
+void bolehPulangGaa(User *current_user, PenyakitList *dataPenyakit, ObatList *dataObat, Obat_PenyakitList *dataObatPenyakit, boolean *isLogin); // pasien
 void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitList *obat_penyakit, Matrix *Hospital); // general
 void EXIT(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitList *obat_penyakit, Matrix *Hospital, boolean *exit);
 void LOAD(const char *folderName, UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList, Set *nama_unik, Matrix *denah);

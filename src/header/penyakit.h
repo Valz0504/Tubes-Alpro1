@@ -56,6 +56,7 @@ typedef struct {
 } Inventory;
 
 
-char* getObatName(ObatList *dataPenyakit, int id);
+char* getObatName(ObatList *dataObat, int id);
+int getIDPenyakit(PenyakitList *dataPenyakit, char penyakit[]);
 
 #endif
