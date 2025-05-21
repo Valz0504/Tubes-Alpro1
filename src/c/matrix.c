@@ -2,10 +2,10 @@
 #include <string.h>
 #include "../header/matrix.h"
 
-void CreateMatrix(int rows, int cols, Matrix *M) {
+void CreateMatrix(int rows, int cols, int kapasitas, Matrix *M) {
     M->rows = rows;
     M->cols = cols;
-    M->kapasitasRuangan = 3;
+    M->kapasitasRuangan = kapasitas;
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             strcpy(M->data[i][j].nama_dokter, "");

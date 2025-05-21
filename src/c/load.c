@@ -291,21 +291,12 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList){
 
     int rows, cols;
     fscanf(fileConfig, "%d %d\n", &rows, &cols);
-    denah->rows = rows;
-    denah->cols = cols;
 
     // Baca kapasitas maksimal pasien per ruangan
     int kapasitas;
     fscanf(fileConfig, "%d\n", &kapasitas);
+    CreateMatrix(rows, cols, kapasitas, denah);
     denah->kapasitasRuangan = kapasitas;
-
-    // Inisialisasi seluruh matrix ruangan
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            denah->data[i][j].nama_dokter[0] = '\0'; // kosongkan nama dokter
-            initQueue(&(denah->data[i][j].antrian)); // inisialisasi antrian pasien
-        }
-    }
 
     // Baca data antrian per ruangan sebanyak rows*cols baris
     for (int i = 0; i < rows * cols; i++) {
