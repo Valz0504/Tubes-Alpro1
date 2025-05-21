@@ -4,6 +4,7 @@
 #ifndef USER_H
 #define USER_H
 
+#include "map.h"
 #include "matrix.h"
 #include "set.h"
 #include "penyakit.h"
@@ -67,7 +68,7 @@ void cariPasien(UserList *dataBaseUser, User *current_user, boolean *isLogin); /
 void cariDokter(UserList *dataBaseUser, User *current_user, boolean *isLogin); // manager
 void diagnosis(User *current_user, UserList *dataBaseUser, PenyakitList *penyakit, boolean *isLogin, Matrix *denah); // dokter
 void ngobatin(User *current_user, PenyakitList *penyakitList, Obat_PenyakitList *obatPenyakitList, boolean *isLogin); // dokter
-void daftarCheckUp(); // pasien
+void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix *Hospital); // pasien
 void antrianSaya(); // pasien
 void minumObat(User *current_user, ObatList *dataObat, boolean *isLogin); // pasien
 void minumPenawar(); // pasien

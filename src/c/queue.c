@@ -38,6 +38,15 @@ void dequeue(Queue *q, int *value) {
 
     free(temp);
 }
+int countQueue(Queue q){
+    int count = 0;
+    Node *A = q.head;
+    while(A != NULL){
+        count++;
+        A = A->next;
+    }
+    return count;
+}
 
 boolean isEmpty(Queue q) {
     return (q.head == NULL && q.tail == NULL);

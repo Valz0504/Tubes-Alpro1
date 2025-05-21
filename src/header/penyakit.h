@@ -50,19 +50,6 @@ typedef struct
 } ObatList;
 
 typedef struct {
-    int id_obat;
-    int id_penyakit;
-    int urutan_minum;
-} Obat_Penyakit;
-
-typedef struct 
-{
-    Obat_Penyakit *data;
-    int Neff;
-    int capacity;
-} Obat_PenyakitList;
-
-typedef struct {
     int pasienId;
     int obat[100];
     int jumlahObat;
