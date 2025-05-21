@@ -46,13 +46,13 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
                         break;
                     case 2: strncpy(u.password, buffer, sizeof(u.password)); break;
                     case 3: 
-                        if (strcmp(buffer, "ROLE_PASIEN") == 0) {
+                        if (strcmp(buffer, "pasien") == 0) {
                             u.role = ROLE_PASIEN;
                             break;
-                        } else if (strcmp(buffer, "ROLE_DOKTER") == 0) {
+                        } else if (strcmp(buffer, "dokter") == 0) {
                             u.role = ROLE_DOKTER;
                             break;
-                        } else if (strcmp(buffer, "ROLE_MANAGER") == 0) {
+                        } else if (strcmp(buffer, "manager") == 0) {
                             u.role = ROLE_MANAGER;
                             break;
                         }
