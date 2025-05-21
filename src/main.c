@@ -5,7 +5,7 @@
 int main(int argc, char* argv[]) {
     system("clear");
 
-    if (argv[1] == NULL) {
+    if (argc < 2) { 
         printf("Tidak ada nama folder yang diberikan!\n");
         printf("Usage: ./main <<nama_folder>>\n");
         return 0;
@@ -21,12 +21,10 @@ int main(int argc, char* argv[]) {
     Matrix denah_rs;
     Set nama_unik;
     
-    CreateListDin(&dataBaseUser, 5);
-    CreateMatrix(10, 10, &denah_rs);
     initSet(&nama_unik, 5);
 
     // LOAD DATA from file folder
-    LOAD(&dataBaseUser, &dataPenyakit, &dataObat, &dataObatPenyakit, &nama_unik);
+    LOAD(argv[1], &dataBaseUser, &dataPenyakit, &dataObat, &dataObatPenyakit, &nama_unik, &denah_rs);
 
     // Inisialisasi state LOGIN
     User current_user;
@@ -56,7 +54,7 @@ int main(int argc, char* argv[]) {
         } else if (strcmp(prompt, "LIHAT_DENAH") == 0) {
             denahRumahSakit(denah_rs);
         } else if (strcmp(prompt, "EXIT") == 0) {
-            EXIT(&current_user, &dataBaseUser, &run_program);
+            EXIT(&dataBaseUser, &dataObat, &dataPenyakit, &dataObatPenyakit, &denah_rs, &run_program);
         } else if (strcmp(prompt, "TAMBAH_DOKTER") == 0) {
             tambahDokter(&dataBaseUser, &current_user, &nama_unik, &isLogin);
         } else if (strcmp(prompt, "ASSIGN_DOKTER") == 0) {
@@ -65,6 +63,16 @@ int main(int argc, char* argv[]) {
             minumObat(&current_user, &dataObat, &isLogin);
         } else if (strcmp(prompt, "MINUM_PENAWAR") == 0) {
             minumPenawar(&current_user, &isLogin);
+        } else if (strcmp(prompt, "DIAGNOSIS") == 0) {
+            diagnosis(&current_user, &dataBaseUser, &dataPenyakit, &isLogin, &denah_rs);
+        } else if (strcmp(prompt, "LIHAT_SEMUA_ANTRIAN") == 0) {
+            lihatAntrian(&dataBaseUser, &current_user, &denah_rs, &isLogin);
+        } else if (strcmp(prompt, "CARI_USER") == 0) {
+            cariUser(&dataBaseUser, &current_user, &isLogin);
+        } else if (strcmp(prompt, "CARI_PASIEN") == 0) {
+            cariPasien(&dataBaseUser, &current_user, &isLogin);
+        } else if (strcmp(prompt, "CARI_DOKTER") == 0) {
+            cariDokter(&dataBaseUser, &current_user, &isLogin);
         }
         else {
             printf("Nama fungsi tidak terdaftar atau kesalahan pengetikan command!\n\n");
