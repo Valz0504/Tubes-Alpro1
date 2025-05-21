@@ -1,8 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 
 #include "../header/user.h"
+#include "../header/matrix.h"
+#include "../header/queue.h"
+#include "../header/boolean.h"
+
 
 #define initialCap 10
 #define maxChar 100
@@ -10,15 +15,14 @@
 
 
 void loadDataUser(const char *filename, UserList *userList, Set *set) {
+    
     FILE *fileUser = fopen(filename, "r");
     if (fileUser == NULL) {
         perror("Gagal membuka file User!\n");
-        return;
+        exit(1);
     }
 
-    userList->data = (User *)malloc(initialCap * sizeof(User));
-    userList->Neff = 0;
-    userList->capacity = initialCap;
+    CreateListDin(userList, initialCap);
 
     char line[1024];
     fgets(line, sizeof(line), fileUser); // Lewati header
@@ -42,16 +46,17 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
                         break;
                     case 2: strncpy(u.password, buffer, sizeof(u.password)); break;
                     case 3: 
-                        if (strcmp(buffer, "ROLE_PASIEN") == 0) {
+                        if (strcmp(buffer, "pasien") == 0) {
                             u.role = ROLE_PASIEN;
                             break;
-                        } else if (strcmp(buffer, "ROLE_DOKTER") == 0) {
+                        } else if (strcmp(buffer, "dokter") == 0) {
                             u.role = ROLE_DOKTER;
                             break;
-                        } else if (strcmp(buffer, "ROLE_MANAGER") == 0) {
+                        } else if (strcmp(buffer, "manager") == 0) {
                             u.role = ROLE_MANAGER;
                             break;
                         }
+                        break;
                     case 4: strncpy(u.riwayat_penyakit, buffer, sizeof(u.riwayat_penyakit)); break;
                     case 5: u.suhu_tubuh = atof(buffer); break;
                     case 6: u.tekanan_darah_sistolik = atoi(buffer); break;
@@ -77,14 +82,9 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
         // Ambil field terakhir (setelah koma terakhir)
         buffer[idx] = '\0';
         if (field == 15) u.trombosit = atoi(buffer);
-
-        if (userList->Neff >= userList->capacity) {
-            userList->capacity *= 2;
-            userList->data = (User *)realloc(userList->data, userList->capacity * sizeof(User));
-        }
         
         initStack(&u.perut);
-        userList->data[userList->Neff++] = u;
+        AddUser(userList, u);
     }
 
     fclose(fileUser);
@@ -162,8 +162,8 @@ void loadDataPenyakit(const char *filename, PenyakitList *listPenyakit) {
 }
 
 
-void loadDataObat(const char *filename, ObatList *listObat){
-    FILE *fileObat = fopen(filename, "r");
+void loadDataObat(const char *fileName, ObatList *listObat){
+    FILE *fileObat = fopen(fileName, "r");
     if (fileObat == NULL) {
         perror("Gagal membuka file obat");
         return;
@@ -226,23 +226,27 @@ void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasiList) {
         return;
     }
 
-    relasiList->data = malloc(initialCap * sizeof(Obat_Penyakit));
-    relasiList->Neff = 0;
-    relasiList->capacity = initialCap;
+    typedef struct {
+        int idObat;
+        int idPenyakit;
+        int urutanMinum;
+    } Temp;
+
+    initObatPenyakitList(relasiList);
 
     char line[256];
     fgets(line, sizeof(line), fileOP);  // Lewati header
 
     while (fgets(line, sizeof(line), fileOP)) {
-        Obat_Penyakit r;
+        Temp temp;
         char buffer[64];
         int i = 0, j = 0, field = 0;
 
         while (line[i] != '\0' && line[i] != '\n') {
             if (line[i] == ';') {
                 buffer[j] = '\0';
-                if (field == 0) r.id_obat = atoi(buffer);
-                else if (field == 1) r.id_penyakit = atoi(buffer);
+                if (field == 0) temp.idObat = atoi(buffer);
+                else if (field == 1) temp.idPenyakit = atoi(buffer);
                 field++;
                 j = 0;
             } else {
@@ -252,90 +256,140 @@ void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasiList) {
         }
 
         buffer[j] = '\0';
-        if (field == 2) r.urutan_minum = atoi(buffer);
+        if (field == 2) temp.urutanMinum = atoi(buffer);
 
-        // Tambah ke list
-        if (relasiList->Neff >= relasiList->capacity) {
-            relasiList->capacity *= 2;
-            relasiList->data = realloc(relasiList->data, relasiList->capacity * sizeof(Obat_Penyakit));
+        // Cari apakah penyakit sudah ada
+        int index = -1;
+        for (int i = 0; i < relasiList->length; i++) {
+            if (relasiList->buffer[i].id_penyakit == temp.idPenyakit) {
+                index = i;
+                break;
+            }
         }
 
-        relasiList->data[relasiList->Neff++] = r;
-    }
+        // Kalau belum ada, tambah entry baru
+        if (index == -1) {
+            index = relasiList->length++;
+            relasiList->buffer[index].id_penyakit = temp.idPenyakit;
+        }
 
+        // Masukkan obat ke urutan yang benar
+        int pos = temp.urutanMinum - 1;
+        relasiList->buffer[index].urutan_obat[pos] = temp.idObat;
+        relasiList->buffer[index].jumlah_obat++;
+    }
     fclose(fileOP);
 }
 
-// void loadDataConfig(const char *filename, Matrix *rumahSakit, Inventory *daftarInventory, int *jumlahInventory) {
-//     FILE *fileConfig = fopen(filename, "r");
-//     if (!fileConfig) {
-//         printf("Gagal membuka file konfigurasi.\n");
-//         return;
-//     }
 
-//     // Baris 1: ukuran denah
-//     rumahSakit->rows = readInt(fileConfig);
-//     fgetc(fileConfig);  // Buang spasi
-//     rumahSakit->cols = readInt(fileConfig);
-    
-//     // Baris 2: kapasitas ruangan
-//     rumahSakit->kapasitasRuangan = readInt(fileConfig);
+void loadConfig(const char *filename, Matrix *denah, UserList *userList){
+    FILE *fileConfig = fopen(filename, "r");
+    if (fileConfig == NULL) {
+        printf("Error: Tidak dapat membuka file %s\n", filename);
+        return;
+    }
 
-//     // Baris 3-8: ruangan
-//     for (int i = 0; i < rumahSakit->rows * rumahSakit->cols; i++) {
-//         int dokterId = readInt(fileConfig);
+    int rows, cols;
+    fscanf(fileConfig, "%d %d\n", &rows, &cols);
 
-//         int row = i / rumahSakit->cols;
-//         int col = i % rumahSakit->cols;
+    // Baca kapasitas maksimal pasien per ruangan
+    int kapasitas;
+    fscanf(fileConfig, "%d\n", &kapasitas);
+    CreateMatrix(rows, cols, kapasitas, denah);
+    denah->kapasitasRuangan = kapasitas;
 
-//         initQueue(&rumahSakit->data[row][col].antrian);
+    // Baca data antrian per ruangan sebanyak rows*cols baris
+    for (int i = 0; i < rows * cols; i++) {
+        int dokterId;
+        // Cek apakah baris kosong atau hanya 0 (tidak ada dokter & pasien)
+        char line[256];
+        if (fgets(line, sizeof(line), fileConfig) == NULL) break;
 
-//         if (dokterId == 0) {
-//             strcpy(rumahSakit->data[row][col].nama_dokter, "-");
-//             while (fgetc(fileConfig) != '\n'); // Skip to next line
-//             continue;
-//         }
+        // Hilangkan newline jika ada
+        line[strcspn(line, "\r\n")] = 0;
 
-//         sprintf(rumahSakit->data[row][col].nama_dokter, "Dokter %d", dokterId);
+        // Kalau baris "0" berarti tidak ada dokter & pasien
+        if (strcmp(line, "0") == 0) {
+            // Ruangan i tanpa dokter dan pasien
+            int r = i / cols;
+            int c = i % cols;
+            denah->data[r][c].nama_dokter[0] = '\0';
+            // antrian sudah kosong karena diinisialisasi sebelumnya
+            continue;
+        }
 
-//         int pasienId;
-//         while ((pasienId = readInt(fileConfig)) != -1) {
-//             enqueue(&rumahSakit->data[row][col].antrian, pasienId);
+        // Kalau tidak 0, parse data dokter dan pasien
+        char *token = strtok(line, " ");
+        if (token == NULL) continue;
+        dokterId = atoi(token);
 
-//             int c = fgetc(fileConfig);
-//             if (c == '\n' || c == EOF) break;
-//             else ungetc(c, fileConfig);  // Put back character to be read again
-//         }
-//     }
+        // Simpan dokter ID sebagai string ke nama_dokter
+        int r = i / cols;
+        int c = i % cols;
+        sprintf(denah->data[r][c].nama_dokter, "Dokter%d", dokterId);
 
-//     // Baris 9: jumlah inventory
-//     *jumlahInventory = readInt(fileConfig);
+        // Sisa token adalah id pasien, masukkan ke antrian
+        while ((token = strtok(NULL, " ")) != NULL) {
+            int pasienId = atoi(token);
+            enqueue(&(denah->data[r][c].antrian), pasienId);
+        }
+    }
 
-//     // Baris 10+: daftar inventory
-//     for (int i = 0; i < *jumlahInventory; i++) {
-//         int pasienId = readInt(fileConfig);
-//         daftarInventory[i].pasienId = pasienId;
-//         daftarInventory[i].jumlahObat = 0;
+    // Baris berikutnya: banyak pasien yang mempunyai inventory obat
+    int jumlahPasienInventory = 0;
+    fscanf(fileConfig, "%d\n", &jumlahPasienInventory);
 
-//         while (1) {
-//             int obatId = readInt(fileConfig);
-//             if (obatId == -1) break;
+    // Untuk setiap pasien inventory, baca id pasien dan daftar obat
+    // (kalau mau disimpan ke struktur data pasien, di luar scope prosedur ini)
+    for (int i = 0; i < jumlahPasienInventory; i++) {
+        char line[256];
+        if (fgets(line, sizeof(line), fileConfig) == NULL) break;
+        line[strcspn(line, "\r\n")] = 0;
 
-//             daftarInventory[i].obat[daftarInventory[i].jumlahObat++] = obatId;
+        char *token = strtok(line, " ");
+        if (token == NULL) continue;
+        int pasienId = atoi(token);
 
-//             int c = fgetc(fileConfig);
-//             if (c == '\n' || c == EOF) break;
-//             else ungetc(c, fileConfig);  // Put back character to be read again
-//         }
-//     }
+        // Cari User sesuai pasienId
+        User *user = findUserByID(userList, pasienId);
+        if (user == NULL) continue; // pasien tidak ditemukan, skip
 
-//     fclose(fileConfig);
-//     printf("Data konfigurasi berhasil dimuat.\n");
-// }
+        user->inventory.jumlahObat = 0;
+        while ((token = strtok(NULL, " ")) != NULL) {
+            int idObat = atoi(token);
+            user->inventory.obat[user->inventory.jumlahObat++] = idObat;
+        }
+    }
 
-void LOAD(UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList, Set *nama_unik){
-    loadDataUser("./file/user.csv", userList, nama_unik);
-    loadDataPenyakit("./file/penyakit.csv", penyakitList);
-    loadDataObat("./file/obat.csv", obatList);
-    loadDataObatPenyakit("./file/obat_penyakit.csv", relasiList);
+    fclose(fileConfig);
+}
+
+void LOAD(const char *folderName, UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList, Set *nama_unik, Matrix *denah){
+    char path[256];
+    struct stat sb;
+
+    // Bangun path lengkap: ./file/data 1
+    snprintf(path, sizeof(path), "./file/%s", folderName);
+
+    // Validasi apakah folder ada
+    if (stat(path, &sb) != 0 || !S_ISDIR(sb.st_mode)) {
+        printf("Folder '%s' tidak ditemukan di dalam folder 'file/'\n", folderName);
+        exit(1);
+    }
+
+    // Bangun path masing-masing file CSV
+    char pathUser[300], pathPenyakit[300], pathObat[300], pathRelasi[300], pathConfig[300];
+
+    snprintf(pathUser, sizeof(pathUser), "%s/user.csv", path);
+    snprintf(pathPenyakit, sizeof(pathPenyakit), "%s/penyakit.csv", path);
+    snprintf(pathObat, sizeof(pathObat), "%s/obat.csv", path);
+    snprintf(pathRelasi, sizeof(pathRelasi), "%s/obat_penyakit.csv", path);
+    snprintf(pathConfig, sizeof(pathConfig), "%s/config.txt", path);
+
+    // Panggil prosedur pemrosesan masing-masing
+    loadDataUser(pathUser, userList, nama_unik);
+    loadDataPenyakit(pathPenyakit, penyakitList);
+    loadDataObat(pathObat, obatList);
+    loadDataObatPenyakit(pathRelasi, relasiList);
+    loadConfig(pathConfig, denah, userList);
 }

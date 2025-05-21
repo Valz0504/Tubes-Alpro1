@@ -2,10 +2,10 @@
 #include <string.h>
 #include "../header/matrix.h"
 
-void CreateMatrix(int rows, int cols, Matrix *M) {
+void CreateMatrix(int rows, int cols, int kapasitas, Matrix *M) {
     M->rows = rows;
     M->cols = cols;
-    M->kapasitasRuangan = 3;
+    M->kapasitasRuangan = kapasitas;
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             strcpy(M->data[i][j].nama_dokter, "");
@@ -19,19 +19,21 @@ boolean isRuanganKosong(Ruangan r) {
 }
 
 boolean getPosisiRuangan(Matrix *denah, char ruang[], int *row, int *col) {
-    if (strlen(ruang) < 2 || strlen(ruang) > 2) return FALSE;
+    if (strlen(ruang) < 2 || strlen(ruang) > 3) return FALSE;
 
     char first_char = ruang[0];
     if (first_char < 'A' || first_char > 'Z') return FALSE;
 
-    *row = first_char - 'A';
-    int col_temp = atoi(&ruang[1]);
-    if (col_temp < 1 || col_temp > 10) return FALSE;
+    *col = first_char - 'A'; 
 
-    *col = col_temp - 1;
+    int row_temp = atoi(&ruang[1]);
+    if (row_temp < 1 || row_temp > denah->rows) return FALSE;
+
+    *row = row_temp - 1;
 
     return TRUE;
 }
+
 
 boolean isDokterSudahAssign(Matrix *denah, char nama_dokter[]) {
     for (int i = 0; i < denah->rows; i++) {
