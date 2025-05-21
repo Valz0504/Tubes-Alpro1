@@ -57,7 +57,7 @@ void logout(User *current_user, boolean *isLogin); // general
 void registerPasien(UserList *list, Set *set, boolean *isLogin); // pasien
 void helpMenu(User current_user, boolean *isLogin); // general
 void denahRumahSakit(Matrix M); // general
-void lihatRuangan(Matrix denah, UserList dataBaseUser, User current_user, boolean isLogin); // general
+void lihatRuangan(Matrix denah, UserList dataBaseUser, User current_user, boolean *isLogin); // general
 void lihatAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, boolean *isLogin); // manager
 void assignDokter(Matrix *denah, UserList *list, User *current_user, boolean *isLogin); // manager
 void tambahDokter(UserList *list, User *current_user, Set *set, boolean *isLogin); // manager
