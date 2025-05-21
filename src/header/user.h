@@ -37,6 +37,7 @@ typedef struct
     int trombosit;    
     Inventory inventory;
     Stack perut;
+    Queue pasien;
 } User;
 
 
