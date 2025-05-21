@@ -75,7 +75,13 @@ int main(int argc, char* argv[]) {
             cariPasien(&dataBaseUser, &current_user, &isLogin);
         } else if (strcmp(prompt, "CARI_DOKTER") == 0) {
             cariDokter(&dataBaseUser, &current_user, &isLogin);
-        }
+        } else if (strcmp(prompt, "LIHAT_USER") == 0) {
+            lihatUser(&dataBaseUser, &current_user, &isLogin);
+        }else if (strcmp(prompt, "LIHAT_PASIEN") == 0) {
+            lihatPasien(&dataBaseUser, &current_user, &isLogin);
+        } else if (strcmp(prompt, "LIHAT_DOKTER") == 0) {
+            lihatDokter(&dataBaseUser, &current_user, &isLogin);
+        } 
         else {
             printf("Nama fungsi tidak terdaftar atau kesalahan pengetikan command!\n\n");
         }

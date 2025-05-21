@@ -58,7 +58,9 @@ void denahRumahSakit(Matrix M); // general
 void lihatRuangan(); // general
 void lihatAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, boolean *isLogin); // manager
 void cariUser(); // manager
-void lihatUser(); // manager
+void lihatUser(UserList *dataBaseUser, User *current_user, boolean *isLogin); // manager
+void lihatPasien(UserList *dataBaseUser, User *current_user, boolean *isLogin); //manager
+void lihatDokter(UserList *dataBaseUser, User *current_user, boolean *isLogin); //manager
 void assignDokter(Matrix *denah, UserList *list, User *current_user, boolean *isLogin); // manager
 void tambahDokter(UserList *list, User *current_user, Set *set, boolean *isLogin); // manager
 void cariUser(UserList *dataBaseUser, User *current_user, boolean *isLogin); // manager
@@ -67,7 +69,7 @@ void cariDokter(UserList *dataBaseUser, User *current_user, boolean *isLogin); /
 void diagnosis(User *current_user, UserList *dataBaseUser, PenyakitList *penyakit, boolean *isLogin, Matrix *denah); // dokter
 void ngobatin(User *current_user, PenyakitList *penyakitList, Obat_PenyakitList *obatPenyakitList, boolean *isLogin); // dokter
 void daftarCheckUp(); // pasien
-void antrianSaya(); // pasien
+void antrianSaya(User *current_user, Matrix *denah, boolean *isLogin); // pasien
 void minumObat(User *current_user, ObatList *dataObat, boolean *isLogin); // pasien
 void minumPenawar(); // pasien
 void bolehPulangGaa(); // pasien
@@ -95,6 +97,7 @@ void dealocateListDin(UserList *l);
 void expandList(UserList *l, int num); 
 void copyList(UserList lIn, UserList *lOut);
 void sortListByUsername(UserList *l, boolean asc);
+void sortListByID(UserList *l, boolean asc);
 
 
 /* Prosedur untuk manajemen Inventory User */
