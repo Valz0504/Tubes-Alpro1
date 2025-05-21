@@ -55,22 +55,31 @@ void FileUser(const char *filePath, UserList *users){// membuat/overwrite file u
     for (int i = 0; i < users->Neff; i++) {
         User u = users->data[i];
         if (u.role == 0) {
-            strcpy(peran, "ROLE_PASIEN");
+            strcpy(peran, "pasien");
+            fprintf(fp,
+                "%d;%s;%s;%s;%s;%.1f;%d;%d;%d;%.1f;%d;%.1f;%d;%d;%d;%d\n",
+                u.id, u.username, u.password, peran, u.riwayat_penyakit,
+                u.suhu_tubuh, u.tekanan_darah_sistolik, u.tekanan_darah_diastolik,
+                u.detak_jantung, u.saturasi_oksigen, u.kadar_gula_darah,
+                u.berat_badan, u.tinggi_badan, u.kadar_kolesterol,
+                u.kadar_kolesterol_Ldl, u.trombosit
+            );
         } 
         else if (u.role == 1) {
-            strcpy(peran, "ROLE_DOKTER");
+            strcpy(peran, "dokter");
+            fprintf(fp,
+                "%d;%s;%s;%s\n",
+                u.id, u.username, u.password, peran
+            );
         } 
         else if (u.role == 2) {
-            strcpy(peran, "ROLE_MANAGER");
+            strcpy(peran, "manager");
+            fprintf(fp,
+                "%d;%s;%s;%s\n",
+                u.id, u.username, u.password, peran
+            );
         }
-        fprintf(fp,
-            "%d;%s;%s;%s;%s;%.1f;%d;%d;%d;%.1f;%d;%.1f;%d;%d;%d;%d;\n",
-            u.id, u.username, u.password, peran, u.riwayat_penyakit,
-            u.suhu_tubuh, u.tekanan_darah_sistolik, u.tekanan_darah_diastolik,
-            u.detak_jantung, u.saturasi_oksigen, u.kadar_gula_darah,
-            u.berat_badan, u.tinggi_badan, u.kadar_kolesterol,
-            u.kadar_kolesterol_Ldl, u.trombosit
-        );
+
     }
     fclose(fp);
 }
@@ -100,7 +109,7 @@ void FilePenyakit(const char *filePath, PenyakitList *sakit){// membuat/overwrit
         "kolesterol_Max,trombosit_Min,trombosit_Max\n");
     for(int i = 0; i < sakit->Neff; i++){
         Penyakit S = sakit->data[i];
-        fprintf(fp, "%d;%s;%f;%f;%d;%d;%d;%d;%d;%d;%f;%f;%d;%d;%f;%f;%d;%d;%d;%d;%d;%d;\n",
+        fprintf(fp, "%d;%s;%f;%f;%d;%d;%d;%d;%d;%d;%f;%f;%d;%d;%f;%f;%d;%d;%d;%d;%d;%d\n",
              S.id, S.nama, S.suhu_tubuh_Min, S.suhu_tubuh_Max, S.tekanan_sistolik_Min
             , S.tekanan_sistolik_Max, S.tekanan_diastolik_Min, S.tekanan_diastolik_Max
             , S.detak_jantung_Min, S.detak_jantung_Max, S.saturasi_Min, S.saturasi_Max
@@ -117,7 +126,7 @@ void FileObat_Penyakit(const char *filePath, Obat_PenyakitList *obat_penyakit) {
         return;
     }
 
-    fprintf(fp, "idObat;idPenyakit;urutanMinum;\n");
+    fprintf(fp, "idObat;idPenyakit;urutanMinum\n");
 
     for (int i = 0; i < obat_penyakit->length; i++) {
         MapEntryList *entry = &obat_penyakit->buffer[i];
