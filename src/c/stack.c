@@ -20,6 +20,7 @@ void pop(Stack *s, int *value) {
     if (s->top >= 0) {
         *value = s->data[s->top];
         s->top--;
+        s->length--;
     } else {
         printf("Stack kosong!\n");
     }

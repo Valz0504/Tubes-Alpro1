@@ -15,7 +15,6 @@ void bolehPulangGaa(User *current_user, PenyakitList *dataPenyakit, ObatList *da
         }
 
         printf("Dokter sedang memeriksa keadaanmu...\n\n");
-
         int idPenyakit = getIDPenyakit(dataPenyakit, current_user->riwayat_penyakit);
         int indexDiMap = getMapIndexByPenyakit(dataObatPenyakit, idPenyakit);
         if (current_user->perut.length != dataObatPenyakit->buffer[indexDiMap].jumlah_obat) {
