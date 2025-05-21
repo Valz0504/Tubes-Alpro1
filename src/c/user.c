@@ -8,7 +8,7 @@
 #define false 0
 
 void CreateUser(UserList *l, User *u, char name[], char pass[], Role role) {
-    u->id = l->Neff;
+    u->id = l->Neff + 1;
     strcpy(u->username, name);
     strcpy(u->password, pass);
     u->role = role;

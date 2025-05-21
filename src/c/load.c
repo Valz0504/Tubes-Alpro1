@@ -22,9 +22,7 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
         exit(1);
     }
 
-    userList->data = (User *)malloc(initialCap * sizeof(User));
-    userList->Neff = 0;
-    userList->capacity = initialCap;
+    CreateListDin(userList, initialCap);
 
     char line[1024];
     fgets(line, sizeof(line), fileUser); // Lewati header
@@ -84,14 +82,9 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
         // Ambil field terakhir (setelah koma terakhir)
         buffer[idx] = '\0';
         if (field == 15) u.trombosit = atoi(buffer);
-
-        if (userList->Neff >= userList->capacity) {
-            userList->capacity *= 2;
-            userList->data = (User *)realloc(userList->data, userList->capacity * sizeof(User));
-        }
         
         initStack(&u.perut);
-        userList->data[userList->Neff++] = u;
+        AddUser(userList, u);
     }
 
     fclose(fileUser);
@@ -273,15 +266,6 @@ void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasiList) {
     fclose(fileOP);
 }
 
-User* findUserById(UserList *userList, int id) {
-    for (int i = 0; i < userList->Neff; i++) {
-        if (userList->data[i].id == id) {
-            return &(userList->data[i]);
-        }
-    }
-    return NULL;  // Tidak ditemukan
-}
-
 void loadConfig(const char *filename, Matrix *denah, UserList *userList){
     FILE *fileConfig = fopen(filename, "r");
     if (fileConfig == NULL) {
@@ -351,7 +335,7 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList){
         int pasienId = atoi(token);
 
         // Cari User sesuai pasienId
-        User *user = findUserById(userList, pasienId);
+        User *user = findUserByID(userList, pasienId);
         if (user == NULL) continue; // pasien tidak ditemukan, skip
 
         user->inventory.jumlahObat = 0;
