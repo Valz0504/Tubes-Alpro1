@@ -241,7 +241,7 @@ void cariPasien(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
         }
 
     } else {
-        printf("Anda bukan manager! Tidak bisa cari user!\n\n");
+        printf("Anda bukan manager! Tidak bisa cari pasien!\n\n");
     }
 }
 
@@ -272,7 +272,7 @@ void cariDokter(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
                     printf("Tidak ditemukan dokter dengan ID %d\n\n", nomor_id);
                 } else {
                     if (u->role == ROLE_DOKTER) {
-                        printf("\nMenampilkan pengguna dengan nomor ID %d...\n", nomor_id);
+                        printf("\nMenampilkan dokter dengan nomor ID %d...\n", nomor_id);
                         printf("ID |    Nama   \n");
                         printf("---------------\n");
                         printf("%d |  %s       \n\n", nomor_id, u->username);
@@ -307,6 +307,6 @@ void cariDokter(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
                 break;
         }
     } else {
-        printf("Anda bukan manager! Tidak bisa cari user!\n\n");        
+        printf("Anda bukan manager! Tidak bisa cari dokter!\n\n");        
     }
 }
