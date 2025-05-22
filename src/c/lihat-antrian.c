@@ -13,7 +13,7 @@ void lihatAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, boo
         for (int i = 0; i < denah->rows; i++) {
             for (int j = 0; j < denah->cols; j++) {
                 if (!isRuanganKosong(denah->data[i][j])) {
-                    printf("============ %c%d ============\n", 'A' + j, i + 1);
+                    printf("============ %c%d ============\n", 'A' + i, j + 1);
                     printf("Kapasitas: %d\n", denah->kapasitasRuangan);
                     printf("Dokter: Dr. %s\n", denah->data[i][j].nama_dokter);
                     

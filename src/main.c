@@ -43,7 +43,7 @@ int main(int argc, char* argv[]) {
         printf(MAGENTA ">>> Command: " RESET);
         scanf("%s", prompt);
         printf("\n");
-        
+
         if (strcmp(prompt, "LOGIN") == 0) {
             login(&dataBaseUser, &current_user, &isLogin);
         } else if (strcmp(prompt, "REGISTER") == 0) {
@@ -90,7 +90,7 @@ int main(int argc, char* argv[]) {
             bolehPulangGaa(&current_user, &dataPenyakit, &dataObat, &dataObatPenyakit, &isLogin);
         }
         else {
-            printf("Nama fungsi tidak terdaftar atau kesalahan pengetikan command!\n\n");
+            printf(RED "Nama fungsi tidak terdaftar atau kesalahan pengetikan command!\n\n" RESET);
         }
     }
 
