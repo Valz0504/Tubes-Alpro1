@@ -3,7 +3,7 @@
 
 void lihatAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, boolean *isLogin) {
     if (!(*isLogin)) {
-        printf("Login sebagai Manager terlebih dahulu!\n\n");
+        printf(RED "Login sebagai Manager terlebih dahulu!\n\n" RESET);
         return;
     }
 
@@ -13,46 +13,46 @@ void lihatAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, boo
         for (int i = 0; i < denah->rows; i++) {
             for (int j = 0; j < denah->cols; j++) {
                 if (!isRuanganKosong(denah->data[i][j])) {
-                    printf("============ %c%d ============\n", 'A' + i, j + 1);
-                    printf("Kapasitas: %d\n", denah->kapasitasRuangan);
-                    printf("Dokter: Dr. %s\n", denah->data[i][j].nama_dokter);
-                    
+                    printf(BLUE BOLD "============ %c%d ============\n" RESET, 'A' + i, j + 1);
+                    printf(GRAY "Kapasitas   : " RESET YELLOW "%d\n" RESET, denah->kapasitasRuangan);
+                    printf(GRAY "Dokter      : " RESET CYAN "%s\n" RESET, denah->data[i][j].nama_dokter);
+
                     Node *curr = denah->data[i][j].antrian.head;
-                    printf("Pasien di antrian dalam ruangan: \n");
+                    printf(GRAY "Pasien di antrian dalam ruangan:\n" RESET);
                     if (!isEmpty(denah->data[i][j].antrian)) {
                         int index = 0;
                         while (curr != NULL && index < denah->kapasitasRuangan) {
                             User *pasien = findUserByID(dataBaseUser, curr->info);
-                            printf("\t%d. %s\n", index+1, pasien->username);
+                            printf(YELLOW "\t%d. %s\n" RESET, index + 1, pasien->username);
                             curr = curr->next;
                             index++;
                         }
 
                         index = 1;
-                        printf("Pasien di antrian luar ruangan: \n");
+                        printf(GRAY "Pasien di antrian luar ruangan:\n" RESET);
                         if (curr == NULL) {
-                            printf("\tTidak ada pasien di antrian luar ruangan saat ini.\n\n");
+                            printf(YELLOW "\tTidak ada pasien di antrian luar ruangan saat ini.\n\n" RESET);
                             continue;
                         }
                         while (curr != NULL) {
                             User *pasien = findUserByID(dataBaseUser, curr->info);
-                            printf("\t%d. %s\n", index, pasien->username);
+                            printf(YELLOW "\t%d. %s\n" RESET, index, pasien->username);
                             curr = curr->next;
                             index++;
                         }
 
                     } else {
-                        printf("\tTidak ada pasien di antrian dalam ruangan saat ini.\n");
-                        printf("Pasien di antrian luar ruangan: \n");
-                        printf("\tTidak ada pasien di antrian luar ruangan saat ini.\n");
+                        printf(YELLOW "\tTidak ada pasien di antrian dalam ruangan saat ini.\n" RESET);
+                        printf(GRAY "Pasien di antrian luar ruangan:\n" RESET);
+                        printf(YELLOW "\tTidak ada pasien di antrian luar ruangan saat ini.\n" RESET);
                     }
-                    
+
                     printf("\n");
                 }
             }
         }
 
     } else {
-        printf("Anda bukan manager! Tidak bisa lihat semua antrian!\n\n");
+        printf(RED "Anda bukan manager! Tidak bisa lihat semua antrian!\n\n" RESET);
     }
 }

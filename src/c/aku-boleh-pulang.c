@@ -66,11 +66,11 @@ void bolehPulangGaa(User *current_user, PenyakitList *dataPenyakit, ObatList *da
             printf(RESET "\n");
 
             printf(MAGENTA "Urutan obat yang kamu minum:\n" RESET);
-            printf(BRIGHT_BLACK "  ");
+            printf(YELLOW "  ");
             for (int i = 0; i < current_user->perut.length; i++) {
                 printf("%s", getObatName(dataObat, current_user->perut.data[i]));
                 if (i != current_user->perut.length - 1) {
-                    printf(" " YELLOW "->" BRIGHT_BLACK " ");
+                    printf(" " YELLOW "->" YELLOW " ");
                 }
             }
             printf(RESET "\n\n");
