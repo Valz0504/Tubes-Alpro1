@@ -349,6 +349,7 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
     }
     
     denah->kapasitasRuangan = kapasitasDalam;
+    denah->kapasitasLuar = kapasitasLuar;
 
     // Inisialisasi semua ruangan
     for (int i = 0; i < denah->rows; i++) {

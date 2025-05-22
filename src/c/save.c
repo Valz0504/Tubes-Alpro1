@@ -185,44 +185,36 @@ void FileConfig(const char *filePath, Matrix *Hospital, UserList *user1){ //BELU
         return;
     }
     int terisi = 0;
-    int nol = 0;
     int dokter;
     fprintf(fp, "%d %d\n", Hospital->rows, Hospital->cols);
-    fprintf(fp, "%d\n", Hospital->kapasitasRuangan);
+    fprintf(fp, "%d %d\n", Hospital->kapasitasRuangan, Hospital->kapasitasLuar);
     for(int i = 0; i < Hospital->rows; i++){
         for(int j = 0; j < Hospital->cols ; j++){
-            for(int k = 0; k < isiRuangan(*Hospital, i, j)+1 ; k++){
-                if(k == 0){
-                    User *I = findUser(user1, Hospital->data[i][j].nama_dokter);
-                    if(I != NULL){
-                        fprintf(fp, "%d ", I->id);
-                        dokter = I->id;
-                    }
-                    else{
-                        fprintf(fp, "%d ", nol);
-                        dokter = 0;
-                    }
+            // Tulis dokter
+            User *I = findUser(user1, Hospital->data[i][j].nama_dokter);
+            if(I != NULL){
+                fprintf(fp, "%d ", I->id);
+                dokter = I->id;
+            } else {
+                fprintf(fp, "%d ", 0);
+                dokter = 0;
+            }
+            // Tulis antrian pasien (jika ada dokter)
+            if(dokter != 0){
+                Node *A = Hospital->data[i][j].antrian.head;
+                while(A != NULL){
+                    fprintf(fp, "%d ", A->info);
+                    A = A->next;
                 }
-                else if(dokter != 0){
-                    Node *A = Hospital->data[i][j].antrian.head;
-                    if(A != NULL){
-                        while(A != NULL){
-                            fprintf(fp, "%d ", A->info);
-                            A = A->next;
-                        }
-                    }
-                    
-                }
-                terisi++;
             }
             fprintf(fp, "\n");
-            terisi = 0;
         }
     }
     int PasienObat[100][100];
     int X = JmlhInventory_ada(*user1, PasienObat);
     
     fprintf(fp, "%d\n", X);
+    // Tulis inventory pasien
     for(int i = 0; i < X; i++){
         for(int j = 0; j < 100; j++){
             if(j == 0){
