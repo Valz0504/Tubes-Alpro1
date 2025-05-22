@@ -281,282 +281,204 @@ void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasiList) {
     fclose(fileOP);
 }
 
-
 void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
-    FILE *fileConfig = fopen(filename, "r");
-    if (fileConfig == NULL) {
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
         printf("Error: Tidak dapat membuka file %s\n", filename);
         return;
     }
 
     char buffer[256];
-    int index = 0;
+    int index;
 
-    // --- BACA BARIS 1: ukuran denah ---
-    fgets(buffer, sizeof(buffer), fileConfig);
-    buffer[strcspn(buffer, "\r\n")] = 0;
-    int rows = 0, cols = 0;
+    // Baca ukuran denah (baris pertama)
+    if (fgets(buffer, sizeof(buffer), file) == NULL) {
+        printf("Error: File kosong\n");
+        fclose(file);
+        return;
+    }
+
+    // Parse rows dan cols
+    denah->rows = 0;
+    denah->cols = 0;
     index = 0;
+    
+    // Parse rows
     while (buffer[index] >= '0' && buffer[index] <= '9') {
-        rows = rows * 10 + (buffer[index++] - '0');
+        denah->rows = denah->rows * 10 + (buffer[index++] - '0');
     }
-    while (buffer[index] && (buffer[index] < '0' || buffer[index] > '9')) index++;
+    
+    // Lewati spasi/pemisah
+    while (buffer[index] == ' ' || buffer[index] == '\t') index++;
+    
+    // Parse cols
     while (buffer[index] >= '0' && buffer[index] <= '9') {
-        cols = cols * 10 + (buffer[index++] - '0');
+        denah->cols = denah->cols * 10 + (buffer[index++] - '0');
     }
-    denah->rows = rows;
-    denah->cols = cols;
 
-    // --- BACA BARIS 2: kapasitas ruangan dan antrian luar ---
-    fgets(buffer, sizeof(buffer), fileConfig);
-    buffer[strcspn(buffer, "\r\n")] = 0;
+    // Baca kapasitas (baris kedua)
+    if (fgets(buffer, sizeof(buffer), file) == NULL) {
+        printf("Error: Format file salah (kapasitas)\n");
+        fclose(file);
+        return;
+    }
+
+    // Parse kapasitas dalam dan luar
     int kapasitasDalam = 0, kapasitasLuar = 0;
     index = 0;
+    
+    // Parse kapasitas dalam
     while (buffer[index] >= '0' && buffer[index] <= '9') {
         kapasitasDalam = kapasitasDalam * 10 + (buffer[index++] - '0');
     }
-    while (buffer[index] && (buffer[index] < '0' || buffer[index] > '9')) index++;
+    
+    // Lewati spasi/pemisah
+    while (buffer[index] == ' ' || buffer[index] == '\t') index++;
+    
+    // Parse kapasitas luar
     while (buffer[index] >= '0' && buffer[index] <= '9') {
         kapasitasLuar = kapasitasLuar * 10 + (buffer[index++] - '0');
     }
+    
     denah->kapasitasRuangan = kapasitasDalam;
 
-    // --- Inisialisasi ruangan ---
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
+    // Inisialisasi semua ruangan
+    for (int i = 0; i < denah->rows; i++) {
+        for (int j = 0; j < denah->cols; j++) {
             denah->data[i][j].nama_dokter[0] = '\0';
-            initQueue(&(denah->data[i][j].antrian));
+            initQueue(&denah->data[i][j].antrian);
         }
     }
 
-    // --- BACA KONFIGURASI RUANGAN ---
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            if (fgets(buffer, sizeof(buffer), fileConfig) == NULL) {
-                printf("Baris config untuk ruangan [%d][%d] tidak cukup!\n", i, j);
+    // Baca state ruangan (rows * cols baris)
+    for (int i = 0; i < denah->rows; i++) {
+        for (int j = 0; j < denah->cols; j++) {
+            if (fgets(buffer, sizeof(buffer), file) == NULL) {
+                printf("Error: Data ruangan tidak lengkap\n");
+                fclose(file);
                 return;
             }
-            buffer[strcspn(buffer, "\r\n")] = 0; // Hapus newline
 
+            // Hapus newline
+            buffer[strcspn(buffer, "\r\n")] = '\0';
+
+            // Jika ruangan kosong
             if (strcmp(buffer, "0") == 0) {
                 denah->data[i][j].nama_dokter[0] = '\0';
-                initQueue(&(denah->data[i][j].antrian));
                 continue;
             }
 
-            // --- BACA ID DOKTER ---
-            int dokterId = 0;
+            // Parse dokter ID
             index = 0;
-            while (buffer[index] == ' ') index++; // skip spasi
+            int dokterId = 0;
             while (buffer[index] >= '0' && buffer[index] <= '9') {
                 dokterId = dokterId * 10 + (buffer[index++] - '0');
             }
 
-            User *temp = findUserByID(userList, dokterId);
-            if (temp == NULL) {
-                printf("⚠️  Dokter dengan ID %d tidak ditemukan untuk ruangan [%d][%d]\n", dokterId, i, j);
-                denah->data[i][j].nama_dokter[0] = '\0';
-                initQueue(&(denah->data[i][j].antrian));
-                continue;
+
+            // Cari user berdasarkan ID
+            User *dokter = findUserByID(userList, dokterId);
+            if (dokter != NULL) {
+                // Salin nama asli dokter ke field nama_dokter
+                snprintf(denah->data[i][j].nama_dokter, 100, "%s", dokter->username);
+            } else {
+                // Jika tidak ditemukan, fallback
+                snprintf(denah->data[i][j].nama_dokter, 100, "%d", dokterId);
             }
 
-            // --- Simpan nama dokter ke ruangan ---
-            sprintf(denah->data[i][j].nama_dokter, "%s", temp->username);
+            // Lewati spasi setelah dokter ID
+            while (buffer[index] == ' ') index++;
 
-            // --- BACA ID PASIEN DALAM ANTRIAN ---
+            // Parse pasien dalam ruangan
             int currentNumber = 0;
-            boolean readingNumber = FALSE;
-            while (buffer[index]) {
+            int pasienCount = 0;
+            while (buffer[index] != '\0' && pasienCount < kapasitasDalam) {
                 if (buffer[index] >= '0' && buffer[index] <= '9') {
                     currentNumber = currentNumber * 10 + (buffer[index] - '0');
-                    readingNumber = TRUE;
-                } else if (readingNumber) {
-                    enqueue(&(denah->data[i][j].antrian), currentNumber);
+                } else if (currentNumber > 0) {
+                    enqueue(&denah->data[i][j].antrian, currentNumber);
                     currentNumber = 0;
-                    readingNumber = FALSE;
+                    pasienCount++;
                 }
                 index++;
             }
-            if (readingNumber) {
-                enqueue(&(denah->data[i][j].antrian), currentNumber);
+            if (currentNumber > 0) {
+                enqueue(&denah->data[i][j].antrian, currentNumber);
             }
+
+            // Lewati spasi antara pasien dalam dan antrian luar
+            while (buffer[index] == ' ') index++;
+
+            // Parse antrian luar (tidak disimpan di contoh struct)
+            // Diabaikan karena tidak ada tempat penyimpanan di struct
         }
     }
 
-    // --- BACA JUMLAH PASIEN DENGAN OBAT ---
+    // Baca jumlah pasien dengan inventory (baris setelah ruangan)
+    if (fgets(buffer, sizeof(buffer), file) == NULL) {
+        printf("Error: Tidak ada data inventory\n");
+        fclose(file);
+        return;
+    }
+
     int jumlahPasienInventory = 0;
-    if (fgets(buffer, sizeof(buffer), fileConfig) != NULL) {
-        buffer[strcspn(buffer, "\r\n")] = 0;
-        index = 0;
-        while (buffer[index] >= '0' && buffer[index] <= '9') {
-            jumlahPasienInventory = jumlahPasienInventory * 10 + (buffer[index++] - '0');
-        }
+    index = 0;
+    while (buffer[index] >= '0' && buffer[index] <= '9') {
+        jumlahPasienInventory = jumlahPasienInventory * 10 + (buffer[index++] - '0');
     }
 
-    // --- BACA INVENTORY OBAT PASIEN ---
+    // Baca data inventory masing-masing pasien
     for (int i = 0; i < jumlahPasienInventory; i++) {
-        if (fgets(buffer, sizeof(buffer), fileConfig) == NULL) break;
-        buffer[strcspn(buffer, "\r\n")] = 0;
+        if (fgets(buffer, sizeof(buffer), file) == NULL) {
+            printf("Error: Data inventory tidak lengkap\n");
+            break;
+        }
 
-        int pasienId = 0;
+        // Hapus newline
+        buffer[strcspn(buffer, "\r\n")] = '\0';
+
+        // Parse pasien ID
         index = 0;
-        while (buffer[index] == ' ') index++;
+        int pasienId = 0;
         while (buffer[index] >= '0' && buffer[index] <= '9') {
             pasienId = pasienId * 10 + (buffer[index++] - '0');
         }
 
-        User *user = findUserByID(userList, pasienId);
+        // Cari user di userList
+        User *user = NULL;
+        for (int u = 0; u < userList->Neff; u++) {
+            if (userList->data[u].id == pasienId) {
+                user = &userList->data[u];
+                break;
+            }
+        }
+
         if (user == NULL) continue;
 
+        // Lewati spasi setelah pasien ID
+        while (buffer[index] == ' ') index++;
+
+        // Parse obat-obatan
         user->inventory.jumlahObat = 0;
         int currentObat = 0;
-        boolean reading = FALSE;
-        while (buffer[index]) {
+        int obatIndex = 0;
+        while (buffer[index] != '\0' && obatIndex < 100) {
             if (buffer[index] >= '0' && buffer[index] <= '9') {
                 currentObat = currentObat * 10 + (buffer[index] - '0');
-                reading = TRUE;
-            } else if (reading) {
-                user->inventory.obat[user->inventory.jumlahObat++] = currentObat;
+            } else if (currentObat > 0) {
+                user->inventory.obat[obatIndex++] = currentObat;
                 currentObat = 0;
-                reading = FALSE;
             }
             index++;
         }
-        if (reading) {
-            user->inventory.obat[user->inventory.jumlahObat++] = currentObat;
+        if (currentObat > 0 && obatIndex < 100) {
+            user->inventory.obat[obatIndex++] = currentObat;
         }
+        user->inventory.jumlahObat = obatIndex;
     }
 
-    fclose(fileConfig);
+    fclose(file);
 }
-
-
-
-//     // --- BACA JUMLAH PASIEN DENGAN OBAT DI INVENTORY ---
-//     int jumlahPasienInventory = 0;
-//     if (fgets(buffer, sizeof(buffer), fileConfig) != NULL) {
-//         index = 0;
-//         while (buffer[index] >= '0' && buffer[index] <= '9') {
-//             jumlahPasienInventory = jumlahPasienInventory * 10 + (buffer[index++] - '0');
-//         }
-//     }
-
-//     // --- BACA DATA INVENTORY MASING-MASING PASIEN ---
-//     for (int i = 0; i < jumlahPasienInventory; i++) {
-//         if (fgets(buffer, sizeof(buffer), fileConfig) == NULL) break;
-//         buffer[strcspn(buffer, "\r\n")] = 0;
-
-//         int pasienId = 0, index = 0;
-//         while (buffer[index] >= '0' && buffer[index] <= '9') {
-//             pasienId = pasienId * 10 + (buffer[index++] - '0');
-//         }
-
-//         User *user = findUserByID(userList, pasienId);
-//         if (user == NULL) continue;
-
-//         user->inventory.jumlahObat = 0;
-//         int currentObat = 0;
-//         boolean reading = FALSE;
-//         while (buffer[index]) {
-//             if (buffer[index] >= '0' && buffer[index] <= '9') {
-//                 currentObat = currentObat * 10 + (buffer[index] - '0');
-//                 reading = TRUE;
-//             } else if (reading) {
-//                 user->inventory.obat[user->inventory.jumlahObat++] = currentObat;
-//                 currentObat = 0;
-//                 reading = FALSE;
-//             }
-//             index++;
-//         }
-//         if (reading) {
-//             user->inventory.obat[user->inventory.jumlahObat++] = currentObat;
-//         }
-//     }
-
-//     fclose(fileConfig);
-// }
-
-// void loadConfig(const char *filename, Matrix *denah, UserList *userList){
-//     FILE *fileConfig = fopen(filename, "r");
-//     if (fileConfig == NULL) {
-//         printf("Error: Tidak dapat membuka file %s\n", filename);
-//         return;
-//     }
-
-//     int rows, cols;
-//     fscanf(fileConfig, "%d %d\n", &rows, &cols);
-
-//     // Baca kapasitas maksimal pasien per ruangan
-//     int kapasitas;
-//     fscanf(fileConfig, "%d\n", &kapasitas);
-//     CreateMatrix(rows, cols, kapasitas, denah);
-//     denah->kapasitasRuangan = kapasitas;
-
-//     // Baca data antrian per ruangan sebanyak rows*cols baris
-//     for (int i = 0; i < rows * cols; i++) {
-//         int dokterId;
-//         // Cek apakah baris kosong atau hanya 0 (tidak ada dokter & pasien)
-//         char line[256];
-//         if (fgets(line, sizeof(line), fileConfig) == NULL) break;
-
-//         // Hilangkan newline jika ada
-//         line[strcspn(line, "\r\n")] = 0;
-
-//         // Kalau baris "0" berarti tidak ada dokter & pasien
-//         if (strcmp(line, "0") == 0) {
-//             // Ruangan i tanpa dokter dan pasien
-//             int r = i / cols;
-//             int c = i % cols;
-//             denah->data[r][c].nama_dokter[0] = '\0';
-//             // antrian sudah kosong karena diinisialisasi sebelumnya
-//             continue;
-//         }
-
-//         // Kalau tidak 0, parse data dokter dan pasien
-//         char *token = strtok(line, " ");
-//         if (token == NULL) continue;
-//         dokterId = atoi(token);
-
-//         // Simpan dokter ID sebagai string ke nama_dokter
-//         int r = i / cols;
-//         int c = i % cols;
-//         sprintf(denah->data[r][c].nama_dokter, "Dokter%d", dokterId);
-
-//         // Sisa token adalah id pasien, masukkan ke antrian
-//         while ((token = strtok(NULL, " ")) != NULL) {
-//             int pasienId = atoi(token);
-//             enqueue(&(denah->data[r][c].antrian), pasienId);
-//         }
-//     }
-
-//     // Baris berikutnya: banyak pasien yang mempunyai inventory obat
-//     int jumlahPasienInventory = 0;
-//     fscanf(fileConfig, "%d\n", &jumlahPasienInventory);
-
-//     // Untuk setiap pasien inventory, baca id pasien dan daftar obat
-//     // (kalau mau disimpan ke struktur data pasien, di luar scope prosedur ini)
-//     for (int i = 0; i < jumlahPasienInventory; i++) {
-//         char line[256];
-//         if (fgets(line, sizeof(line), fileConfig) == NULL) break;
-//         line[strcspn(line, "\r\n")] = 0;
-
-//         char *token = strtok(line, " ");
-//         if (token == NULL) continue;
-//         int pasienId = atoi(token);
-
-//         // Cari User sesuai pasienId
-//         User *user = findUserByID(userList, pasienId);
-//         if (user == NULL) continue; // pasien tidak ditemukan, skip
-
-//         user->inventory.jumlahObat = 0;
-//         while ((token = strtok(NULL, " ")) != NULL) {
-//             int idObat = atoi(token);
-//             user->inventory.obat[user->inventory.jumlahObat++] = idObat;
-//         }
-//     }
-
-//     fclose(fileConfig);
-// }
 
 void LOAD(const char *folderName, UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList, Set *nama_unik, Matrix *denah){
     char path[256];
@@ -587,6 +509,6 @@ void LOAD(const char *folderName, UserList *userList, PenyakitList *penyakitList
     loadDataObatPenyakit(pathRelasi, relasiList);
 
     // Sort sebelum laod config
-    sortUserListByID(userList);
+    // sortUserListByID(userList);
     loadConfig(pathConfig, denah, userList);
 }

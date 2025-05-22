@@ -157,14 +157,14 @@ void deleteAt(Inventory *inventory, int *id, int idx) {
 }
 
 // Tambahan untuk config
-void sortUserListByID(UserList *l) {
-    for (int i = 0; i < l->Neff - 1; i++) {
-        for (int j = i + 1; j < l->Neff; j++) {
-            if (l->data[i].id > l->data[j].id) {
-                User temp = l->data[i];
-                l->data[i] = l->data[j];
-                l->data[j] = temp;
-            }
-        }
-    }
-}
+// void sortUserListByID(UserList *l) {
+//     for (int i = 0; i < l->Neff - 1; i++) {
+//         for (int j = i + 1; j < l->Neff; j++) {
+//             if (l->data[i].id > l->data[j].id) {
+//                 User temp = l->data[i];
+//                 l->data[i] = l->data[j];
+//                 l->data[j] = temp;
+//             }
+//         }
+//     }
+// }

@@ -18,7 +18,7 @@ void lihatAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, boo
                     printf("Dokter: Dr. %s\n", denah->data[i][j].nama_dokter);
                     
                     Node *curr = denah->data[i][j].antrian.head;
-                    printf("Pasien di dalam ruangan: \n");
+                    printf("Pasien di antrian dalam ruangan: \n");
                     if (!isEmpty(denah->data[i][j].antrian)) {
                         int index = 0;
                         while (curr != NULL && index < denah->kapasitasRuangan) {
@@ -29,10 +29,10 @@ void lihatAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, boo
                         }
 
                         index = 1;
-                        printf("Pasien di dalam antrian: \n");
+                        printf("Pasien di antrian luar ruangan: \n");
                         if (curr == NULL) {
-                            printf("\tTidak ada pasien di dalam antrian saat ini.\n\n");
-                            return;
+                            printf("\tTidak ada pasien di antrian luar ruangan saat ini.\n\n");
+                            continue;
                         }
                         while (curr != NULL) {
                             User *pasien = findUserByID(dataBaseUser, curr->info);
@@ -42,9 +42,9 @@ void lihatAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, boo
                         }
 
                     } else {
-                        printf("\tTidak ada pasien di dalam ruangan saat ini.\n");
-                        printf("Pasien di dalam antrian: \n");
-                        printf("\tTidak ada pasien di dalam antrian saat ini.\n");
+                        printf("\tTidak ada pasien di antrian dalam ruangan saat ini.\n");
+                        printf("Pasien di antrian luar ruangan: \n");
+                        printf("\tTidak ada pasien di antrian luar ruangan saat ini.\n");
                     }
                     
                     printf("\n");
