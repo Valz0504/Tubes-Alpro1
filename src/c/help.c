@@ -1,53 +1,59 @@
 #include <stdio.h>
 #include "../header/user.h"
+#include "../header/coloring.h"
 
 void helpMenu(User current_user, boolean *isLogin) {
-    printf("=========== HELP ===========\n\n");
+    printf(CYAN BOLD "==========[ HELP MENU ]==========\n\n" RESET);
+
     if (!(*isLogin)) {
-        printf("Kamu belum login sebagai role apapun. Silahkan login terlebih dahulu.\n");
-        printf("\t1. LOGIN: Masuk ke dalam akun yang sudah terdaftar\n");
-        printf("\t2. REGISTER: Membuat akun baru\n");
-        printf("\t3. LUPA_PASSWORD: Lupa password akun? Gunakan command ini\n");
+        printf(YELLOW "Kamu belum login sebagai role apapun. Silakan login terlebih dahulu.\n\n" RESET);
+        printf(GRAY BOLD "  %-18s " YELLOW ": Masuk ke dalam akun yang sudah terdaftar\n" RESET, "LOGIN");
+        printf(GRAY BOLD "  %-18s " YELLOW ": Membuat akun baru\n" RESET, "REGISTER");
+        printf(GRAY BOLD "  %-18s " YELLOW ": Lupa password akun? Gunakan command ini\n\n" RESET, "LUPA_PASSWORD");
     } else {
         if (current_user.role == 0 || current_user.role == 1) {
-            printf("Halo %s %s. Kamu memanggil command HELP. Kamu pasti sedang kebingungan.\n", roleToStr(current_user.role), current_user.username);
-            printf("Berikut adalah hal-hal yang dapat kamu lakukan sekarang: \n");
+            printf(GREEN "Halo %s %s!\n" RESET, roleToStr(current_user.role), current_user.username);
+            printf(CYAN "Berikut adalah hal-hal yang dapat kamu lakukan sekarang:\n\n" RESET);
             if (current_user.role == 0) {
-                printf("\t1. LOGOUT: Keluar dari akun yang sedang digunakan\n");
-                printf("\t2. DAFTAR_CHECKUP: Mendaftarkan diri untuk pemeriksaan dokter\n");
-                printf("\t3. ANTRIAN_SAYA: Melihat status antrian dari dokter yang kamu pilih untuk check-up\n");
-                printf("\t4. MINUM_OBAT: Meminum obat yang kamu miliki di inventori\n");
-                printf("\t5. MINUM_PENAWAR: Mengeluarkan obat terakhir yang diminum\n");
-                printf("\t6. BOLEH_PULANG_GA: Konsultasi ulang ke dokter untuk mendapatkan izin pulang\n");
-                printf("\t7. LIHAT_DENAH: Melihat keseluruhan bangunan dari rumah sakit\n");
-                printf("\t8. LIHAT_RUANGAN <<nama_ruangan>>: Melihat nama dokter dan pasien yang ada di dalam ruangan tersebut\n");
-                printf("\t9. EXIT: Keluar dari Rumah Sakit\n");
+                printf(GRAY BOLD "  %-18s " YELLOW ": Keluar dari akun yang sedang digunakan\n" RESET, "LOGOUT");
+                printf(GRAY BOLD "  %-18s " YELLOW ": Mendaftarkan diri untuk pemeriksaan dokter\n" RESET, "DAFTAR_CHECKUP");
+                printf(GRAY BOLD "  %-18s " YELLOW ": Melihat status antrian dari dokter yang kamu pilih untuk check-up\n" RESET, "ANTRIAN");
+                printf(GRAY BOLD "  %-18s " YELLOW ": Meminum obat yang kamu miliki di inventori\n" RESET, "MINUM_OBAT");
+                printf(GRAY BOLD "  %-18s " YELLOW ": Mengeluarkan obat terakhir yang diminum\n" RESET, "MINUM_PENAWAR");
+                printf(GRAY BOLD "  %-18s " YELLOW ": Konsultasi ulang ke dokter untuk izin pulang\n" RESET, "PULANGDOK");
+                printf(GRAY BOLD "  %-18s " YELLOW ": Melihat keseluruhan bangunan dari rumah sakit\n" RESET, "LIHAT_DENAH");
+                printf(GRAY BOLD "  %-18s " YELLOW ": Melihat nama dokter & pasien di ruangan\n" RESET, "LIHAT_RUANGAN <<nama_ruangan>>");
+                printf(GRAY BOLD "  %-18s " YELLOW ": Keluar dari Rumah Sakit\n\n" RESET, "EXIT");
             } else if (current_user.role == 1) {
-                printf("\t1. LOGOUT: Keluar dari akun yang sedang digunakan\n");
-                printf("\t2. DIAGNOSIS: Melakukan diagnosis penyakit pasien berdasarkan kondisi tubuh pasien\n");
-                printf("\t3. NGOBATIN: Memberikan obat-obat yang sesuai dengan penyakit kepada pasien\n");
-                printf("\t4. LIHAT_DENAH: Melihat keseluruhan bangunan dari rumah sakit\n");
-                printf("\t5. LIHAT_RUANGAN <<nama_ruangan>>: Melihat nama dokter dan pasien yang ada di dalam ruangan tersebut\n");
-                printf("\t6. EXIT: Keluar dari Rumah Sakit\n");
+                printf(GRAY BOLD "  %-18s " YELLOW ": Keluar dari akun yang sedang digunakan\n" RESET, "LOGOUT");
+                printf(GRAY BOLD "  %-18s " YELLOW ": Diagnosis penyakit pasien\n" RESET, "DIAGNOSIS");
+                printf(GRAY BOLD "  %-18s " YELLOW ": Memberikan obat sesuai penyakit\n" RESET, "NGOBATIN");
+                printf(GRAY BOLD "  %-18s " YELLOW ": Melihat keseluruhan bangunan dari rumah sakit\n" RESET, "LIHAT_DENAH");
+                printf(GRAY BOLD "  %-18s " YELLOW ": Melihat nama dokter & pasien di ruangan\n" RESET, "LIHAT_RUANGAN <<nama_ruangan>>");
+                printf(GRAY BOLD "  %-18s " YELLOW ": Keluar dari Rumah Sakit\n\n" RESET, "EXIT");
             }
         } else if (current_user.role == 2) {
-            printf("Halo Manager %s. Kenapa kamu memanggil command HELP? Kan kamu manager, tapi yasudahlah kamu pasti sedang kebingungan.\n", current_user.username);
-            printf("Berikut adalah hal-hal yang dapat kamu lakukan sekarang: \n");
-            printf("\t1. LOGOUT: Keluar dari akun yang sedang digunakan\n");
-            printf("\t2. TAMBAH_DOKTER: Mendaftarkan dokter baru ke sistem\n");
-            printf("\t3. ASSIGN_DOKTER: Melakukan assign ruangan ke dokter tertentu\n");
-            printf("\t4. LIHAT_USER: Melihat data pengguna dan memilih metode penampilan data pengguna\n");
-            printf("\t5. LIHAT_SEMUA_ANTRIAN: Melihat rincian seluruh ruangan di Rumah Sakit\n");
-            printf("\t6. CARI_USER: Menampilkan data pengguna secara spesifik\n");
-            printf("\t7. CARI_PASIEN: Menampilkan data pasien secara spesifik\n");
-            printf("\t8. CARI_DOKTER: Menampilkan data dokter secara spesifik\n");
-            printf("\t9. LIHAT_DENAH: Melihat keseluruhan bangunan dari rumah sakit\n");
-            printf("\t10. LIHAT_RUANGAN <<nama_ruangan>>: Melihat nama dokter dan pasien yang ada di dalam ruangan tersebut\n");
-            printf("\t11. EXIT: Keluar dari Rumah Sakit\n");
+            printf(GREEN "Halo Manager %s!\n" RESET, current_user.username);
+            printf(CYAN "Berikut adalah hal-hal yang dapat kamu lakukan sekarang:\n\n" RESET);
+            printf(GRAY BOLD "  %-18s " YELLOW ": Keluar dari akun yang sedang digunakan\n" RESET, "LOGOUT");
+            printf(GRAY BOLD "  %-18s " YELLOW ": Mendaftarkan dokter baru ke sistem\n" RESET, "TAMBAH_DOKTER");
+            printf(GRAY BOLD "  %-18s " YELLOW ": Assign ruangan ke dokter tertentu\n" RESET, "ASSIGN_DOKTER");
+            printf(GRAY BOLD "  %-18s " YELLOW ": Melihat data pengguna\n" RESET, "LIHAT_USER");
+            printf(GRAY BOLD "  %-18s " YELLOW ": Menampilkan seluruh pasien\n" RESET, "LIHAT_PASIEN");
+            printf(GRAY BOLD "  %-18s " YELLOW ": Menampilkan seluruh dokter\n" RESET, "LIHAT_DOKTER");
+            printf(GRAY BOLD "  %-18s " YELLOW ": Melihat rincian seluruh ruangan\n" RESET, "LIHAT_SEMUA_ANTRIAN");
+            printf(GRAY BOLD "  %-18s " YELLOW ": Menampilkan pengguna secara spesifik\n" RESET, "CARI_USER");
+            printf(GRAY BOLD "  %-18s " YELLOW ": Menampilkan pasien secara spesifik\n" RESET, "CARI_PASIEN");
+            printf(GRAY BOLD "  %-18s " YELLOW ": Menampilkan dokter secara spesifik\n" RESET, "CARI_DOKTER");
+            printf(GRAY BOLD "  %-18s " YELLOW ": Melihat keseluruhan bangunan dari rumah sakit\n" RESET, "LIHAT_DENAH");
+            printf(GRAY BOLD "  %-18s " YELLOW ": Melihat nama dokter & pasien di ruangan\n" RESET, "LIHAT_RUANGAN <<nama_ruangan>>");
+            printf(GRAY BOLD "  %-18s " YELLOW ": Keluar dari Rumah Sakit\n\n" RESET, "EXIT");
         }
     }
-    printf("Footnote: \n");
-    printf("\t1. Untuk menggunakan aplikasi, silakan masukkan nama fungsi yang terdaftar\n");
-    printf("\t2. Jangan lupa untuk memasukkan input yang valid\n");
-    printf("\t3. Command HELP dapat kamu akses kapan saja!\n\n");
+    printf(BLUE "----------------------------------------\n" RESET);
+    printf(YELLOW "Footnote:\n" RESET);
+    printf(GRAY BOLD "  - Untuk menggunakan aplikasi, masukkan nama fungsi yang terdaftar\n" RESET);
+    printf(GRAY BOLD "  - Jangan lupa untuk memasukkan input yang valid\n" RESET);
+    printf(GRAY BOLD "  - Command " CYAN BOLD "LUPA_PASSWORD" GRAY BOLD " dapat kamu akses sebelum LOGIN\n" RESET);
+    printf(GRAY BOLD "  - Command " CYAN BOLD "HELP" GRAY BOLD " dapat kamu akses kapan saja!\n\n" RESET);
 }
