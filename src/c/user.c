@@ -8,7 +8,7 @@
 #define false 0
 
 void CreateUser(UserList *l, User *u, char name[], char pass[], Role role) {
-    u->id = l->Neff + 1;
+    u->id = l->currMaxId + 1;
     strcpy(u->username, name);
     strcpy(u->password, pass);
     u->role = role;
@@ -29,6 +29,7 @@ void CreateUser(UserList *l, User *u, char name[], char pass[], Role role) {
 void CreateListDin(UserList *l, int capacity) {
     l->Neff = 0;
     l->capacity = capacity;
+    l->currMaxId = 0;
     l->data = (User*) malloc(capacity*sizeof(User));
 }
 
@@ -46,6 +47,7 @@ void expandList(UserList *l, int num) {
 void copyList(UserList lIn, UserList *lOut) {
     CreateListDin(lOut, lIn.capacity);
     lOut->Neff = lIn.Neff;
+    lOut->currMaxId = lIn.currMaxId;
     for (int i = 0; i < lIn.Neff; i++) {
         lOut->data[i] = lIn.data[i];
     }
@@ -59,6 +61,25 @@ void sortListByUsername(UserList *l, boolean asc) {
                 kondisi = strcmp(l->data[j].username, l->data[j+1].username) > 0;
             } else {
                 kondisi = strcmp(l->data[j].username, l->data[j+1].username) < 0;
+            }
+
+            if (kondisi) {
+                User temp = l->data[j];
+                l->data[j] = l->data[j + 1];
+                l->data[j + 1] = temp;
+            }
+        }
+    }
+}
+
+void sortListByID(UserList *l, boolean asc) {
+    for (int i = 0; i < l->Neff - 1; i++) {
+        for (int j = 0; j < l->Neff - i - 1; j++) {
+            boolean kondisi;
+            if (asc) {
+                kondisi = (l->data[j].id > l->data[j+1].id);
+            } else {
+                kondisi = (l->data[j].id < l->data[j+1].id);
             }
 
             if (kondisi) {
@@ -110,12 +131,9 @@ User* findUserByID(UserList *l, int id) {
 
 
 boolean isUsernameExist(UserList l, char username[]) {
-    for (int i = 0; i < l.Neff; i++) {
-        if (strcmp(l.data[i].username, username) == 0) {
-            return true;
-        }
-    }
-    return false;
+    User *u = findUser(&l, username);
+    if (u != NULL) return TRUE;
+    else return FALSE;
 }
 
 void AddUser(UserList *l, User u) {

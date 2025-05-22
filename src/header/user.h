@@ -4,6 +4,7 @@
 #ifndef USER_H
 #define USER_H
 
+#include "coloring.h" // Iseng wkwkwk
 #include "map.h"
 #include "matrix.h"
 #include "set.h"
@@ -48,6 +49,7 @@ typedef struct
     User *data;
     int Neff;
     int capacity;
+    int currMaxId;
 } UserList;
 
 /* --- PROSEDUR FITUR PROGRAM --- */
@@ -57,8 +59,11 @@ void logout(User *current_user, boolean *isLogin); // general
 void registerPasien(UserList *list, Set *set, boolean *isLogin); // pasien
 void helpMenu(User current_user, boolean *isLogin); // general
 void denahRumahSakit(Matrix M); // general
-void lihatRuangan(Matrix denah, UserList dataBaseUser, User current_user, boolean isLogin); // general
+void lihatRuangan(Matrix denah, UserList dataBaseUser, User current_user, boolean *isLogin); // general
 void lihatAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, boolean *isLogin); // manager
+void lihatUser(UserList *dataBaseUser, User *current_user, boolean *isLogin); // manager
+void lihatPasien(UserList *dataBaseUser, User *current_user, boolean *isLogin); //manager
+void lihatDokter(UserList *dataBaseUser, User *current_user, boolean *isLogin); //manager
 void assignDokter(Matrix *denah, UserList *list, User *current_user, boolean *isLogin); // manager
 void tambahDokter(UserList *list, User *current_user, Set *set, boolean *isLogin); // manager
 void cariUser(UserList *dataBaseUser, User *current_user, boolean *isLogin); // manager
@@ -67,10 +72,10 @@ void cariDokter(UserList *dataBaseUser, User *current_user, boolean *isLogin); /
 void diagnosis(User *current_user, UserList *dataBaseUser, PenyakitList *penyakit, boolean *isLogin, Matrix *denah); // dokter
 void ngobatin(User *current_user, PenyakitList *penyakitList, Obat_PenyakitList *obatPenyakitList, boolean *isLogin); // dokter
 void daftarCheckUp(); // pasien
-void antrianSaya(); // pasien
+void antrianSaya(User *current_user, Matrix *denah, boolean *isLogin); // pasien
 void minumObat(User *current_user, ObatList *dataObat, boolean *isLogin); // pasien
-void minumPenawar(); // pasien
-void bolehPulangGaa(); // pasien
+void minumPenawar(User *current_user, boolean *isLogin); // pasien
+void bolehPulangGaa(User *current_user, PenyakitList *dataPenyakit, ObatList *dataObat, Obat_PenyakitList *dataObatPenyakit, boolean *isLogin); // pasien
 void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitList *obat_penyakit, Matrix *Hospital); // general
 void EXIT(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitList *obat_penyakit, Matrix *Hospital, boolean *exit);
 void LOAD(const char *folderName, UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList, Set *nama_unik, Matrix *denah);
@@ -95,6 +100,7 @@ void dealocateListDin(UserList *l);
 void expandList(UserList *l, int num); 
 void copyList(UserList lIn, UserList *lOut);
 void sortListByUsername(UserList *l, boolean asc);
+void sortListByID(UserList *l, boolean asc);
 
 
 /* Prosedur untuk manajemen Inventory User */
@@ -115,3 +121,4 @@ void toLower(char *str);
 void sortUserListByID(UserList *l);
 
 #endif
+

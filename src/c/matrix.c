@@ -24,12 +24,12 @@ boolean getPosisiRuangan(Matrix *denah, char ruang[], int *row, int *col) {
     char first_char = ruang[0];
     if (first_char < 'A' || first_char > 'Z') return FALSE;
 
-    *col = first_char - 'A'; 
+    *row = first_char - 'A'; 
 
-    int row_temp = atoi(&ruang[1]);
-    if (row_temp < 1 || row_temp > denah->rows) return FALSE;
+    int col_temp = atoi(&ruang[1]);
+    if (col_temp < 1 || col_temp > denah->cols) return FALSE;
 
-    *row = row_temp - 1;
+    *col = col_temp - 1;
 
     return TRUE;
 }

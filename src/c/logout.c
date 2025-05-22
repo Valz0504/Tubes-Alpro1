@@ -5,29 +5,37 @@
 
 void logout(User *current_user, boolean *isLogin) {
     if (*isLogin == FALSE) {
-        printf("Logout gagal!\n");
-        printf("Anda belum login, silahkan login terlebih dahulu sebelum melakukan logout!\n\n");
+        printf(RED BOLD "Logout gagal!\n" RESET);
+        printf(YELLOW "Anda belum login, silahkan login terlebih dahulu sebelum melakukan logout!\n\n" RESET);
         return;
     }
 
     char answer[100];
-    printf("Apakah anda yakin untuk logout? (y/n)\n");
+    printf(CYAN "Apakah anda yakin untuk logout? (y/n)\n" RESET);
     do {
         scanf("%s", answer);
         toLower(answer);
 
         if (strcmp(answer, "y") != 0 && strcmp(answer, "n") != 0) {
-            printf("Masukan anda belum benar, coba lagi!\n\n");
-            printf("Apakah anda yakin untuk logout? (y/n)\n");
+            printf(RED "Masukan anda belum benar, coba lagi!\n\n" RESET);
+            printf(CYAN "Apakah anda yakin untuk logout? (y/n)\n" RESET);
         }
     } while (strcmp(answer, "y") != 0  && strcmp(answer, "n") != 0);
     
     if (strcmp(answer, "y") == 0) {
         current_user = NULL;
         *isLogin = FALSE;
-        printf("Sampai jumpa!\n\n");
+        printf(GREEN "Sampai jumpa!\n\n\n" RESET);
+
+        printf(DARK_GREEN);
+        printf("========================================\n");
+        printf("   SELAMAT DATANG DI SISTEM KLINIK ITB  \n");
+        printf("========================================\n");
+        printf(RESET);
+        printf(CYAN "Ketik command " YELLOW BOLD "HELP" RESET CYAN " untuk melihat apa saja yang dapat kamu lakukan sekarang!\n\n" RESET);
+
         return;
     } else {
-        printf("Anda tidak jadi logout...\n\n");
+        printf(YELLOW "Anda tidak jadi logout...\n\n" RESET);
     }
 }

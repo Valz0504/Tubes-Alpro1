@@ -9,3 +9,10 @@ void initObatPenyakitList(Obat_PenyakitList *list) {
         list->buffer[i].urutan_obat = malloc(CAPACITY * sizeof(int));
     }
 }
+
+int getMapIndexByPenyakit(Obat_PenyakitList *list, int idPenyakit) {
+    for (int i = 0; i < list->length; i++) {
+        if (list->buffer[i].id_penyakit == idPenyakit) return i;
+    }
+    return -1;
+}
