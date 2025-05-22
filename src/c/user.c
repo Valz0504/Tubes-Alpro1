@@ -99,6 +99,21 @@ User* findUser(UserList *l, char username[]) {
     }
     return NULL;
 }
+// User* findUserByID(UserList *l, int id) {
+//     int left = 0, right = l->Neff;
+//     while (left <= right) {
+//         int mid = (left + right) / 2;
+//         if (id > l->data[mid].id) {
+//             left = mid + 1;
+//         } else if (id < l->data[mid].id) {
+//             right = mid - 1;
+//         } else {
+//             return &l->data[mid];
+//         }
+//     }
+//     return NULL;
+// }
+
 User* findUserByID(UserList *l, int id) {
     int left = 0, right = l->Neff - 1;
     while (left <= right) {
@@ -113,6 +128,7 @@ User* findUserByID(UserList *l, int id) {
     }
     return NULL;
 }
+
 
 boolean isUsernameExist(UserList l, char username[]) {
     User *u = findUser(&l, username);
@@ -157,3 +173,16 @@ void deleteAt(Inventory *inventory, int *id, int idx) {
     }
     inventory->jumlahObat -= 1;
 }
+
+// Tambahan untuk config
+// void sortUserListByID(UserList *l) {
+//     for (int i = 0; i < l->Neff - 1; i++) {
+//         for (int j = i + 1; j < l->Neff; j++) {
+//             if (l->data[i].id > l->data[j].id) {
+//                 User temp = l->data[i];
+//                 l->data[i] = l->data[j];
+//                 l->data[j] = temp;
+//             }
+//         }
+//     }
+// }

@@ -117,4 +117,8 @@ void AddUser(UserList *l, User u);
 char* roleToStr(Role role); 
 void toLower(char *str);
 
+// Tmabahan untuk Config
+void sortUserListByID(UserList *l);
+
 #endif
+
