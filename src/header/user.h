@@ -4,6 +4,7 @@
 #ifndef USER_H
 #define USER_H
 
+#include "coloring.h" // Iseng wkwkwk
 #include "map.h"
 #include "matrix.h"
 #include "set.h"
@@ -48,6 +49,7 @@ typedef struct
     User *data;
     int Neff;
     int capacity;
+    int currMaxId;
 } UserList;
 
 /* --- PROSEDUR FITUR PROGRAM --- */

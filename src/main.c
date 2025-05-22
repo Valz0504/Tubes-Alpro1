@@ -10,8 +10,6 @@ int main(int argc, char* argv[]) {
         printf("Usage: ./main <<nama_folder>>\n");
         return 0;
     }
-    // masih harus ada pengecekan kalo foldernya gaada
-
 
     // Inisialisasi semua Database yang diperlukan
     UserList dataBaseUser;
@@ -31,16 +29,21 @@ int main(int argc, char* argv[]) {
     boolean isLogin = FALSE;
 
     // Opening Program
-    printf("=== SELAMAT DATANG ===\n");
-    printf("Ketik command HELP untuk melihat apa saja yang dapat kamu lakukan sekarang!\n\n");
+    printf(DARK_GREEN);
+    printf("========================================\n");
+    printf("   SELAMAT DATANG DI SISTEM KLINIK ITB  \n");
+    printf("========================================\n");
+    printf(RESET);
+    printf(CYAN "Ketik command " YELLOW BOLD "HELP" RESET CYAN " untuk melihat apa saja yang dapat kamu lakukan sekarang!\n\n" RESET);
 
     // Program Utama
     boolean run_program = TRUE;
     while (run_program) {
         char prompt[100];
-        printf(">>> Command: ");
+        printf(MAGENTA ">>> Command: " RESET);
         scanf("%s", prompt);
-    
+        printf("\n");
+        
         if (strcmp(prompt, "LOGIN") == 0) {
             login(&dataBaseUser, &current_user, &isLogin);
         } else if (strcmp(prompt, "REGISTER") == 0) {

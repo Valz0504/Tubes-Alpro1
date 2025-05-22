@@ -39,9 +39,17 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
                 buffer[idx] = '\0';
 
                 switch (field) {
-                    case 0: u.id = atoi(buffer); break;
+                    case 0: 
+                        u.id = atoi(buffer);
+                        if (u.id > userList->currMaxId) {
+                            userList->currMaxId = u.id;
+                        }
+                        break;
                     case 1: 
-                        strncpy(u.username, buffer, sizeof(u.username)); 
+                        strncpy(u.username, buffer, sizeof(u.username));
+                        // u.username[sizeof(u.username)-1] = '\0';
+                        // u.username[strcspn(u.username, "\r\n")] = 0;
+                        toLower(buffer); 
                         insertSet(set, buffer);
                         break;
                     case 2: strncpy(u.password, buffer, sizeof(u.password)); break;
@@ -388,6 +396,7 @@ void LOAD(const char *folderName, UserList *userList, PenyakitList *penyakitList
 
     // Panggil prosedur pemrosesan masing-masing
     loadDataUser(pathUser, userList, nama_unik);
+    sortListByID(userList, TRUE);
     loadDataPenyakit(pathPenyakit, penyakitList);
     loadDataObat(pathObat, obatList);
     loadDataObatPenyakit(pathRelasi, relasiList);
