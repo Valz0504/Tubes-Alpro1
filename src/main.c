@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
 
     // LOAD DATA from file folder
     LOAD(argv[1], &dataBaseUser, &dataPenyakit, &dataObat, &dataObatPenyakit, &nama_unik, &denah_rs);
-
+    
     // Inisialisasi state LOGIN
     User current_user;
     boolean isLogin = FALSE;

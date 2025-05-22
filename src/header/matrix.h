@@ -19,6 +19,7 @@ typedef struct
   int rows;
   int cols;
   int kapasitasRuangan;
+  int kapasitasLuar;
 } Matrix;
 
 void CreateMatrix(int rows, int cols, int kapasitas, Matrix *M);
