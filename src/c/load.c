@@ -401,7 +401,7 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
             // Parse pasien dalam ruangan
             int currentNumber = 0;
             int pasienCount = 0;
-            while (buffer[index] != '\0' && pasienCount < kapasitasDalam) {
+            while (buffer[index] != '\0' && buffer[index] != '\n') {
                 if (buffer[index] >= '0' && buffer[index] <= '9') {
                     currentNumber = currentNumber * 10 + (buffer[index] - '0');
                 } else if (currentNumber > 0) {

@@ -1,8 +1,5 @@
 #include <stdio.h>
 #include "../header/user.h"
-#include "../header/penyakit.h"
-#include "../header/matrix.h"
-#include "../header/boolean.h"
 
 void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix *Hospital){
     if (!(*isLogin)) {
@@ -117,7 +114,7 @@ void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix
                 Queue *A = &Hospital->data[i][j].antrian;
                 Ruangan *R = &Hospital->data[i][j];
                 Antrian = countQueue(*A);
-                if(!isRuanganKosong(*R) && Antrian < Hospital->kapasitasRuangan + Hospital->batasAntrian){
+                if(!isRuanganKosong(*R) && Antrian < Hospital->kapasitasRuangan + Hospital->kapasitasLuar){
                     User *dokternya = findUser(user1, Hospital->data[i][j].nama_dokter);
                     printf("Mencari dokter \"%s\" ...\n", Hospital->data[i][j].nama_dokter);
                     if (dokternya == NULL) {
@@ -139,7 +136,6 @@ void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix
             getRuanganDokter(Hospital, A->username, &ruangan);
             printf("%d Dr. %s - Spesialis Umum - Ruangan %c (Antrian: %d orang)\n", i+1, A->username, ruangan, dokter_available[i][1]);
         }
-        printf("\nPilih dokter (1-%d): ", asalan);
         int pilihanDokter;
         do {
             printf("\nPilih dokter (1-%d): ", asalan);
@@ -151,7 +147,7 @@ void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix
         enqueue(B, current_user->id);
         printf("Pendaftaran check-up berhasil!\n");
         printf("Anda terdaftar pada antrian Dr. %s di ruangan %c.\n", C->username, ruangan);
-        printf("Posisi antrian Anda: %d", countQueue(*B));
+        printf("Posisi antrian Anda: %d\n", countQueue(*B));
     }
     else{
         printf("Anda bukan pasien! Tidak bisa daftar checkup!\n\n");

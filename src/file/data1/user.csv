@@ -10,3 +10,4 @@ id;username;password;role;riwayat_penyakit;suhu_tubuh;tekanan_darah_sistolik;tek
 9;tobo;pass99;pasien;COVID-19;36.8;114;74;61;94.6;100;80.6;173;152;139;386;
 10;ropik;pass110;pasien;Anemia;36.2;103;87;65;96.6;102;72.3;184;150;91;292;
 11;hero;pass11;dokter;
+12;yolo;pass123;dokter;

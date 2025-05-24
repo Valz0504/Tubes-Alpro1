@@ -28,17 +28,17 @@ void lihatAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, boo
                             index++;
                         }
 
-                        index = 1;
                         printf(GRAY "Pasien di antrian luar ruangan:\n" RESET);
                         if (curr == NULL) {
                             printf(YELLOW "\tTidak ada pasien di antrian luar ruangan saat ini.\n\n" RESET);
-                            continue;
-                        }
-                        while (curr != NULL) {
-                            User *pasien = findUserByID(dataBaseUser, curr->info);
-                            printf(YELLOW "\t%d. %s\n" RESET, index, pasien->username);
-                            curr = curr->next;
-                            index++;
+                        } else {
+                            index = 1;
+                            while (curr != NULL) {
+                                User *pasien = findUserByID(dataBaseUser, curr->info);
+                                printf(YELLOW "\t%d. %s\n" RESET, index, pasien->username);
+                                curr = curr->next;
+                                index++;
+                            }
                         }
 
                     } else {
