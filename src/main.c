@@ -79,6 +79,8 @@ int main(int argc, char* argv[]) {
             diagnosis(&current_user, &dataBaseUser, &dataPenyakit, &isLogin, &denah_rs);
         } else if (strcmp(prompt, "LIHAT_SEMUA_ANTRIAN") == 0) {
             lihatAntrian(&dataBaseUser, &current_user, &denah_rs, &isLogin);
+        } else if (strcmp(prompt, "DAFTAR_CHECKUP") == 0) {
+            daftarCheckUp(&current_user, &dataBaseUser, &isLogin, &denah_rs);
         } else if (strcmp(prompt, "CARI_USER") == 0) {
             cariUser(&dataBaseUser, &current_user, &isLogin);
         } else if (strcmp(prompt, "CARI_PASIEN") == 0) {
@@ -87,7 +89,7 @@ int main(int argc, char* argv[]) {
             cariDokter(&dataBaseUser, &current_user, &isLogin);
         } else if (strcmp(prompt, "LIHAT_USER") == 0) {
             lihatUser(&dataBaseUser, &current_user, &isLogin);
-        }else if (strcmp(prompt, "LIHAT_PASIEN") == 0) {
+        } else if (strcmp(prompt, "LIHAT_PASIEN") == 0) {
             lihatPasien(&dataBaseUser, &current_user, &isLogin);
         } else if (strcmp(prompt, "LIHAT_DOKTER") == 0) {
             lihatDokter(&dataBaseUser, &current_user, &isLogin);
