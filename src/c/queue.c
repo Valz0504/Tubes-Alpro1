@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "../header/boolean.h"
 #include "../header/queue.h"
 
 void initQueue(Queue *q) {
@@ -7,7 +8,6 @@ void initQueue(Queue *q) {
     q->tail = NULL;
 }
 
-// masih bisa diubah
 void enqueue(Queue *q, int value) {
     Node *newNode = (Node*) malloc(sizeof(Node));
     newNode->info = value;

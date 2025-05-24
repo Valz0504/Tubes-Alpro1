@@ -64,31 +64,32 @@ void SetNewPassword(UserList *l, char username[], char pass[]) {
 
 void lupa_password(UserList *list, boolean *isLogin) {
     if (*isLogin) {
-        printf("Loh!? kan kamu udah login, kok malah lupa password?\n\n");
+        printf(YELLOW "Loh!? kan kamu udah login, kok malah lupa password?\n\n" RESET);
     } else {
-        printf("=== GANTI PASSWORD ===\n");
+        printf(CYAN BOLD "=== GANTI PASSWORD ===\n" RESET);
     
         char username[100];
         char kode_unik[100];
-        printf("Username: ");
-        scanf(" %[^\n]", username);
-        printf("Kode Unik: ");
-        scanf(" %[^\n]", kode_unik);
+        printf(YELLOW "Username: " RESET);
+        scanf("%s", username);
+        printf(YELLOW "Kode Unik: " RESET);
+        scanf("%s", kode_unik);
     
         if (isUsernameExist(*list, username)) {
             User *user = findUser(list, username);
             if (strcmp(kode_unik, RunLengthEncoding(username)) == 0) {
                 char new_password[100];
                 
-                printf("Halo %s %s, silakan daftarkan ulang password anda!\n", roleToStr(user->role), username);
-                printf("Password baru: ");
+                printf(GREEN "Halo %s %s, silakan daftarkan ulang password anda!\n" RESET, roleToStr(user->role), username);
+                printf(YELLOW "Password baru: ");
                 scanf("%s", new_password);
                 SetNewPassword(list, username, new_password);
+                printf(GREEN "Password berhasil diubah!\n\n" RESET);
             } else {
-                printf("Kode unik salah!\n");
+                printf(RED "Kode unik salah!\n");
             }
         } else {
-            printf("Username tidak terdaftar!\n");
+            printf(RED "Username tidak terdaftar!\n");
         }
         printf("\n");
     }

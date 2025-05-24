@@ -181,49 +181,40 @@ int isiRuangan(Matrix Hospital, int i, int j){
 void FileConfig(const char *filePath, Matrix *Hospital, UserList *user1){ //BELUM SELESAI, belum ada data ruangan? // membuat/overwrite file config
     FILE *fp = fopen(filePath, "w");
     if (fp == NULL) {
-        printf("Gagal membuat file di path: %s\n", filePath);
+        printf(RED "Gagal membuat file di path: %s\n" RESET, filePath);
         return;
     }
     int terisi = 0;
-    int nol = 0;
     int dokter;
     fprintf(fp, "%d %d\n", Hospital->rows, Hospital->cols);
-    fprintf(fp, "%d\n", Hospital->kapasitasRuangan);
+    fprintf(fp, "%d %d\n", Hospital->kapasitasRuangan, Hospital->kapasitasLuar);
     for(int i = 0; i < Hospital->rows; i++){
         for(int j = 0; j < Hospital->cols ; j++){
-            for(int k = 0; k < isiRuangan(*Hospital, i, j)+1 ; k++){
-                if(k == 0){
-                    User *I = findUser(user1, Hospital->data[i][j].nama_dokter);
-                    if(I != NULL){
-                        printf("%d", I->id);
-                        fprintf(fp, "%d ", I->id);
-                        dokter = I->id;
-                    }
-                    else{
-                        fprintf(fp, "%d ", nol);
-                        dokter = 0;
-                    }
+            // Tulis dokter
+            User *I = findUser(user1, Hospital->data[i][j].nama_dokter);
+            if(I != NULL){
+                fprintf(fp, "%d ", I->id);
+                dokter = I->id;
+            } else {
+                fprintf(fp, "%d ", 0);
+                dokter = 0;
+            }
+            // Tulis antrian pasien (jika ada dokter)
+            if(dokter != 0){
+                Node *A = Hospital->data[i][j].antrian.head;
+                while(A != NULL){
+                    fprintf(fp, "%d ", A->info);
+                    A = A->next;
                 }
-                else if(dokter != 0){
-                    Node *A = Hospital->data[i][j].antrian.head;
-                    if(A != NULL){
-                        while(A != NULL){
-                            fprintf(fp, "%d ", A->info);
-                            A = A->next;
-                        }
-                    }
-                    
-                }
-                terisi++;
             }
             fprintf(fp, "\n");
-            terisi = 0;
         }
     }
     int PasienObat[100][100];
     int X = JmlhInventory_ada(*user1, PasienObat);
     
     fprintf(fp, "%d\n", X);
+    // Tulis inventory pasien
     for(int i = 0; i < X; i++){
         for(int j = 0; j < 100; j++){
             if(j == 0){
@@ -261,7 +252,7 @@ void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitLis
     char pathPenyakit[256];
     char pathObatPenyakit[256];
     char pathConfig[256];
-    printf("Masukkan nama folder: ");
+    printf(CYAN BOLD "Masukkan nama folder: " RESET);
     scanf("%s", nama_folder);
     snprintf(FullFolder, sizeof(FullFolder), "%s/%s", base, nama_folder);
     snprintf(pathUser, sizeof(pathUser), "%s/%s/user.csv", base, nama_folder); // buat path filenya
@@ -269,34 +260,33 @@ void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitLis
     snprintf(pathPenyakit, sizeof(pathPenyakit), "%s/%s/penyakit.csv", base, nama_folder);
     snprintf(pathObatPenyakit, sizeof(pathObatPenyakit), "%s/%s/obat_penyakit.csv", base, nama_folder);
     snprintf(pathConfig, sizeof(pathConfig), "%s/%s/config.txt", base, nama_folder);
-    if(folder_exist(FullFolder) == 1 && file_exist(FullFolder) == 1){//butuh FileObat, dll tidak?
-        printf("Saving...\n\n");
-        printf("Membuat folder data...\n");
-        //folder(nama_folder);
-        printf("Membuat folder data/%s\n", nama_folder);
+    
+    printf(CYAN "\nSaving...\n\n" RESET);
+
+    if(folder_exist(FullFolder) == 1 && file_exist(FullFolder) == 1){
+        printf(YELLOW "Folder sudah ada, file lama akan di-overwrite.\n" RESET);
+        printf(GRAY "Membuat folder data/%s (sudah ada)\n" RESET, nama_folder);
         FileUser(pathUser, user1);
         FileConfig(pathConfig, Hospital, user1);
-        printf("Berhasil menyimpan data di folder data/%s!\n", nama_folder);
+        printf(GREEN "Berhasil menyimpan data di folder " CYAN "data/%s\n\n" RESET, nama_folder);
     }
     else if (folder_exist(FullFolder) == 1 && file_exist(FullFolder) == 0){
-        printf("Saving...\n\n");
+        printf(GRAY "Membuat folder data/%s (sudah ada)\n" RESET, nama_folder);
         FileUser(pathUser, user1);
         FileObat(pathObat, Obat);
         FilePenyakit(pathPenyakit, sakit);
         FileObat_Penyakit(pathObatPenyakit, obat_penyakit);
         FileConfig(pathConfig, Hospital, user1);
-        printf("Berhasil menyimpan data di folder data/%s!\n", nama_folder);
+        printf(GREEN "Berhasil menyimpan data di folder " CYAN "data/%s\n\n" RESET, nama_folder);
     }
     else{
-        printf("Saving...\n\n");
+        printf(GRAY "Membuat folder data/%s\n" RESET, nama_folder);
         folder(FullFolder);
-        printf("Membuat folder data/%s\n", nama_folder);
         FileUser(pathUser, user1);
         FileObat(pathObat, Obat);
         FilePenyakit(pathPenyakit, sakit);
         FileObat_Penyakit(pathObatPenyakit, obat_penyakit);
         FileConfig(pathConfig, Hospital, user1);
-        printf("Berhasil menyimpan data di folder data/%s!\n", nama_folder);
+        printf(GREEN "Berhasil menyimpan data di folder " CYAN "data/%s\n\n" RESET, nama_folder);
     }
-
 }

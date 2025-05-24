@@ -4,41 +4,41 @@
 
 void minumObat(User *current_user, ObatList *dataObat, boolean *isLogin) {
     if (!(*isLogin)) {
-        printf("Anda belum login!\n\n");
+        printf(RED "Anda belum login!\n\n" RESET);
         return;
     }
 
     if (current_user->role == ROLE_PASIEN) {
-        printf("==== DAFTAR OBAT ====\n");
+        printf(CYAN BOLD "==== DAFTAR OBAT ====\n" RESET);
         
         if (current_user->inventory.jumlahObat == 0) {
-            printf("Anda tidak memiliki obat apapun di inventory!\n\n");
+            printf(YELLOW "Anda tidak memiliki obat apapun di inventory!\n\n" RESET);
             return;
         }
 
         for (int i = 0; i < current_user->inventory.jumlahObat; i++) {
-            printf("%d. %s\n", i+1, getObatName(dataObat, current_user->inventory.obat[i]));
+            printf(GRAY "%d. %s\n" RESET, i+1, getObatName(dataObat, current_user->inventory.obat[i]));
         }
         printf("\n");
 
         int choice;
         do {
-            printf(">>> Pilih obat untuk diminum: ");
+            printf(CYAN ">>> Pilih obat untuk diminum: " RESET);
             scanf("%d", &choice);
 
             if (choice <= 0 || choice > current_user->inventory.jumlahObat) {
-                printf("Pilihan nomor tidak tersedia!\n\n");
+                printf(RED "Pilihan nomor tidak tersedia!\n\n" RESET);
             }
         } while (choice <= 0 || choice > current_user->inventory.jumlahObat);
 
         int obat_id;
-        printf("GLEKGLEKGLEK... %s berhasil diminum!!\n\n", getObatName(dataObat, current_user->inventory.obat[choice - 1]));
+        printf(GREEN "GLEKGLEKGLEK... %s berhasil diminum!!\n\n" RESET, getObatName(dataObat, current_user->inventory.obat[choice - 1]));
         deleteAt(&current_user->inventory, &obat_id, choice - 1);
 
         // masukin ke stack (ntar berhubungan sama minum penawar)
         push(&current_user->perut, obat_id);
     } else {
-        printf("Anda bukan pasien! Tidak bisa minum obat!\n\n");
+        printf(RED "Anda bukan pasien! Tidak bisa minum obat!\n\n" RESET);
     }
 }
 

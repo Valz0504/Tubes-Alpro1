@@ -3,34 +3,34 @@
 #include "../header/user.h"
 
 void denahRumahSakit(Matrix M) {
-    printf("== Denah Rumah Sakit ==\n\n");
+    printf(CYAN BOLD "== Denah Rumah Sakit ==\n\n" RESET);
 
     // Header kolom
-    printf("    ");
+    printf("   ");
     for (int col = 0; col < M.cols; col++) {
-        printf("     %d     ", col + 1);
+        printf(BLUE BOLD "     %d     " RESET, col + 1);
     }
     printf("\n");
 
     // Garis atas
     printf("   ");
     for (int col = 0; col < M.cols; col++) {
-        printf("-----------");
+        printf(BLUE "-----------" RESET);
     }
-    printf("-\n");
+    printf(BLUE "-\n" RESET);
 
     for (int row = 0; row < M.rows; row++) {
-        printf(" %c |", 'A' + row);
+        printf(GRAY BOLD " %c " RESET "|", 'A' + row);
         for (int col = 0; col < M.cols; col++) {
-            printf("   %c%d     |", 'A' + row, col + 1);
+            printf(GRAY "   %c%d     " RESET "|", 'A' + row, col + 1);
         }
         printf("\n");
 
         // Garis bawah tiap baris
         printf("   ");
         for (int col = 0; col < M.cols; col++) {
-            printf("-----------");
+            printf(BLUE "-----------" RESET);
         }
-        printf("-\n");
+        printf(BLUE "-\n" RESET);
     }
 }
