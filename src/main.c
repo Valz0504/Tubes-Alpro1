@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
     boolean isLogin = FALSE;
 
     // Opening Program
-    printf(DARK_GREEN);
+    printf(BLUE);
     printf("========================================\n");
     printf("   SELAMAT DATANG DI SISTEM KLINIK ITB  \n");
     printf("========================================\n");
