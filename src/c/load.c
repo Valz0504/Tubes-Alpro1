@@ -65,7 +65,13 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
                             break;
                         }
                         break;
-                    case 4: strncpy(u.riwayat_penyakit, buffer, sizeof(u.riwayat_penyakit)); break;
+                    case 4: 
+                        if (strlen(buffer) == 0) {
+                            strncpy(u.riwayat_penyakit, "-", sizeof(u.riwayat_penyakit));
+                        } else {
+                            strncpy(u.riwayat_penyakit, buffer, sizeof(u.riwayat_penyakit)); 
+                        }
+                        break;
                     case 5: u.suhu_tubuh = atof(buffer); break;
                     case 6: u.tekanan_darah_sistolik = atoi(buffer); break;
                     case 7: u.tekanan_darah_diastolik = atoi(buffer); break;
@@ -75,8 +81,7 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
                     case 11: u.berat_badan = atof(buffer); break;
                     case 12: u.tinggi_badan = atoi(buffer); break;
                     case 13: u.kadar_kolesterol = atoi(buffer); break;
-                    case 14: u.kadar_kolesterol_Ldl = atoi(buffer); break;
-                    case 15: u.trombosit = atoi(buffer); break;
+                    case 14: u.trombosit = atoi(buffer); break;
                 }
 
                 field++;
@@ -89,7 +94,7 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
 
         // Ambil field terakhir (setelah koma terakhir)
         buffer[idx] = '\0';
-        if (field == 15) u.trombosit = atoi(buffer);
+        if (field == 14) u.trombosit = atoi(buffer);
         
         initStack(&u.perut);
         AddUser(userList, u);
@@ -192,36 +197,56 @@ void loadDataObat(const char *fileName, ObatList *listObat){
         }
 
         Obat o;
-        char buffer[128];
+        char idobat[128];
+        char namaobat[128];
         int i = 0, j = 0, field = 0;
 
-        while (line[i] != '\0' && line[i] != '\n') {
-            if (line[i] == ';') {
-                buffer[j] = '\0';
-                // o.id = atoi(buffer);  // field pertama: id
-                // field++;
-                // j = 0;
+        while (line[i] != ';' && line[i] != '\0') {
+            idobat[j++] = line[i++]; 
+        }
+        idobat[j] = '\0';
+        i++;
+        j = 0;
+            
+        while (line[i] != '\n' && line[i] != '\0') {
+            namaobat[j++] = line[i++];
+        }
+        namaobat[j] = '\0';
 
-                if (field == 0) {
-                    o.id = atoi(buffer);
-                } else if (field == 1) {
-                    strncpy(o.nama, buffer, sizeof(o.nama));
-                }
-
-                field++;
-                j = 0;
-            } else {
-                buffer[j++] = line[i];
-            }
-            i++;
+        if (j > 0 && namaobat[j - 1] == '\r') {
+            namaobat[j - 1] = '\0';
         }
 
-        buffer[j] = '\0';
-        if (field == 1) {
-            strncpy(o.nama, buffer, sizeof(o.nama));
-        }
-
+        o.id = atoi(idobat);
+        strncpy(o.nama, namaobat, sizeof(o.nama) - 1);
+        o.nama[sizeof(o.nama) - 1] = '\0';
         listObat->data[listObat->Neff++] = o;
+
+        // while (line[i] != '\0' && line[i] != '\n') {
+        //     if (line[i] == ';' || line[i] == '\n') {
+        //         buffer[j] = '\0';
+        //         // o.id = atoi(buffer);  // field pertama: id
+        //         // field++;
+        //         // j = 0;
+
+        //         if (field == 0) {
+        //             o.id = atoi(buffer);
+        //         } else if (field == 1) {
+        //             strncpy(o.nama, buffer, sizeof(o.nama));
+        //         }
+
+        //         field++;
+        //         j = 0;
+        //     } else {
+        //         buffer[j++] = line[i];
+        //     }
+        //     i++;
+        // }
+
+        // buffer[j] = '\0';
+        // if (field == 1) {
+        //     strncpy(o.nama, buffer, sizeof(o.nama));
+        // }
     }
 
     fclose(fileObat);

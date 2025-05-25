@@ -58,7 +58,8 @@ void bolehPulangGaa(User *current_user, PenyakitList *dataPenyakit, ObatList *da
             printf(CYAN "Urutan peminuman obat yang diharapkan:\n" RESET);
             printf(BLUE BOLD "  ");
             for (int i = 0; i < dataObatPenyakit->buffer[indexDiMap].jumlah_obat; i++) {
-                printf("%s", getObatName(dataObat, dataObatPenyakit->buffer[indexDiMap].urutan_obat[i]));
+                Obat *obat = getObatbyId(dataObat, dataObatPenyakit->buffer[indexDiMap].urutan_obat[i]);
+                printf("%s", obat->nama);
                 if (i != dataObatPenyakit->buffer[indexDiMap].jumlah_obat - 1) {
                     printf(" " YELLOW "->" BLUE BOLD " ");
                 }
@@ -68,7 +69,8 @@ void bolehPulangGaa(User *current_user, PenyakitList *dataPenyakit, ObatList *da
             printf(MAGENTA "Urutan obat yang kamu minum:\n" RESET);
             printf(YELLOW "  ");
             for (int i = 0; i < current_user->perut.length; i++) {
-                printf("%s", getObatName(dataObat, current_user->perut.data[i]));
+                Obat *obat = getObatbyId(dataObat, current_user->perut.data[i]);
+                printf("%s", obat->nama);
                 if (i != current_user->perut.length - 1) {
                     printf(" " YELLOW "->" YELLOW " ");
                 }

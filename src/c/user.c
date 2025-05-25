@@ -24,6 +24,8 @@ void CreateUser(UserList *l, User *u, char name[], char pass[], Role role) {
     u->kadar_kolesterol = -1;
     u->kadar_kolesterol_Ldl = -1;
     u->trombosit = -1;
+    initStack(&u->perut);
+    u->inventory.jumlahObat = 0;
 }
 
 void CreateListDin(UserList *l, int capacity) {
