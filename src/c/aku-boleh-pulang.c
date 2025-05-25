@@ -1,18 +1,51 @@
 #include <stdio.h>
 #include "../header/user.h"
 
-void bolehPulangGaa(User *current_user, PenyakitList *dataPenyakit, ObatList *dataObat, Obat_PenyakitList *dataObatPenyakit, boolean *isLogin) {
+void bolehPulangGaa(User *current_user, PenyakitList *dataPenyakit, ObatList *dataObat, Obat_PenyakitList *dataObatPenyakit, Matrix *denah, boolean *isLogin) {
     if (!(*isLogin)) {
         printf(RED "Anda belum login!\n\n" RESET);
         return;
     } 
 
     if (current_user->role == ROLE_PASIEN) {
+        
+        Queue *antrianPasien = NULL;
+        boolean isFront = FALSE;
+        boolean isInQueue = FALSE;
+
+        for (int i = 0; i < denah->rows; i++) {
+            for (int j = 0; j < denah->cols; j++) {
+                Queue *antrian = &denah->data[i][j].antrian;
+                Node *curr = antrian->head;
+
+                while (curr != NULL) {
+                    if (curr->info == current_user->id) {
+                        isInQueue = TRUE;
+                        if (curr == antrian->head) {
+                            isFront = TRUE;
+                            antrianPasien = antrian;
+                        }
+                        break;
+                    }
+                    curr = curr->next;
+                }
+            }
+        }
+        if (!isInQueue) {
+            printf(YELLOW "Kamu belum berada di antrian mana pun!\n\n" RESET);
+            return;
+        }
+
+        if (!isFront) {
+            printf(YELLOW "Belum giliranmu untuk diperiksa, mohon bersabar!\n\n" RESET);
+            return;
+        }
 
         if (strcmp(current_user->riwayat_penyakit, "-") == 0) {
             printf(YELLOW "Kamu belum menerima diagnosis apapun dari dokter, jangan buru-buru pulang!\n\n" RESET);
             return;
         }
+
 
         if (strcmp(current_user->riwayat_penyakit, "Sehat") == 0) {
             printf(GREEN "Kamu sudah sehat dan boleh langsung pulang, sampai jumpa!\n\n" RESET);
@@ -49,6 +82,9 @@ void bolehPulangGaa(User *current_user, PenyakitList *dataPenyakit, ObatList *da
             current_user->tinggi_badan = -1;
             current_user->kadar_kolesterol = -1;
             current_user->trombosit = -1;
+
+            int idPasien;
+            dequeue(antrianPasien, &idPasien);
 
             printf(GREEN BOLD "Selamat! Kamu sudah dinyatakan sembuh oleh dokter. Silahkan pulang dan semoga sehat selalu!\n\n" RESET);
         } else {

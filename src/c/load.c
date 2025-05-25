@@ -453,7 +453,7 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
                 break;
             }
         }
-
+        // printf("[DEBUG]%s\n", user->username);
         if (user == NULL) continue;
 
         // Lewati spasi setelah pasien ID
@@ -476,6 +476,11 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
             user->inventory.obat[obatIndex++] = currentObat;
         }
         user->inventory.jumlahObat = obatIndex;
+        // for (int i = 0; i < user->inventory.jumlahObat; i++) {
+        //     printf("[DEBUG]%d ", user->inventory.obat[i]);
+        // } 
+        // printf("\n");
+        // printf("[DEBUG]%d\n", user->inventory.jumlahObat);
     }
 
     fclose(file);

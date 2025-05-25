@@ -19,7 +19,7 @@ void helpMenu(User current_user, boolean *isLogin) {
                 printf(GRAY BOLD "  %-18s " YELLOW ": Mendaftarkan diri untuk pemeriksaan dokter\n" RESET, "DAFTAR_CHECKUP");
                 printf(GRAY BOLD "  %-18s " YELLOW ": Melihat status antrian dari dokter yang kamu pilih untuk check-up\n" RESET, "ANTRIAN");
                 printf(GRAY BOLD "  %-18s " YELLOW ": Meminum obat yang kamu miliki di inventori\n" RESET, "MINUM_OBAT");
-                printf(GRAY BOLD "  %-18s " YELLOW ": Mengeluarkan obat terakhir yang diminum\n" RESET, "MINUM_PENAWAR");
+                printf(GRAY BOLD "  %-18s " YELLOW ": Mengeluarkan obat terakhir yang diminum\n" RESET, "PENAWAR");
                 printf(GRAY BOLD "  %-18s " YELLOW ": Konsultasi ulang ke dokter untuk izin pulang\n" RESET, "PULANGDOK");
                 printf(GRAY BOLD "  %-18s " YELLOW ": Melihat keseluruhan bangunan dari rumah sakit\n" RESET, "LIHAT_DENAH");
                 printf(GRAY BOLD "  %-18s " YELLOW ": Melihat nama dokter & pasien di ruangan\n" RESET, "LIHAT_RUANGAN <<nama_ruangan>>");

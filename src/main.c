@@ -16,13 +16,13 @@ int main(int argc, char* argv[]) {
     PenyakitList dataPenyakit;
     ObatList dataObat;
     Obat_PenyakitList dataObatPenyakit;
-    Matrix denah_rs;
+    Matrix denahRS;
     Set nama_unik;
     
     initSet(&nama_unik, 5);
 
     // LOAD DATA from file folder
-    LOAD(argv[1], &dataBaseUser, &dataPenyakit, &dataObat, &dataObatPenyakit, &nama_unik, &denah_rs);
+    LOAD(argv[1], &dataBaseUser, &dataPenyakit, &dataObat, &dataObatPenyakit, &nama_unik, &denahRS);
     
     // Inisialisasi state LOGIN
     User current_user;
@@ -62,25 +62,25 @@ int main(int argc, char* argv[]) {
         } else if (strcmp(prompt, "HELP") == 0) {
             helpMenu(current_user, &isLogin);
         } else if (strcmp(prompt, "LIHAT_DENAH") == 0) {
-            denahRumahSakit(denah_rs);
+            denahRumahSakit(denahRS);
         } else if (strcmp(prompt, "LIHAT_RUANGAN") == 0){
-            lihatRuangan(denah_rs, dataBaseUser, current_user, &isLogin);
+            lihatRuangan(denahRS, dataBaseUser, current_user, &isLogin);
         } else if (strcmp(prompt, "EXIT") == 0) {
-            EXIT(&dataBaseUser, &dataObat, &dataPenyakit, &dataObatPenyakit, &denah_rs, &run_program);
+            EXIT(&dataBaseUser, &dataObat, &dataPenyakit, &dataObatPenyakit, &denahRS, &run_program);
         } else if (strcmp(prompt, "TAMBAH_DOKTER") == 0) {
             tambahDokter(&dataBaseUser, &current_user, &nama_unik, &isLogin);
         } else if (strcmp(prompt, "ASSIGN_DOKTER") == 0) {
-            assignDokter(&denah_rs, &dataBaseUser, &current_user, &isLogin);
+            assignDokter(&denahRS, &dataBaseUser, &current_user, &isLogin);
         } else if (strcmp(prompt, "MINUM_OBAT") == 0) {
             minumObat(&current_user, &dataObat, &isLogin);
-        } else if (strcmp(prompt, "MINUM_PENAWAR") == 0) {
-            minumPenawar(&current_user, &isLogin);
+        } else if (strcmp(prompt, "PENAWAR") == 0) {
+            minumPenawar(&current_user, &dataObat, &isLogin);
         } else if (strcmp(prompt, "DIAGNOSIS") == 0) {
-            diagnosis(&current_user, &dataBaseUser, &dataPenyakit, &isLogin, &denah_rs);
+            diagnosis(&current_user, &dataBaseUser, &dataPenyakit, &isLogin, &denahRS);
         } else if (strcmp(prompt, "LIHAT_SEMUA_ANTRIAN") == 0) {
-            lihatAntrian(&dataBaseUser, &current_user, &denah_rs, &isLogin);
+            lihatAntrian(&dataBaseUser, &current_user, &denahRS, &isLogin);
         } else if (strcmp(prompt, "DAFTAR_CHECKUP") == 0) {
-            daftarCheckUp(&current_user, &dataBaseUser, &isLogin, &denah_rs);
+            daftarCheckUp(&current_user, &dataBaseUser, &isLogin, &denahRS);
         } else if (strcmp(prompt, "CARI_USER") == 0) {
             cariUser(&dataBaseUser, &current_user, &isLogin);
         } else if (strcmp(prompt, "CARI_PASIEN") == 0) {
@@ -94,9 +94,9 @@ int main(int argc, char* argv[]) {
         } else if (strcmp(prompt, "LIHAT_DOKTER") == 0) {
             lihatDokter(&dataBaseUser, &current_user, &isLogin);
         } else if (strcmp(prompt, "ANTRIAN") == 0) {
-            antrianSaya(&current_user, &denah_rs, &isLogin);
+            antrianSaya(&current_user, &denahRS, &isLogin);
         } else if (strcmp(prompt, "PULANGDOK") == 0) {
-            bolehPulangGaa(&current_user, &dataPenyakit, &dataObat, &dataObatPenyakit, &isLogin);
+            bolehPulangGaa(&current_user, &dataPenyakit, &dataObat, &dataObatPenyakit, &denahRS, &isLogin);
         }
         else {
             printf(RED "Nama fungsi tidak terdaftar atau kesalahan pengetikan command!\n\n" RESET);
