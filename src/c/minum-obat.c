@@ -17,7 +17,8 @@ void minumObat(User *current_user, ObatList *dataObat, boolean *isLogin) {
         }
 
         for (int i = 0; i < current_user->inventory.jumlahObat; i++) {
-            printf(GRAY "%d. %s\n" RESET, i+1, getObatName(dataObat, current_user->inventory.obat[i]));
+            Obat *punya = getObatbyId(dataObat, current_user->inventory.obat[i]);
+            printf(GRAY "%d. %s\n" RESET, i+1, punya->nama);
         }
         printf("\n");
 
@@ -32,7 +33,8 @@ void minumObat(User *current_user, ObatList *dataObat, boolean *isLogin) {
         } while (choice <= 0 || choice > current_user->inventory.jumlahObat);
 
         int obat_id;
-        printf(GREEN "GLEKGLEKGLEK... %s berhasil diminum!!\n\n" RESET, getObatName(dataObat, current_user->inventory.obat[choice - 1]));
+        Obat *yangDiminum = getObatbyId(dataObat, current_user->inventory.obat[choice - 1]);
+        printf(GREEN "GLEKGLEKGLEK... %s berhasil diminum!!\n\n" RESET, yangDiminum->nama);
         deleteAt(&current_user->inventory, &obat_id, choice - 1);
 
         // masukin ke stack (ntar berhubungan sama minum penawar)

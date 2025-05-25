@@ -71,7 +71,7 @@ void cariPasien(UserList *dataBaseUser, User *current_user, boolean *isLogin); /
 void cariDokter(UserList *dataBaseUser, User *current_user, boolean *isLogin); // manager
 void diagnosis(User *current_user, UserList *dataBaseUser, PenyakitList *penyakit, boolean *isLogin, Matrix *denah); // dokter
 void ngobatin(User *current_user, PenyakitList *penyakitList, Obat_PenyakitList *obatPenyakitList, boolean *isLogin); // dokter
-void daftarCheckUp(); // pasien
+void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix *Hospital); // pasien
 void antrianSaya(User *current_user, Matrix *denah, boolean *isLogin); // pasien
 void minumObat(User *current_user, ObatList *dataObat, boolean *isLogin); // pasien
 void minumPenawar(User *current_user, boolean *isLogin); // pasien

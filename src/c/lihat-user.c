@@ -31,15 +31,15 @@ void lihatUser(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
             else if (arahSort == 2) sortListByUsername(&temp, 0);
         }
 
-        printf(BLUE BOLD "\n+----+--------------------+-----------+----------------------+\n" RESET);
-        printf(BLUE BOLD "| ID | Nama               | Role      | Penyakit             |\n" RESET);
-        printf(BLUE BOLD "+----+--------------------+-----------+----------------------+\n" RESET);
+        printf(BLUE BOLD "\n+-----+--------------------+-----------+----------------------+\n" RESET);
+        printf(BLUE BOLD "| ID  | Nama               | Role      | Penyakit             |\n" RESET);
+        printf(BLUE BOLD "+-----+--------------------+-----------+----------------------+\n" RESET);
         for (int i = 0; i < temp.Neff; i++) {
             User u = temp.data[i];
-            printf(GRAY " %-2d " RESET " | " GRAY "%-18s" RESET " | " YELLOW "%-9s" RESET " | " YELLOW "%-20s" RESET " |\n",
+            printf(GRAY " %-3d " RESET " | " GRAY "%-18s" RESET " | " YELLOW "%-9s" RESET " | " YELLOW "%-20s" RESET " |\n",
                 u.id, u.username, roleToStr(u.role), u.riwayat_penyakit);
         }
-        printf(BLUE BOLD "+----+--------------------+-----------+----------------------+\n\n" RESET);
+        printf(BLUE BOLD "+-----+--------------------+-----------+----------------------+\n\n" RESET);
         dealocateListDin(&temp);
     }
 }

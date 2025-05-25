@@ -81,7 +81,7 @@ void lupa_password(UserList *list, boolean *isLogin) {
                 char new_password[100];
                 
                 printf(GREEN "Halo %s %s, silakan daftarkan ulang password anda!\n" RESET, roleToStr(user->role), username);
-                printf(YELLOW "Password baru: ");
+                printf(YELLOW "Password baru: " RESET);
                 scanf("%s", new_password);
                 SetNewPassword(list, username, new_password);
                 printf(GREEN "Password berhasil diubah!\n\n" RESET);

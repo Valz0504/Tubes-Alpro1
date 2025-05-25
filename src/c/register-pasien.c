@@ -20,7 +20,6 @@ void registerPasien(UserList *list, Set *set, boolean *isLogin) {
             insertSet(set, username);
 
             User new_user;
-            initStack(&new_user.perut);
             CreateUser(list, &new_user, usernameTemp, password, 0);
             AddUser(list, new_user);
             

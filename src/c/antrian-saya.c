@@ -16,23 +16,24 @@ void antrianSaya(User *current_user, Matrix *denah, boolean *isLogin) {
                 Queue antrian = denah->data[i][j].antrian;
                 Node *curr = antrian.head;
                 int posisi = 1;
+                int totalAntrian = 0;
+
+                Node *hit = antrian.head;
+                while (hit != NULL) {
+                    totalAntrian++;
+                    hit = hit->next;
+                }
 
                 while (curr != NULL) {
                     if (curr->info == current_user->id) {
                         printf("\nStatus antrian Anda:\n");
                         if (strlen(denah->data[i][j].nama_dokter) > 0) {
-                            printf("Dokter: Dr. %s\n", denah->data[i][j].nama_dokter);
+                            printf("Dokter: %s\n", denah->data[i][j].nama_dokter);
                         } else {
                             printf("Dokter belum ditentukan untuk ruangan ini.\n");
                         }
                         printf("Ruangan: %c%d\n", 'A' + j, i + 1);
-                        
-                        int totalAntrian = 0;
-                        Node *hit = antrian.head;
-                        while (hit != NULL) {
-                            totalAntrian++;
-                            hit = hit->next;
-                        }
+                    
                         printf("Posisi antrian: %d dari %d\n", posisi, totalAntrian);
 
                         ditemukan = 1;

@@ -50,8 +50,8 @@ void getRuanganDokter(Matrix *denah, char nama_dokter[], char *ruangan) {
     for (int i = 0; i < denah->rows; i++) {
         for (int j = 0; j < denah->cols; j++) {
             if (strcmp(denah->data[i][j].nama_dokter, nama_dokter) == 0) {
-                ruangan[0] = 'A' + j;
-                sprintf(ruangan + 1, "%d", i + 1);
+                ruangan[0] = 'A' + i;
+                sprintf(ruangan + 1, "%d", j + 1);
                 return;
             }
         }
