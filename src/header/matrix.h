@@ -10,6 +10,7 @@
 
 typedef struct {
     char nama_dokter[100];
+    boolean serving;
     Queue antrian;
 } Ruangan;
 

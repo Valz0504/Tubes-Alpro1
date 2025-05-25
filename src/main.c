@@ -72,9 +72,9 @@ int main(int argc, char* argv[]) {
         } else if (strcmp(prompt, "ASSIGN_DOKTER") == 0) {
             assignDokter(&denahRS, &dataBaseUser, &current_user, &isLogin);
         } else if (strcmp(prompt, "MINUM_OBAT") == 0) {
-            minumObat(&current_user, &dataObat, &isLogin);
+            minumObat(&current_user, &dataBaseUser,&dataObat, &isLogin);
         } else if (strcmp(prompt, "PENAWAR") == 0) {
-            minumPenawar(&current_user, &dataObat, &isLogin);
+            minumPenawar(&current_user, &dataBaseUser,&dataObat, &isLogin);
         } else if (strcmp(prompt, "DIAGNOSIS") == 0) {
             diagnosis(&current_user, &dataBaseUser, &dataPenyakit, &isLogin, &denahRS);
         } else if (strcmp(prompt, "LIHAT_SEMUA_ANTRIAN") == 0) {
@@ -96,7 +96,9 @@ int main(int argc, char* argv[]) {
         } else if (strcmp(prompt, "ANTRIAN") == 0) {
             antrianSaya(&current_user, &denahRS, &isLogin);
         } else if (strcmp(prompt, "PULANGDOK") == 0) {
-            bolehPulangGaa(&current_user, &dataPenyakit, &dataObat, &dataObatPenyakit, &denahRS, &isLogin);
+            bolehPulangGaa(&current_user,  &dataBaseUser,&dataPenyakit, &dataObat, &dataObatPenyakit, &denahRS, &isLogin);
+        } else if (strcmp(prompt, "NGOBATIN") == 0) {
+            ngobatin(&current_user, &dataBaseUser, &dataPenyakit, &dataObat, &dataObatPenyakit, &denahRS, &isLogin);
         }
         else {
             printf(RED "Nama fungsi tidak terdaftar atau kesalahan pengetikan command!\n\n" RESET);

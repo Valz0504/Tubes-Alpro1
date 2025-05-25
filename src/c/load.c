@@ -349,7 +349,8 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
     // Inisialisasi semua ruangan
     for (int i = 0; i < denah->rows; i++) {
         for (int j = 0; j < denah->cols; j++) {
-            denah->data[i][j].nama_dokter[0] = '\0';
+            denah->data[i][j].serving = FALSE;
+            strcpy(denah->data[i][j].nama_dokter, "");
             initQueue(&denah->data[i][j].antrian);
         }
     }

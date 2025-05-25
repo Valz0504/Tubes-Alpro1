@@ -93,7 +93,7 @@ void FileObat(const char *filePath, ObatList *obat){// membuat/overwrite file ob
         "obat_id,nama_obat\n");
     for(int i = 0; i < obat->Neff; i++){
         Obat o = obat->data[i];
-        fprintf(fp, "%d;%s;\n", o.id, o.nama);
+        fprintf(fp, "%d;%s\n", o.id, o.nama);
     }
     fclose(fp);
 }
@@ -210,29 +210,47 @@ void FileConfig(const char *filePath, Matrix *Hospital, UserList *user1){ //BELU
             fprintf(fp, "\n");
         }
     }
-    int PasienObat[100][100];
-    int X = JmlhInventory_ada(*user1, PasienObat);
-    
-    fprintf(fp, "%d\n", X);
-    // Tulis inventory pasien
-    for(int i = 0; i < X; i++){
-        for(int j = 0; j < 100; j++){
-            if(j == 0){
-                fprintf(fp, "%d ", PasienObat[i][j]);
+
+    int x = 0;
+    for (int i = 0; i < user1->Neff; i++) {
+        if (user1->data[i].inventory.jumlahObat > 0) x++;
+    }
+
+    fprintf(fp, "%d\n", x);
+    for (int i = 0; i < user1->Neff; i++) {
+        if (user1->data[i].inventory.jumlahObat > 0) {
+            fprintf(fp, "%d ", user1->data[i].id);
+
+            for (int j = 0; j < user1->data[i].inventory.jumlahObat; j++) {
+                fprintf(fp, "%d ", user1->data[i].inventory.obat[j]);
             }
-            else{
-                if(PasienObat[i][j] != 0){
-                    fprintf(fp, "%d ", PasienObat[i][j]);
-                    terisi++;
-                }
-            }
-            
-        }
-        if(terisi > 0){
             fprintf(fp, "\n");
         }
-        terisi = 0;
     }
+
+    // int PasienObat[100][100];
+    // int X = JmlhInventory_ada(*user1, PasienObat);
+    
+    // fprintf(fp, "%d\n", X);
+    // // Tulis inventory pasien
+    // for(int i = 0; i < X; i++){
+    //     for(int j = 0; j < 100; j++){
+    //         if(j == 0){
+    //             fprintf(fp, "%d ", PasienObat[i][j]);
+    //         }
+    //         else{
+    //             if(PasienObat[i][j] != 0){
+    //                 fprintf(fp, "%d ", PasienObat[i][j]);
+    //                 terisi++;
+    //             }
+    //         }
+            
+    //     }
+    //     if(terisi > 0){
+    //         fprintf(fp, "\n");
+    //     }
+    //     terisi = 0;
+    // }
     
     fclose(fp);
 }
