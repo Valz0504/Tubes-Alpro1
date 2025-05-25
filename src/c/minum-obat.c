@@ -10,7 +10,7 @@ void minumObat(User *current_user, ObatList *dataObat, boolean *isLogin) {
 
     if (current_user->role == ROLE_PASIEN) {
         printf(CYAN BOLD "==== DAFTAR OBAT ====\n" RESET);
-        
+        // printf("[DEBUG]jumlahobatinventory:%d\n", current_user->inventory.jumlahObat);
         if (current_user->inventory.jumlahObat == 0) {
             printf(YELLOW "Anda tidak memiliki obat apapun di inventory!\n\n" RESET);
             return;

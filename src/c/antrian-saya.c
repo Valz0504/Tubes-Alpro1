@@ -15,32 +15,27 @@ void antrianSaya(User *current_user, Matrix *denah, boolean *isLogin) {
             for (int j = 0; j < denah->cols; j++) {
                 Queue antrian = denah->data[i][j].antrian;
                 Node *curr = antrian.head;
-                int posisi = 1;
-                int totalAntrian = 0;
-
-                Node *hit = antrian.head;
-                while (hit != NULL) {
-                    totalAntrian++;
-                    hit = hit->next;
-                }
-
+                
+                int panjangAntriLuar = countQueue(antrian) - denah->kapasitasRuangan;
+                int posisiPasien = 1;
+                
                 while (curr != NULL) {
                     if (curr->info == current_user->id) {
-                        printf("\nStatus antrian Anda:\n");
-                        if (strlen(denah->data[i][j].nama_dokter) > 0) {
-                            printf("Dokter: %s\n", denah->data[i][j].nama_dokter);
+                        if (posisiPasien > denah->kapasitasRuangan) {
+                            posisiPasien -= denah->kapasitasRuangan;
                         } else {
-                            printf("Dokter belum ditentukan untuk ruangan ini.\n");
+                            printf(YELLOW "Anda sedang berada di dalam ruangan dokter!\n\n" RESET);
+                            return;
                         }
-                        printf("Ruangan: %c%d\n", 'A' + j, i + 1);
-                    
-                        printf("Posisi antrian: %d dari %d\n", posisi, totalAntrian);
-
+                        printf("Status antrian Anda: \n");
+                        printf("Dokter: %s\n", denah->data[i][j].nama_dokter);
+                        printf("Ruangan: %c%d\n", 'A'+i, j+1);
+                        printf("Posisi antrian: %d dari %d\n\n", posisiPasien, panjangAntriLuar);
                         ditemukan = 1;
                         break;
                     }
                     curr = curr->next;
-                    posisi++;
+                    posisiPasien++;
                 }
                 if (ditemukan) break;
             }

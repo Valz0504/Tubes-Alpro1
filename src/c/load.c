@@ -453,7 +453,7 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
                 break;
             }
         }
-
+        // printf("[DEBUG]%s\n", user->username);
         if (user == NULL) continue;
 
         // Lewati spasi setelah pasien ID
@@ -476,6 +476,11 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
             user->inventory.obat[obatIndex++] = currentObat;
         }
         user->inventory.jumlahObat = obatIndex;
+        // for (int i = 0; i < user->inventory.jumlahObat; i++) {
+        //     printf("[DEBUG]%d ", user->inventory.obat[i]);
+        // } 
+        // printf("\n");
+        // printf("[DEBUG]%d\n", user->inventory.jumlahObat);
     }
 
     fclose(file);
@@ -486,7 +491,7 @@ void LOAD(const char *folderName, UserList *userList, PenyakitList *penyakitList
     struct stat sb;
 
     // Bangun path lengkap: ./file/data 1
-    snprintf(path, sizeof(path), "../data/%s", folderName);
+    snprintf(path, sizeof(path), "./data/%s", folderName);
 
     // Validasi apakah folder ada
     if (stat(path, &sb) != 0 || !S_ISDIR(sb.st_mode)) {

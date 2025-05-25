@@ -57,12 +57,12 @@ void FileUser(const char *filePath, UserList *users){// membuat/overwrite file u
         if (u.role == 0) {
             strcpy(peran, "pasien");
             fprintf(fp,
-                "%d;%s;%s;%s;%s;%.1f;%d;%d;%d;%.1f;%d;%.1f;%d;%d;%d;%d\n",
+                "%d;%s;%s;%s;%s;%.1f;%d;%d;%d;%.1f;%d;%.1f;%d;%d;%d\n",
                 u.id, u.username, u.password, peran, u.riwayat_penyakit,
                 u.suhu_tubuh, u.tekanan_darah_sistolik, u.tekanan_darah_diastolik,
                 u.detak_jantung, u.saturasi_oksigen, u.kadar_gula_darah,
                 u.berat_badan, u.tinggi_badan, u.kadar_kolesterol,
-                u.kadar_kolesterol_Ldl, u.trombosit
+                u.trombosit
             );
         } 
         else if (u.role == 1) {
@@ -246,7 +246,7 @@ void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitLis
     //char file_obatpenyakit[50] = "obat_penyakit.csv";
     //char file_config[50] = "config.txt";
     char pathUser[256];
-    char base[50] = "file";
+    char base[50] = "data";
     char FullFolder[256];
     char pathObat[256];
     char pathPenyakit[256];

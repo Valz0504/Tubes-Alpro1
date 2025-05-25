@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "../header/user.h"
 
-void minumPenawar(User *current_user, boolean *isLogin) {
+void minumPenawar(User *current_user, ObatList *dataObat, boolean *isLogin) {
     if (!(*isLogin)) {
         printf(RED "Anda belum login!\n\n" RESET);
         return;
@@ -9,8 +9,8 @@ void minumPenawar(User *current_user, boolean *isLogin) {
 
     if (current_user->role == ROLE_PASIEN) {
         char answer[100];
-        if (current_user->perut.top == -1) {
-            printf(YELLOW "Anda belum minum obat apapun!\n\n" RESET);
+        if (current_user->perut.length == 0) {
+            printf(YELLOW "Perut kosong!! Belum ada obat yang dimakan.\n\n" RESET);
             return;
         }
 
@@ -29,8 +29,9 @@ void minumPenawar(User *current_user, boolean *isLogin) {
         if (strcmp(answer, "y") == 0) {
             int value;
             pop(&current_user->perut, &value);
+            Obat *obat = getObatbyId(dataObat, value);
             insertLast(&current_user->inventory, value);
-            printf(GREEN "Obat terakhir berhasil dikeluarkan dari tubuhmu dan kembali ke inventory!\n\n" RESET);
+            printf(GREEN "Uwekkk!!! %s keluar dari tubuhmu dan kembali ke inventory!\n\n" RESET, obat->nama);
         } else {
             printf(YELLOW "Tidak jadi minum penawar...\n\n" RESET);
         }
