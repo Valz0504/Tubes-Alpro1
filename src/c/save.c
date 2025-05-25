@@ -240,13 +240,8 @@ void FileConfig(const char *filePath, Matrix *Hospital, UserList *user1){ //BELU
 
 void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitList *obat_penyakit, Matrix *Hospital){//obatlist, dll perlu tidak?
     char nama_folder[50];
-    //char file_user[50] = "user.csv";
-    //char file_obat[50] = "obat.csv";
-    //char file_penyakit[50] = "penyakit.csv";
-    //char file_obatpenyakit[50] = "obat_penyakit.csv";
-    //char file_config[50] = "config.txt";
     char pathUser[256];
-    char base[50] = "data";
+    char base[50] = "./data";
     char FullFolder[256];
     char pathObat[256];
     char pathPenyakit[256];
