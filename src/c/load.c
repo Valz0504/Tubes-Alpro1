@@ -486,7 +486,7 @@ void LOAD(const char *folderName, UserList *userList, PenyakitList *penyakitList
     struct stat sb;
 
     // Bangun path lengkap: ./file/data 1
-    snprintf(path, sizeof(path), "../data/%s", folderName);
+    snprintf(path, sizeof(path), "./data/%s", folderName);
 
     // Validasi apakah folder ada
     if (stat(path, &sb) != 0 || !S_ISDIR(sb.st_mode)) {
