@@ -27,7 +27,7 @@ void logout(User *current_user, boolean *isLogin) {
         *isLogin = FALSE;
         printf(GREEN "Sampai jumpa!\n\n\n" RESET);
 
-        printf(DARK_GREEN);
+        printf(BLUE);
         printf("========================================\n");
         printf("   SELAMAT DATANG DI SISTEM KLINIK ITB  \n");
         printf("========================================\n");

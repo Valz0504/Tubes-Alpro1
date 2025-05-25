@@ -35,7 +35,6 @@ typedef struct
     float berat_badan;
     int tinggi_badan;
     int kadar_kolesterol;
-    int kadar_kolesterol_Ldl;
     int trombosit;    
     Inventory inventory;
     Stack perut;

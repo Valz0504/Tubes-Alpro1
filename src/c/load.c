@@ -4,10 +4,6 @@
 #include <sys/stat.h>
 
 #include "../header/user.h"
-#include "../header/matrix.h"
-#include "../header/queue.h"
-#include "../header/boolean.h"
-
 
 #define initialCap 10
 #define maxChar 100
@@ -18,7 +14,7 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
     
     FILE *fileUser = fopen(filename, "r");
     if (fileUser == NULL) {
-        perror("Gagal membuka file User!\n");
+        perror(RED "Gagal membuka file User!\n" RESET);
         exit(1);
     }
 
@@ -106,7 +102,7 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
 void loadDataPenyakit(const char *filename, PenyakitList *listPenyakit) {
     FILE *filePenyakit = fopen(filename, "r");
     if (filePenyakit == NULL) {
-        printf("Gagal membuka file penyakit!");
+        printf(RED "Gagal membuka file penyakit!" RESET);
         return;
     }
 
@@ -178,7 +174,7 @@ void loadDataPenyakit(const char *filename, PenyakitList *listPenyakit) {
 void loadDataObat(const char *fileName, ObatList *listObat){
     FILE *fileObat = fopen(fileName, "r");
     if (fileObat == NULL) {
-        perror("Gagal membuka file obat");
+        perror(RED "Gagal membuka file obat" RESET);
         return;
     }
 
@@ -199,7 +195,7 @@ void loadDataObat(const char *fileName, ObatList *listObat){
         Obat o;
         char idobat[128];
         char namaobat[128];
-        int i = 0, j = 0, field = 0;
+        int i = 0, j = 0;
 
         while (line[i] != ';' && line[i] != '\0') {
             idobat[j++] = line[i++]; 
@@ -221,32 +217,6 @@ void loadDataObat(const char *fileName, ObatList *listObat){
         strncpy(o.nama, namaobat, sizeof(o.nama) - 1);
         o.nama[sizeof(o.nama) - 1] = '\0';
         listObat->data[listObat->Neff++] = o;
-
-        // while (line[i] != '\0' && line[i] != '\n') {
-        //     if (line[i] == ';' || line[i] == '\n') {
-        //         buffer[j] = '\0';
-        //         // o.id = atoi(buffer);  // field pertama: id
-        //         // field++;
-        //         // j = 0;
-
-        //         if (field == 0) {
-        //             o.id = atoi(buffer);
-        //         } else if (field == 1) {
-        //             strncpy(o.nama, buffer, sizeof(o.nama));
-        //         }
-
-        //         field++;
-        //         j = 0;
-        //     } else {
-        //         buffer[j++] = line[i];
-        //     }
-        //     i++;
-        // }
-
-        // buffer[j] = '\0';
-        // if (field == 1) {
-        //     strncpy(o.nama, buffer, sizeof(o.nama));
-        // }
     }
 
     fclose(fileObat);
@@ -255,7 +225,7 @@ void loadDataObat(const char *fileName, ObatList *listObat){
 void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasiList) {
     FILE *fileOP = fopen(filename, "r");
     if (fileOP == NULL) {
-        perror("Gagal membuka file obat-penyakit");
+        perror(RED "Gagal membuka file obat-penyakit" RESET);
         return;
     }
 
@@ -317,7 +287,7 @@ void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasiList) {
 void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
-        printf("Error: Tidak dapat membuka file %s\n", filename);
+        printf(RED "Error: Tidak dapat membuka file %s\n" RESET, filename);
         return;
     }
 
@@ -326,7 +296,7 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
 
     // Baca ukuran denah (baris pertama)
     if (fgets(buffer, sizeof(buffer), file) == NULL) {
-        printf("Error: File kosong\n");
+        printf(RED "Error: File kosong\n" RESET);
         fclose(file);
         return;
     }
@@ -351,7 +321,7 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
 
     // Baca kapasitas (baris kedua)
     if (fgets(buffer, sizeof(buffer), file) == NULL) {
-        printf("Error: Format file salah (kapasitas)\n");
+        printf(RED "Error: Format file salah (kapasitas)\n" RESET);
         fclose(file);
         return;
     }
@@ -388,7 +358,7 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
     for (int i = 0; i < denah->rows; i++) {
         for (int j = 0; j < denah->cols; j++) {
             if (fgets(buffer, sizeof(buffer), file) == NULL) {
-                printf("Error: Data ruangan tidak lengkap\n");
+                printf(RED "Error: Data ruangan tidak lengkap\n" RESET);
                 fclose(file);
                 return;
             }
@@ -442,15 +412,12 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
 
             // Lewati spasi antara pasien dalam dan antrian luar
             while (buffer[index] == ' ') index++;
-
-            // Parse antrian luar (tidak disimpan di contoh struct)
-            // Diabaikan karena tidak ada tempat penyimpanan di struct
         }
     }
 
     // Baca jumlah pasien dengan inventory (baris setelah ruangan)
     if (fgets(buffer, sizeof(buffer), file) == NULL) {
-        printf("Error: Tidak ada data inventory\n");
+        printf(RED "Error: Tidak ada data inventory\n" RESET);
         fclose(file);
         return;
     }
@@ -464,7 +431,7 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
     // Baca data inventory masing-masing pasien
     for (int i = 0; i < jumlahPasienInventory; i++) {
         if (fgets(buffer, sizeof(buffer), file) == NULL) {
-            printf("Error: Data inventory tidak lengkap\n");
+            printf(RED "Error: Data inventory tidak lengkap\n" RESET);
             break;
         }
 
@@ -519,11 +486,11 @@ void LOAD(const char *folderName, UserList *userList, PenyakitList *penyakitList
     struct stat sb;
 
     // Bangun path lengkap: ./file/data 1
-    snprintf(path, sizeof(path), "./file/%s", folderName);
+    snprintf(path, sizeof(path), "../data/%s", folderName);
 
     // Validasi apakah folder ada
     if (stat(path, &sb) != 0 || !S_ISDIR(sb.st_mode)) {
-        printf("Folder '%s' tidak ditemukan di dalam folder 'file/'\n", folderName);
+        printf(RED "Folder '%s' tidak ditemukan di dalam folder 'data/'\n" RESET, folderName);
         exit(1);
     }
 
@@ -542,8 +509,5 @@ void LOAD(const char *folderName, UserList *userList, PenyakitList *penyakitList
     loadDataPenyakit(pathPenyakit, penyakitList);
     loadDataObat(pathObat, obatList);
     loadDataObatPenyakit(pathRelasi, relasiList);
-
-    // Sort sebelum laod config
-    // sortUserListByID(userList);
     loadConfig(pathConfig, denah, userList);
 }

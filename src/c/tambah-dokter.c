@@ -6,30 +6,30 @@
 void assignDokter(Matrix *denah, UserList *list, User *current_user, boolean *isLogin) {
     if (*isLogin) {
         if (current_user->role == ROLE_MANAGER) {
-            printf("=== ASSIGN DOKTER ===\n");
+            printf(CYAN BOLD "=== ASSIGN DOKTER ===\n" RESET);
     
             char nama_dokter[100], ruang[100];    
-            printf("Username: ");
+            printf(YELLOW "Username: " RESET);
             scanf("%s", nama_dokter);
-            printf("Ruangan: ");
+            printf(YELLOW "Ruangan: " RESET);
             scanf("%s", ruang);
             
             // cek apakah nama_dokter nya ada 
             User *dokter = findUser(list, nama_dokter);
             if (dokter == NULL) {
-                printf("Tidak ada dokter dengan nama %s.\n\n", nama_dokter);
+                printf(RED "Tidak ada dokter dengan nama %s.\n\n" RESET, nama_dokter);
                 return;
             }
 
             if (dokter->role != ROLE_DOKTER) {
-                printf("%s bukan dokter!\n\n", dokter->username);
+                printf(RED "%s bukan dokter!\n\n" RESET, dokter->username);
                 return;
             }
 
-            int row,col;
+            int row, col;
             if (getPosisiRuangan(denah, ruang, &row, &col)) {
                 if (strcmp(nama_dokter, denah->data[row][col].nama_dokter) == 0) {
-                    printf("Dokter %s sudah diassign ke ruangan ini!\n\n", nama_dokter);
+                    printf(BLUE "Dokter %s sudah diassign ke ruangan ini!\n\n" RESET, nama_dokter);
                     return;
                 }
 
@@ -40,41 +40,41 @@ void assignDokter(Matrix *denah, UserList *list, User *current_user, boolean *is
                 
                 if (kosong && !isDokterSudahAssign(denah, nama_dokter)) {
                     strcpy(denah->data[row][col].nama_dokter, nama_dokter);
-                    printf("Dokter %s berhasil ditugaskan ke ruangan %s!\n\n", nama_dokter, ruang);
+                    printf(GREEN "Dokter %s berhasil ditugaskan ke ruangan %s!\n\n" RESET, nama_dokter, ruang);
                 } else if (kosong && isDokterSudahAssign(denah, nama_dokter)) {
                     char ruangan_asal[10];
                     getRuanganDokter(denah, nama_dokter, ruangan_asal);
-                    printf("Dokter %s sudah diassign ke ruangan %s!\n", nama_dokter, ruangan_asal);
+                    printf(BLUE "Dokter %s sudah diassign ke ruangan %s!\n" RESET, nama_dokter, ruangan_asal);
                 } else if (!kosong && !isDokterSudahAssign(denah, nama_dokter)) {
-                    printf("Dokter %s sudah menempati ruangan %s!\n", denah->data[row][col].nama_dokter, ruang);
-                    printf("Silakan cari ruangan lain untuk dokter %s.\n\n", nama_dokter);
+                    printf(BLUE "Ruangan %s sudah ditempati dokter %s!\n" RESET, ruang, denah->data[row][col].nama_dokter);
+                    printf(RED "Silakan cari ruangan lain untuk dokter %s.\n\n" RESET, nama_dokter);
                 } else if (!kosong && isDokterSudahAssign(denah, nama_dokter)) {
                     char ruangan_asal[10];
                     getRuanganDokter(denah, nama_dokter, ruangan_asal);
 
-                    printf("Dokter %s sudah diassign ke ruangan %s!\n", nama_dokter, ruangan_asal);
-                    printf("Ruangan %s juga sudah ditempati dokter %s!\n\n", ruang, denah->data[row][col].nama_dokter);
+                    printf(BLUE "Dokter %s sudah diassign ke ruangan %s!\n" RESET, nama_dokter, ruangan_asal);
+                    printf(RED "Ruangan %s juga sudah ditempati dokter %s!\n\n" RESET, ruang, denah->data[row][col].nama_dokter);
                 }
             } else {
-                printf(("Nama ruangan tidak valid!\n\n"));
+                printf(RED "Nama ruangan tidak valid!\n\n" RESET);
             }
         } else {
-            printf("Anda bukan manager! Tidak bisa assign dokter!\n\n");
+            printf(RED "Anda bukan manager! Tidak bisa assign dokter!\n\n" RESET);
         }
     } else {
-        printf("Login sebagai Manager terlebih dahulu!\n\n");
+        printf(RED "Login sebagai Manager terlebih dahulu!\n\n" RESET);
     }
 }
 
 void tambahDokter(UserList *list, User *current_user, Set *set, boolean *isLogin) {
     if (*isLogin) {
         if (current_user->role == ROLE_MANAGER) {
-            printf("=== TAMBAH DOKTER ===\n");
+            printf(CYAN BOLD "=== TAMBAH DOKTER ===\n" RESET);
             char username[100], password[100];
             
-            printf("Username: ");
+            printf(YELLOW "Username: " RESET);
             scanf("%s", username);
-            printf("Password: ");
+            printf(YELLOW "Password: " RESET);
             scanf("%s", password);
             
             User *temp_user = findUser(list, username);
@@ -89,22 +89,21 @@ void tambahDokter(UserList *list, User *current_user, Set *set, boolean *isLogin
                 CreateUser(list, &new_user, usernameTemp, password, 1);
                 AddUser(list, new_user);
                 
-                printf("Dokter %s berhasil ditambahkan!\n\n", usernameTemp);
+                printf(GREEN "Dokter %s berhasil ditambahkan!\n\n" RESET, usernameTemp);
             } else {
                 if (temp_user != NULL) {
                     if (temp_user->role == ROLE_DOKTER) {
-                        printf("Sudah ada Dokter bernama %s!\n\n", usernameTemp);
+                        printf(YELLOW "Sudah ada Dokter bernama %s!\n\n" RESET, usernameTemp);
                     } else {
-                        printf("Sudah ada User bernama %s!\n\n", usernameTemp);
+                        printf(RED "Sudah ada User bernama %s!\n\n" RESET, usernameTemp);
                     }
                 }
             }
         } else {
-            printf("Anda bukan manager! Tidak bisa tambah dokter!\n\n");
+            printf(RED "Anda bukan manager! Tidak bisa tambah dokter!\n\n" RESET);
         }
     } else {
-        printf("Login sebagai Manager terlebih dahulu!\n\n");
+        printf(RED "Login sebagai Manager terlebih dahulu!\n\n" RESET);
     }
-
 }
 

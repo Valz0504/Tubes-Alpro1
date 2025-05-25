@@ -22,10 +22,10 @@ void CreateUser(UserList *l, User *u, char name[], char pass[], Role role) {
     u->berat_badan = 0.0;
     u->tinggi_badan = -1;
     u->kadar_kolesterol = -1;
-    u->kadar_kolesterol_Ldl = -1;
     u->trombosit = -1;
     initStack(&u->perut);
     u->inventory.jumlahObat = 0;
+    l->currMaxId++;
 }
 
 void CreateListDin(UserList *l, int capacity) {

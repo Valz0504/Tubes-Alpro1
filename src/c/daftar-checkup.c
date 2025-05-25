@@ -1,100 +1,95 @@
 #include <stdio.h>
 #include "../header/user.h"
 
-void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix *Hospital){
+void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix *Hospital) {
     if (!(*isLogin)) {
-        printf("Anda belum login!\n\n");
+        printf(RED "Anda belum login!\n\n" RESET);
         return;
     }
-    if(current_user->role == ROLE_PASIEN){
+    if (current_user->role == ROLE_PASIEN) {
         float suhu;
         int tekanan_sis, tekanan_dis, jantung;
         float saturasi;
         int gula_darah;
         float berat;
-        int tinggi, kolesterol, kolesterol_Ldl, trombosit;
-        printf("Silakan masukkan data check-up Anda:\n");
-        do{
-            printf("Suhu Tubuh (Celcius): ");
+        int tinggi, kolesterol, trombosit;
+
+        printf(CYAN BOLD "Silakan masukkan data check-up Anda:\n" RESET);
+
+        do {
+            printf(YELLOW "Suhu Tubuh (Celcius): " RESET);
             scanf("%f", &suhu);
-            //printf("\n");
-            if(suhu <= 0){
-                printf("Suhu tubuh harus berupa angka positif!\n");
+            if (suhu <= 0) {
+                printf(RED "Suhu tubuh harus berupa angka positif!\n" RESET);
             }
-        }while(suhu <= 0);
-        do{
-            printf("Tekanan Darah (sistol/diastol, contoh 120 80):");
+        } while (suhu <= 0);
+
+        do {
+            printf(YELLOW "Tekanan Darah (sistol/diastol, contoh 120 80): " RESET);
             scanf("%d %d", &tekanan_sis, &tekanan_dis);
-            //printf("\n");
-            if(tekanan_dis < 0 || tekanan_sis < 0){
-                printf("Tekanan darah harus berupa angka positif\n");
+            if (tekanan_dis < 0 || tekanan_sis < 0) {
+                printf(RED "Tekanan darah harus berupa angka positif\n" RESET);
             }
-        }while(tekanan_dis < 0 || tekanan_sis < 0);
-        do{
-            printf("Detak Jantung (bpm):");
+        } while (tekanan_dis < 0 || tekanan_sis < 0);
+
+        do {
+            printf(YELLOW "Detak Jantung (bpm): " RESET);
             scanf("%d", &jantung);
-            //printf("\n");
-            if(jantung < 0){
-                printf("Detak Jantung harus berupa angka positif\n");
+            if (jantung < 0) {
+                printf(RED "Detak Jantung harus berupa angka positif\n" RESET);
             }
-        }while(jantung < 0);
-        do{
-            printf("Saturasi Oksigen (%%):");
+        } while (jantung < 0);
+
+        do {
+            printf(YELLOW "Saturasi Oksigen (%%): " RESET);
             scanf("%f", &saturasi);
-            //printf("\n");
-            if(saturasi < 0){
-                printf("Saturasi Oksigen harus berupa angka positif\n");
+            if (saturasi < 0) {
+                printf(RED "Saturasi Oksigen harus berupa angka positif\n" RESET);
             }
-        }while(saturasi < 0);
-        do{
-            printf("Kadar Gula Darah (mg/dL):");
+        } while (saturasi < 0);
+
+        do {
+            printf(YELLOW "Kadar Gula Darah (mg/dL): " RESET);
             scanf("%d", &gula_darah);
-            //printf("\n");
-            if(gula_darah < 0){
-                printf("Kadar Gula Darah harus berupa angka positif\n");
+            if (gula_darah < 0) {
+                printf(RED "Kadar Gula Darah harus berupa angka positif\n" RESET);
             }
-        }while(gula_darah < 0);
-        do{
-            printf("Berat Badan (kg):");
+        } while (gula_darah < 0);
+
+        do {
+            printf(YELLOW "Berat Badan (kg): " RESET);
             scanf("%f", &berat);
-            //printf("\n");
-            if(berat < 0){
-                printf("Berat Badan harus berupa angka positif\n");
+            if (berat < 0) {
+                printf(RED "Berat Badan harus berupa angka positif\n" RESET);
             }
-        }while(berat < 0);
-        do{
-            printf("Tinggi Badan (cm):");
+        } while (berat < 0);
+
+        do {
+            printf(YELLOW "Tinggi Badan (cm): " RESET);
             scanf("%d", &tinggi);
-            //printf("\n");
-            if(tinggi < 0){
-                printf("Tinggi Badan harus berupa angka positif\n");
+            if (tinggi < 0) {
+                printf(RED "Tinggi Badan harus berupa angka positif\n" RESET);
             }
-        }while(tinggi < 0);
-        do{
-            printf("Kadar Kolestrol (mg/dL):");
+        } while (tinggi < 0);
+
+        do {
+            printf(YELLOW "Kadar Kolesterol (mg/dL): " RESET);
             scanf("%d", &kolesterol);
-            //printf("\n");
-            if(kolesterol < 0){
-                printf("Kadar Kolestrol harus berupa angka positif\n");
+            if (kolesterol < 0) {
+                printf(RED "Kadar Kolesterol harus berupa angka positif\n" RESET);
             }
-        }while(kolesterol < 0);
-        do{
-            printf("Kadar Kolestrol LDL (mg/dL):");
-            scanf("%d", &kolesterol_Ldl);
-            //printf("\n");
-            if(kolesterol_Ldl < 0){
-                printf("Kadar Kolestrol LDL harus berupa angka positif\n");
-            }
-        }while(kolesterol_Ldl < 0);
-        do{
-            printf("Trombosit (ribu/µL):");
+        } while (kolesterol < 0);
+
+        do {
+            printf(YELLOW "Trombosit (ribu/µL): " RESET);
             scanf("%d", &trombosit);
-            //printf("\n");
-            if(trombosit < 0){
-                printf("Trombosit harus berupa angka positif\n");
+            if (trombosit < 0) {
+                printf(RED "Trombosit harus berupa angka positif\n" RESET);
             }
-        }while(trombosit < 0);
-        printf("\n\n");
+        } while (trombosit < 0);
+
+        printf("\n");
+
         current_user->suhu_tubuh = suhu;
         current_user->tekanan_darah_sistolik = tekanan_sis;
         current_user->tekanan_darah_diastolik = tekanan_dis;
@@ -104,23 +99,27 @@ void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix
         current_user->berat_badan = berat;
         current_user->tinggi_badan = tinggi;
         current_user->kadar_kolesterol = kolesterol;
-        current_user->kadar_kolesterol_Ldl = kolesterol_Ldl;
         current_user->trombosit = trombosit;
-        int Antrian;// row di dokter_available
-        int dokter_available[100][4]; // list dokter dengan antrian tidak penuh
+
+        int Antrian;
+        int dokter_available[100][4];
         int asalan = 0;
-        for(int i = 0; i < Hospital->rows; i++){
-            for(int j = 0; j < Hospital->cols; j++){
+
+        for (int i = 0; i < Hospital->rows; i++) {
+            for (int j = 0; j < Hospital->cols; j++) {
                 Queue *A = &Hospital->data[i][j].antrian;
                 Ruangan *R = &Hospital->data[i][j];
                 Antrian = countQueue(*A);
-                if(!isRuanganKosong(*R) && Antrian < Hospital->kapasitasRuangan + Hospital->kapasitasLuar){
+
+                if (!isRuanganKosong(*R) && Antrian < Hospital->kapasitasRuangan + Hospital->kapasitasLuar) {
                     User *dokternya = findUser(user1, Hospital->data[i][j].nama_dokter);
-                    printf("Mencari dokter \"%s\" ...\n", Hospital->data[i][j].nama_dokter);
+                    printf(GRAY "Mencari dokter \"%s\" ...\n" RESET, Hospital->data[i][j].nama_dokter);
+
                     if (dokternya == NULL) {
-                        printf("[ERROR] Dokter tidak ditemukan!\n");
-                        continue;  // atau break; tergantung logika yang diinginkan
+                        printf(RED "[ERROR] Dokter tidak ditemukan!\n" RESET);
+                        continue;
                     }
+
                     dokter_available[asalan][0] = dokternya->id;
                     dokter_available[asalan][1] = Antrian;
                     dokter_available[asalan][2] = i;
@@ -129,27 +128,35 @@ void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix
                 }
             }
         }
+
         char ruangan;
-        printf("Berikut adalah daftar dokter yang tersedia:\n");
-        for(int i = 0; i < asalan; i++){
+        printf(CYAN "\nBerikut adalah daftar dokter yang tersedia:\n" RESET);
+        for (int i = 0; i < asalan; i++) {
             User *A = findUserByID(user1, dokter_available[i][0]);
             getRuanganDokter(Hospital, A->username, &ruangan);
-            printf("%d Dr. %s - Spesialis Umum - Ruangan %c (Antrian: %d orang)\n", i+1, A->username, ruangan, dokter_available[i][1]);
+            printf(YELLOW "%d. Dr. %s - Spesialis Umum - Ruangan %c (Antrian: %d orang)\n" RESET,
+                   i + 1, A->username, ruangan, dokter_available[i][1]);
         }
+
         int pilihanDokter;
         do {
-            printf("\nPilih dokter (1-%d): ", asalan);
+            printf(CYAN "\nPilih dokter: " RESET);
             scanf("%d", &pilihanDokter);
+
+            if (pilihanDokter < 1 || pilihanDokter > asalan) {
+                printf(RED "Masukan tidak valid!\n" RESET);
+            }
         } while (pilihanDokter < 1 || pilihanDokter > asalan);
-        Queue *B = &Hospital->data[dokter_available[pilihanDokter-1][2]][dokter_available[pilihanDokter-1][3]].antrian;
-        User *C = findUserByID(user1, dokter_available[pilihanDokter-1][0]);// cari identitas dokter;
-        getRuanganDokter(Hospital, C->username, &ruangan);//Mencari ruangan
+
+        Queue *B = &Hospital->data[dokter_available[pilihanDokter - 1][2]][dokter_available[pilihanDokter - 1][3]].antrian;
+        User *C = findUserByID(user1, dokter_available[pilihanDokter - 1][0]);
+        getRuanganDokter(Hospital, C->username, &ruangan);
+
         enqueue(B, current_user->id);
-        printf("Pendaftaran check-up berhasil!\n");
-        printf("Anda terdaftar pada antrian Dr. %s di ruangan %c.\n", C->username, ruangan);
-        printf("Posisi antrian Anda: %d\n", countQueue(*B));
-    }
-    else{
-        printf("Anda bukan pasien! Tidak bisa daftar checkup!\n\n");
+        printf(GREEN "\nPendaftaran check-up berhasil!\n" RESET);
+        printf(GREEN "Anda terdaftar pada antrian Dr. %s di ruangan %c.\n" RESET, C->username, ruangan);
+        printf(GREEN "Posisi antrian Anda: %d\n\n" RESET, countQueue(*B));
+    } else {
+        printf(RED "Anda bukan pasien! Tidak bisa daftar checkup!\n\n" RESET);
     }
 }

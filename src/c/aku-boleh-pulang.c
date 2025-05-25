@@ -48,7 +48,6 @@ void bolehPulangGaa(User *current_user, PenyakitList *dataPenyakit, ObatList *da
             current_user->berat_badan = 0.0;
             current_user->tinggi_badan = -1;
             current_user->kadar_kolesterol = -1;
-            current_user->kadar_kolesterol_Ldl = -1;
             current_user->trombosit = -1;
 
             printf(GREEN BOLD "Selamat! Kamu sudah dinyatakan sembuh oleh dokter. Silahkan pulang dan semoga sehat selalu!\n\n" RESET);

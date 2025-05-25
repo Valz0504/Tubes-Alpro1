@@ -3,7 +3,7 @@
 #include "../header/user.h"
 
 void denahRumahSakit(Matrix M) {
-    printf(CYAN BOLD "== Denah Rumah Sakit ==\n\n" RESET);
+    printf(CYAN BOLD "=== Denah Rumah Sakit ===\n\n" RESET);
 
     // Header kolom
     printf("   ");
