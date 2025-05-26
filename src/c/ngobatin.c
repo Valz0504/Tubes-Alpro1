@@ -39,31 +39,38 @@ void ngobatin(User *current_user, UserList *dataBaseUser, PenyakitList *dataPeny
     int idPasien = antrian->head->info;
     User *pasien = findUserByID(dataBaseUser, idPasien);
 
+    if (strcmp(pasien->riwayat_penyakit, "Sehat") == 0) {
+        printf(GREEN "%s sudah sehat! Tidak ada obat yang dapat diberikan.\n\n" RESET, pasien->username);
+        denah->data[row][col].serving = TRUE;
+        return;
+    }
+
     if (pasien->inventory.jumlahObat > 0) {
         printf(GREEN "%s sudah diobati!\n\n" RESET, pasien->username);
         denah->data[row][col].serving = TRUE;
         return;
     }
 
-    printf(CYAN "Dokter sedang mengobati pasien...\n" RESET);
+    printf(CYAN "Anda sedang mengobati %s...\n" RESET, pasien->username);
 
     if (strcmp(pasien->riwayat_penyakit, "-") == 0) {
-        printf(RED "Pasien tidak memiliki penyakit!\n" RESET);
-        printf(YELLOW "Pasien belum didiagnosis!\n\n" RESET);
+        printf(RED "%s tidak memiliki penyakit!\n" RESET, pasien->username);
+        printf(YELLOW "%s belum didiagnosis!\n\n" RESET, pasien->username);
         return;
     }
 
     int idPenyakit = getIDPenyakit(dataPenyakit, pasien->riwayat_penyakit);
     int indexDiMap = getMapIndexByPenyakit(dataObatPenyakit, idPenyakit);
 
-    printf(GREEN "Pasien memiliki penyakit %s\n" RESET, pasien->riwayat_penyakit);
+    printf(YELLOW "%s memiliki penyakit %s\n\n" RESET, pasien->username, pasien->riwayat_penyakit);
     printf(CYAN "Obat yang harus diberikan:\n" RESET);
 
     for (int i = 0; i < dataObatPenyakit->buffer[indexDiMap].jumlah_obat; i++) {
         Obat *obat = getObatbyId(dataObat, dataObatPenyakit->buffer[indexDiMap].urutan_obat[i]);
 
-        printf(GREEN "%d. %s\n" RESET, i + 1, obat->nama);
+        printf(YELLOW "%d. %s\n" RESET, i + 1, obat->nama);
         pasien->inventory.obat[i] = obat->id;
         pasien->inventory.jumlahObat++;
     }
+    printf(GREEN "\nObat sudah diberikan sesuai dengan urutan minumnya!\n\n" RESET);
 }

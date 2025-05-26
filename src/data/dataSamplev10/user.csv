@@ -18,3 +18,4 @@ id,username,password,role,riwayat_penyakit,suhu_tubuh,tekanan_darah_sistolik,tek
 20;popokan;passpopokan;pasien;-;36.9;110;85;73;98.7;152;62.8;157;184;390
 88;zeru;pass77;manager;;;;;;;;
 100;pendatang;pendatangbaru;pasien;-;0.0;0;0;0;0.0;0;0.0;0;0;0
+101;emil;val;pasien;Sehat;0.0;-1;-1;-1;0.0;-1;0.0;-1;-1;-1

@@ -33,7 +33,7 @@ void lihatRuangan(Matrix denah, UserList dataBaseUser, User current_user, boolea
             while (curr != NULL && index < denah.kapasitasRuangan) {
                 User *pasien = findUserByID(&dataBaseUser, curr->info);
                 if (pasien != NULL) {
-                    printf(BRIGHT_BLACK "    %d. %s\n" RESET, index + 1, pasien->username);
+                    printf(YELLOW "    %d. %s\n" RESET, index + 1, pasien->username);
                     index++;
                 }
                 curr = curr->next;

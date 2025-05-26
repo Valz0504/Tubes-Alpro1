@@ -76,7 +76,7 @@ void diagnosis(User *current_user, UserList *listUser, PenyakitList *listPenyaki
         }
 
         if (!foundPenyakit) {
-            printf(YELLOW "%s tidak terdiagnosa penyakit apapun\n" RESET, pasien->username);
+            printf(YELLOW "%s tidak terdiagnosa penyakit apapun\n\n" RESET, pasien->username);
             strcpy(pasien->riwayat_penyakit, "Sehat");
             pasien->riwayat_penyakit[sizeof(pasien->riwayat_penyakit) - 1] = '\0';
         }
