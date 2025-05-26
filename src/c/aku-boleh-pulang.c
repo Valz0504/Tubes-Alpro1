@@ -1,14 +1,16 @@
 #include <stdio.h>
 #include "../header/user.h"
 
-void bolehPulangGaa(User *current_user, PenyakitList *dataPenyakit, ObatList *dataObat, Obat_PenyakitList *dataObatPenyakit, Matrix *denah, boolean *isLogin) {
+void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *dataPenyakit, ObatList *dataObat, Obat_PenyakitList *dataObatPenyakit, Matrix *denah, boolean *isLogin) {
     if (!(*isLogin)) {
         printf(RED "Anda belum login!\n\n" RESET);
         return;
     } 
 
     if (current_user->role == ROLE_PASIEN) {
+        User *pasien = findUser(dataBaseUser, current_user->username);
         
+        int row,col;
         Queue *antrianPasien = NULL;
         boolean isFront = FALSE;
         boolean isInQueue = FALSE;
@@ -19,7 +21,8 @@ void bolehPulangGaa(User *current_user, PenyakitList *dataPenyakit, ObatList *da
                 Node *curr = antrian->head;
 
                 while (curr != NULL) {
-                    if (curr->info == current_user->id) {
+                    if (curr->info == pasien->id) {
+                        row = i; col = j;
                         isInQueue = TRUE;
                         if (curr == antrian->head) {
                             isFront = TRUE;
@@ -41,28 +44,31 @@ void bolehPulangGaa(User *current_user, PenyakitList *dataPenyakit, ObatList *da
             return;
         }
 
-        if (strcmp(current_user->riwayat_penyakit, "-") == 0) {
+        if (strcmp(pasien->riwayat_penyakit, "-") == 0) {
             printf(YELLOW "Kamu belum menerima diagnosis apapun dari dokter, jangan buru-buru pulang!\n\n" RESET);
             return;
         }
 
 
-        if (strcmp(current_user->riwayat_penyakit, "Sehat") == 0) {
+        if (strcmp(pasien->riwayat_penyakit, "Sehat") == 0) {
             printf(GREEN "Kamu sudah sehat dan boleh langsung pulang, sampai jumpa!\n\n" RESET);
+            int idPasien;
+            dequeue(antrianPasien, &idPasien);
+            denah->data[row][col].serving = FALSE;
             return;
         }
 
         printf(CYAN "Dokter sedang memeriksa keadaanmu...\n\n" RESET);
-        int idPenyakit = getIDPenyakit(dataPenyakit, current_user->riwayat_penyakit);
+        int idPenyakit = getIDPenyakit(dataPenyakit, pasien->riwayat_penyakit);
         int indexDiMap = getMapIndexByPenyakit(dataObatPenyakit, idPenyakit);
-        if (current_user->perut.length != dataObatPenyakit->buffer[indexDiMap].jumlah_obat) {
+        if (pasien->perut.length != dataObatPenyakit->buffer[indexDiMap].jumlah_obat) {
             printf(YELLOW "Masih ada obat yang belum kamu habiskan, minum semuanya dulu yukk!\n\n" RESET);
             return;
         }
 
         boolean bolehPulang = TRUE;
-        for (int i = 0; i < current_user->perut.length; i++) {
-            if (current_user->perut.data[i] != dataObatPenyakit->buffer[indexDiMap].urutan_obat[i]) {
+        for (int i = 0; i < pasien->perut.length; i++) {
+            if (pasien->perut.data[i] != dataObatPenyakit->buffer[indexDiMap].urutan_obat[i]) {
                 bolehPulang = FALSE;
             }
         }
@@ -71,20 +77,21 @@ void bolehPulangGaa(User *current_user, PenyakitList *dataPenyakit, ObatList *da
             emptyStack(&current_user->perut);
 
             // reset data 
-            strcpy(current_user->riwayat_penyakit, "-");
-            current_user->suhu_tubuh = 0.0;
-            current_user->tekanan_darah_sistolik = -1;
-            current_user->tekanan_darah_diastolik = -1;
-            current_user->detak_jantung = -1;
-            current_user->saturasi_oksigen = 0.0;
-            current_user->kadar_gula_darah = -1;
-            current_user->berat_badan = 0.0;
-            current_user->tinggi_badan = -1;
-            current_user->kadar_kolesterol = -1;
-            current_user->trombosit = -1;
+            strcpy(pasien->riwayat_penyakit, "-");
+            pasien->suhu_tubuh = 0.0;
+            pasien->tekanan_darah_sistolik = -1;
+            pasien->tekanan_darah_diastolik = -1;
+            pasien->detak_jantung = -1;
+            pasien->saturasi_oksigen = 0.0;
+            pasien->kadar_gula_darah = -1;
+            pasien->berat_badan = 0.0;
+            pasien->tinggi_badan = -1;
+            pasien->kadar_kolesterol = -1;
+            pasien->trombosit = -1;
 
             int idPasien;
             dequeue(antrianPasien, &idPasien);
+            denah->data[row][col].serving = FALSE;
 
             printf(GREEN BOLD "Selamat! Kamu sudah dinyatakan sembuh oleh dokter. Silahkan pulang dan semoga sehat selalu!\n\n" RESET);
         } else {
@@ -103,10 +110,10 @@ void bolehPulangGaa(User *current_user, PenyakitList *dataPenyakit, ObatList *da
 
             printf(MAGENTA "Urutan obat yang kamu minum:\n" RESET);
             printf(YELLOW "  ");
-            for (int i = 0; i < current_user->perut.length; i++) {
-                Obat *obat = getObatbyId(dataObat, current_user->perut.data[i]);
+            for (int i = 0; i < pasien->perut.length; i++) {
+                Obat *obat = getObatbyId(dataObat, pasien->perut.data[i]);
                 printf("%s", obat->nama);
-                if (i != current_user->perut.length - 1) {
+                if (i != pasien->perut.length - 1) {
                     printf(" " YELLOW "->" YELLOW " ");
                 }
             }

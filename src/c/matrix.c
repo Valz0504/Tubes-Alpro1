@@ -8,6 +8,7 @@ void CreateMatrix(int rows, int cols, int kapasitas, Matrix *M) {
     M->kapasitasRuangan = kapasitas;
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
+            M->data[i][j].serving = FALSE;
             strcpy(M->data[i][j].nama_dokter, "");
             initQueue(&(M->data[i][j].antrian));
         }

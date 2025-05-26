@@ -76,15 +76,15 @@ void lihatPasien(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
             sortListByUsername(&temp, arahSort == 1);
         }
 
-        printf(BLUE BOLD "\n+----+--------------------+----------------------+\n" RESET);
-        printf(BLUE BOLD "| ID | Nama               | Penyakit             |\n" RESET);
-        printf(BLUE BOLD "+----+--------------------+----------------------+\n" RESET);
+        printf(BLUE BOLD "\n+-----+--------------------+----------------------+\n" RESET);
+        printf(BLUE BOLD "| ID  | Nama               | Penyakit             |\n" RESET);
+        printf(BLUE BOLD "+-----+--------------------+----------------------+\n" RESET);
         for (int i = 0; i < temp.Neff; i++) {
             User u = temp.data[i];
-            printf(GRAY " %-2d " RESET " | " GRAY "%-18s" RESET " | " YELLOW "%-20s" RESET " |\n",
+            printf(GRAY " %-3d " RESET " | " GRAY "%-18s" RESET " | " YELLOW "%-20s" RESET " |\n",
                 u.id, u.username, u.riwayat_penyakit);
         }
-        printf(BLUE BOLD "+----+--------------------+----------------------+\n\n" RESET);
+        printf(BLUE BOLD "+-----+--------------------+----------------------+\n\n" RESET);
 
         dealocateListDin(&temp);
     }
@@ -122,14 +122,14 @@ void lihatDokter(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
             sortListByUsername(&temp, arahSort == 1);
         }
 
-        printf(BLUE BOLD "\n+----+--------------------+\n" RESET);
-        printf(BLUE BOLD "| ID | Nama               |\n" RESET);
-        printf(BLUE BOLD "+----+--------------------+\n" RESET);
+        printf(BLUE BOLD "\n+-----+--------------------+\n" RESET);
+        printf(BLUE BOLD "| ID  | Nama               |\n" RESET);
+        printf(BLUE BOLD "+-----+--------------------+\n" RESET);
         for (int i = 0; i < temp.Neff; i++) {
             User u = temp.data[i];
-            printf(GRAY " %-2d " RESET " | " GRAY "%-18s" RESET " |\n", u.id, u.username);
+            printf(GRAY " %-3d " RESET " | " GRAY "%-18s" RESET " |\n", u.id, u.username);
         }
-        printf(BLUE BOLD "+----+--------------------+\n\n" RESET);
+        printf(BLUE BOLD "+-----+--------------------+\n\n" RESET);
 
         dealocateListDin(&temp);
     }

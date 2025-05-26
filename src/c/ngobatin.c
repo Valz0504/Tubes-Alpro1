@@ -1,89 +1,76 @@
-// #include <stdio.h>
-// #include <string.h>
-// #include "../header/user.h"
-// #include "../header/map.h"
+#include <stdio.h>
+#include <string.h>
+#include "../header/user.h"
 
-// #define MAX_OBAT_LIST_SIZE 100
-// #define MAX_OBAT_IN_INVENTORY 100
+void ngobatin(User *current_user, UserList *dataBaseUser, PenyakitList *dataPenyakit, ObatList *dataObat, Obat_PenyakitList *dataObatPenyakit, Matrix *denah, boolean *isLogin) {
+    if (!(*isLogin)) {
+        printf(RED "Login sebagai Dokter terlebih dahulu!\n\n" RESET);
+        return;
+    }
 
-// // Fungsi untuk mendapatkan obat berdasarkan id_obat
-// Obat getObatById(int id_obat) {
-//     extern ObatList obatList[MAX_OBAT_LIST_SIZE];  // Misalkan obatList sudah terdefinisi sebelumnya
-//     for (int i = 0; i < MAX_OBAT_LIST_SIZE; i++) {
-//         if (obatList->data[i].id == id_obat) {
-//             return obatList->data[i];
-//         }
-//     }
-//     Obat emptyObat = {0, "Obat tidak ditemukan"};
-//     return emptyObat;  // Kembalikan obat kosong jika tidak ditemukan
-// }
+    if (current_user->role != ROLE_DOKTER) {
+        printf(RED "Anda bukan dokter! Tidak bisa mengobati pasien!\n\n" RESET);
+        return;
+    }
 
-// // Fungsi untuk menambahkan obat ke inventory pasien
-// void addToInventory(User *u, int obatId) {
-//     if (u->inventory.jumlahObat < MAX_OBAT_IN_INVENTORY) {
-//         u->inventory.obat[u->inventory.jumlahObat] = obatId;
-//         u->inventory.jumlahObat++;
-//         // printf("Obat dengan ID %d ditambahkan ke inventory\n", obatId);  // Feedback obat yang ditambahkan
-//     } else {
-//         printf("Inventory pasien sudah penuh!\n");
-//     }
-// }
+    int row, col;
+    boolean foundRuangan = FALSE;
+    for (int i = 0; i < denah->rows; i++) {
+        for (int j = 0; j < denah->cols; j++) {
+            if (strcmp(current_user->username, denah->data[i][j].nama_dokter) == 0) {
+                row = i;
+                col = j;
+                foundRuangan = TRUE;
+            }
+        }
+    }
 
-// // Prosedur untuk mengobati pasien
-// void ngobatin(User *current_user, PenyakitList *penyakitList, Obat_PenyakitList *obatPenyakitList, boolean *isLogin) {
-//     if (!(*isLogin)) {
-//         printf("Login sebagai Dokter terlebih dahulu!\n\n");
-//         return;
-//     }
+    if (!foundRuangan) {
+        printf(YELLOW "Anda belum ditugaskan ke ruangan manapun.\n\n" RESET);
+        return;
+    }
 
-//     if (current_user->role == ROLE_DOKTER) {
-//         printf("Dokter sedang mengobati pasien!\n");
-    
-//         if (current_user == NULL) {
-//             printf("Tidak ada pasien untuk diperiksa!\n");
-//             return;
-//         }
-    
-//         // Riwayat penyakit pasien
-//         char penyakitTerdiagnosis[100];
-//         strncpy(penyakitTerdiagnosis, current_user->riwayat_penyakit, sizeof(penyakitTerdiagnosis));
-    
-//         // Jika pasien tidak terdiagnosis penyakit apapun
-//         if (strcmp(penyakitTerdiagnosis, "Sehat") == 0) {
-//             printf("Pasien tidak memiliki penyakit yang terdiagnosis!\n");
-//             return;
-//         }
-    
-//         // Menentukan penyakit yang terdiagnosis
-//         Penyakit *penyakitTerdeteksi = NULL;
-//         for (int i = 0; i < penyakitList->Neff; i++) {
-//             if (strcmp(penyakitList->data[i].nama, penyakitTerdiagnosis) == 0) {
-//                 penyakitTerdeteksi = &penyakitList->data[i];
-//                 break;
-//             }
-//         }
-    
-//         if (!penyakitTerdeteksi) {
-//             printf("Penyakit %s tidak ditemukan dalam daftar penyakit!\n", penyakitTerdiagnosis);
-//             return;
-//         }
-    
-//         // Menentukan obat berdasarkan penyakit yang terdiagnosis
-//         printf("Pasien memiliki penyakit %s\n", penyakitTerdiagnosis);
-//         printf("Obat yang harus diberikan:\n");
-    
-//         // Mengambil obat untuk penyakit tersebut dari Obat_Penyakit
-//         for (int i = 0; i < obatPenyakitList->Neff; i++) {
-//             if (obatPenyakitList->data[i].id_penyakit == penyakitTerdeteksi->id) {
-//                 // Ambil obat berdasarkan id_obat
-//                 Obat obat = getObatById(obatPenyakitList->data[i].id_penyakit);
-//                 printf("%d. %s\n", i + 1, obat.nama);
-    
-//                 // Menambahkan obat ke inventory pasien
-//                 addToInventory(current_user, obat.id);
-//             }
-//         }
-//     } else {
-//         printf("Anda bukan dokter! Tidak bisa diagnosis pasien!\n\n");
-//     }
-// }
+    Queue *antrian = &denah->data[row][col].antrian;
+    if (antrian->head == NULL) {
+        printf(CYAN "Antrian kosong, tidak ada pasien untuk diobati!\n\n" RESET);
+        return;
+    }
+
+    int idPasien = antrian->head->info;
+    User *pasien = findUserByID(dataBaseUser, idPasien);
+
+    if (strcmp(pasien->riwayat_penyakit, "Sehat") == 0) {
+        printf(GREEN "%s sudah sehat! Tidak ada obat yang dapat diberikan.\n\n" RESET, pasien->username);
+        denah->data[row][col].serving = TRUE;
+        return;
+    }
+
+    if (pasien->inventory.jumlahObat > 0) {
+        printf(GREEN "%s sudah diobati!\n\n" RESET, pasien->username);
+        denah->data[row][col].serving = TRUE;
+        return;
+    }
+
+    printf(CYAN "Anda sedang mengobati %s...\n" RESET, pasien->username);
+
+    if (strcmp(pasien->riwayat_penyakit, "-") == 0) {
+        printf(RED "%s tidak memiliki penyakit!\n" RESET, pasien->username);
+        printf(YELLOW "%s belum didiagnosis!\n\n" RESET, pasien->username);
+        return;
+    }
+
+    int idPenyakit = getIDPenyakit(dataPenyakit, pasien->riwayat_penyakit);
+    int indexDiMap = getMapIndexByPenyakit(dataObatPenyakit, idPenyakit);
+
+    printf(YELLOW "%s memiliki penyakit %s\n\n" RESET, pasien->username, pasien->riwayat_penyakit);
+    printf(CYAN "Obat yang harus diberikan:\n" RESET);
+
+    for (int i = 0; i < dataObatPenyakit->buffer[indexDiMap].jumlah_obat; i++) {
+        Obat *obat = getObatbyId(dataObat, dataObatPenyakit->buffer[indexDiMap].urutan_obat[i]);
+
+        printf(YELLOW "%d. %s\n" RESET, i + 1, obat->nama);
+        pasien->inventory.obat[i] = obat->id;
+        pasien->inventory.jumlahObat++;
+    }
+    printf(GREEN "\nObat sudah diberikan sesuai dengan urutan minumnya!\n\n" RESET);
+}

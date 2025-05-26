@@ -1,15 +1,17 @@
 #include <stdio.h>
 #include "../header/user.h"
 
-void minumPenawar(User *current_user, ObatList *dataObat, boolean *isLogin) {
+void minumPenawar(User *current_user, UserList *dataBaseUser, ObatList *dataObat, boolean *isLogin) {
     if (!(*isLogin)) {
         printf(RED "Anda belum login!\n\n" RESET);
         return;
     }
 
     if (current_user->role == ROLE_PASIEN) {
+        User *pasien = findUser(dataBaseUser, current_user->username);
+
         char answer[100];
-        if (current_user->perut.length == 0) {
+        if (pasien->perut.length == 0) {
             printf(YELLOW "Perut kosong!! Belum ada obat yang dimakan.\n\n" RESET);
             return;
         }
@@ -28,9 +30,9 @@ void minumPenawar(User *current_user, ObatList *dataObat, boolean *isLogin) {
 
         if (strcmp(answer, "y") == 0) {
             int value;
-            pop(&current_user->perut, &value);
+            pop(&pasien->perut, &value);
             Obat *obat = getObatbyId(dataObat, value);
-            insertLast(&current_user->inventory, value);
+            insertLast(&pasien->inventory, value);
             printf(GREEN "Uwekkk!!! %s keluar dari tubuhmu dan kembali ke inventory!\n\n" RESET, obat->nama);
         } else {
             printf(YELLOW "Tidak jadi minum penawar...\n\n" RESET);

@@ -113,10 +113,10 @@ void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix
 
                 if (!isRuanganKosong(*R) && Antrian < Hospital->kapasitasRuangan + Hospital->kapasitasLuar) {
                     User *dokternya = findUser(user1, Hospital->data[i][j].nama_dokter);
-                    printf(GRAY "Mencari dokter \"%s\" ...\n" RESET, Hospital->data[i][j].nama_dokter);
+                    // printf(GRAY "Mencari dokter \"%s\" ...\n" RESET, Hospital->data[i][j].nama_dokter);
 
                     if (dokternya == NULL) {
-                        printf(RED "[ERROR] Dokter tidak ditemukan!\n" RESET);
+                        // printf(RED "[ERROR] Dokter tidak ditemukan!\n" RESET);
                         continue;
                     }
 
@@ -129,12 +129,12 @@ void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix
             }
         }
 
-        char ruangan;
+        char ruangan[10];
         printf(CYAN "\nBerikut adalah daftar dokter yang tersedia:\n" RESET);
         for (int i = 0; i < asalan; i++) {
             User *A = findUserByID(user1, dokter_available[i][0]);
-            getRuanganDokter(Hospital, A->username, &ruangan);
-            printf(YELLOW "%d. Dr. %s - Spesialis Umum - Ruangan %c (Antrian: %d orang)\n" RESET,
+            getRuanganDokter(Hospital, A->username, ruangan);
+            printf(YELLOW "%d. Dr. %s - Spesialis Umum - Ruangan %s (Antrian: %d orang)\n" RESET,
                    i + 1, A->username, ruangan, dokter_available[i][1]);
         }
 
@@ -150,11 +150,11 @@ void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix
 
         Queue *B = &Hospital->data[dokter_available[pilihanDokter - 1][2]][dokter_available[pilihanDokter - 1][3]].antrian;
         User *C = findUserByID(user1, dokter_available[pilihanDokter - 1][0]);
-        getRuanganDokter(Hospital, C->username, &ruangan);
+        getRuanganDokter(Hospital, C->username, ruangan);
 
         enqueue(B, current_user->id);
         printf(GREEN "\nPendaftaran check-up berhasil!\n" RESET);
-        printf(GREEN "Anda terdaftar pada antrian Dr. %s di ruangan %c.\n" RESET, C->username, ruangan);
+        printf(GREEN "Anda terdaftar pada antrian Dr. %s di ruangan %s.\n" RESET, C->username, ruangan);
         printf(GREEN "Posisi antrian Anda: %d\n\n" RESET, countQueue(*B));
     } else {
         printf(RED "Anda bukan pasien! Tidak bisa daftar checkup!\n\n" RESET);

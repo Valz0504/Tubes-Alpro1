@@ -69,12 +69,12 @@ void cariUser(UserList *dataBaseUser, User *current_user, boolean *isLogin); // 
 void cariPasien(UserList *dataBaseUser, User *current_user, boolean *isLogin); // manager
 void cariDokter(UserList *dataBaseUser, User *current_user, boolean *isLogin); // manager
 void diagnosis(User *current_user, UserList *dataBaseUser, PenyakitList *penyakit, boolean *isLogin, Matrix *denah); // dokter
-void ngobatin(User *current_user, PenyakitList *penyakitList, Obat_PenyakitList *obatPenyakitList, boolean *isLogin); // dokter
+void ngobatin(User *current_user, UserList *dataBaseUser, PenyakitList *dataPenyakit, ObatList *dataObat, Obat_PenyakitList *dataObatPenyakit, Matrix *denah, boolean *isLogin); // dokter
 void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix *Hospital); // pasien
 void antrianSaya(User *current_user, Matrix *denah, boolean *isLogin); // pasien
-void minumObat(User *current_user, ObatList *dataObat, boolean *isLogin); // pasien
-void minumPenawar(User *current_user, ObatList *dataObat, boolean *isLogin); // pasien
-void bolehPulangGaa(User *current_user, PenyakitList *dataPenyakit, ObatList *dataObat, Obat_PenyakitList *dataObatPenyakit, Matrix *denah, boolean *isLogin); // pasien
+void minumObat(User *current_user, UserList *dataBaseUser, ObatList *dataObat, boolean *isLogin); // pasien
+void minumPenawar(User *current_user, UserList *dataBaseUser, ObatList *dataObat, boolean *isLogin); // pasien
+void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *dataPenyakit, ObatList *dataObat, Obat_PenyakitList *dataObatPenyakit, Matrix *denah, boolean *isLogin); // pasien
 void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitList *obat_penyakit, Matrix *Hospital); // general
 void EXIT(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitList *obat_penyakit, Matrix *Hospital, boolean *exit);
 void LOAD(const char *folderName, UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList, Set *nama_unik, Matrix *denah);
