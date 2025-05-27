@@ -33,14 +33,14 @@ int folder(const char *folderName){//membuat folder
         return 0;
     } 
     else {
-        perror("Gagal membuat folder");
+        perror(RED "Gagal membuat folder" RESET);
         return -1;
     }
 }
 void FileUser(const char *filePath, UserList *users){// membuat/overwrite file user
     FILE *fp = fopen(filePath, "w");
     if (!fp) {
-        printf("Gagal membuat file di path: %s\n", filePath);
+        printf(RED "Gagal membuat file di path: %s\n" RESET, filePath);
         return;
     }
     char peran[100];
@@ -83,7 +83,7 @@ void FileUser(const char *filePath, UserList *users){// membuat/overwrite file u
 void FileObat(const char *filePath, ObatList *obat){// membuat/overwrite file obat
     FILE *fp = fopen(filePath, "w");
     if (fp == NULL) {
-        printf("Gagal membuat file di path: %s\n", filePath);
+        printf(RED "Gagal membuat file di path: %s\n" RESET, filePath);
         return;
     }
     fprintf(fp,
@@ -97,7 +97,7 @@ void FileObat(const char *filePath, ObatList *obat){// membuat/overwrite file ob
 void FilePenyakit(const char *filePath, PenyakitList *sakit){// membuat/overwrite file penyakit
     FILE *fp = fopen(filePath, "w");
     if (fp == NULL) {
-        printf("Gagal membuat file di path: %s\n", filePath);
+        printf(RED "Gagal membuat file di path: %s\n" RESET, filePath);
         return;
     }
     fprintf(fp, "id,nama,suhu_tubuh_Min,suhu_tubuh_Max,tekanan_sistolik_Min,tekanan_sistolik_Max,"
@@ -119,7 +119,7 @@ void FilePenyakit(const char *filePath, PenyakitList *sakit){// membuat/overwrit
 void FileObat_Penyakit(const char *filePath, Obat_PenyakitList *obat_penyakit) {
     FILE *fp = fopen(filePath, "w");
     if (fp == NULL) {
-        printf("Gagal membuat file di path: %s\n", filePath);
+        printf(RED "Gagal membuat file di path: %s\n" RESET, filePath);
         return;
     }
 
@@ -138,7 +138,7 @@ void FileObat_Penyakit(const char *filePath, Obat_PenyakitList *obat_penyakit) {
     fclose(fp);
 }
 
-void FileConfig(const char *filePath, Matrix *Hospital, UserList *user1){ //BELUM SELESAI, belum ada data ruangan? // membuat/overwrite file config
+void FileConfig(const char *filePath, Matrix *Hospital, UserList *dataBaseUser){ //BELUM SELESAI, belum ada data ruangan? // membuat/overwrite file config
     FILE *fp = fopen(filePath, "w");
     if (fp == NULL) {
         printf(RED "Gagal membuat file di path: %s\n" RESET, filePath);
@@ -150,7 +150,7 @@ void FileConfig(const char *filePath, Matrix *Hospital, UserList *user1){ //BELU
     for(int i = 0; i < Hospital->rows; i++){
         for(int j = 0; j < Hospital->cols ; j++){
             // Tulis dokter
-            User *I = findUser(user1, Hospital->data[i][j].nama_dokter);
+            User *I = findUser(dataBaseUser, Hospital->data[i][j].nama_dokter);
             if(I != NULL){
                 fprintf(fp, "%d ", I->id);
                 dokter = I->id;
@@ -170,22 +170,43 @@ void FileConfig(const char *filePath, Matrix *Hospital, UserList *user1){ //BELU
         }
     }
 
+    // save state inventory
     int x = 0;
-    for (int i = 0; i < user1->Neff; i++) {
-        if (user1->data[i].inventory.jumlahObat > 0) x++;
+    for (int i = 0; i < dataBaseUser->Neff; i++) {
+        if (dataBaseUser->data[i].inventory.jumlahObat > 0) x++;
     }
 
     fprintf(fp, "%d\n", x);
-    for (int i = 0; i < user1->Neff; i++) {
-        if (user1->data[i].inventory.jumlahObat > 0) {
-            fprintf(fp, "%d ", user1->data[i].id);
+    for (int i = 0; i < dataBaseUser->Neff; i++) {
+        if (dataBaseUser->data[i].inventory.jumlahObat > 0) {
+            fprintf(fp, "%d ", dataBaseUser->data[i].id);
 
-            for (int j = 0; j < user1->data[i].inventory.jumlahObat; j++) {
-                fprintf(fp, "%d ", user1->data[i].inventory.obat[j]);
+            for (int j = 0; j < dataBaseUser->data[i].inventory.jumlahObat; j++) {
+                fprintf(fp, "%d ", dataBaseUser->data[i].inventory.obat[j]);
             }
             fprintf(fp, "\n");
         }
     }
+
+    // save state perut
+    int y = 0;
+    for (int i = 0; i < dataBaseUser->Neff; i++) {
+        if (dataBaseUser->data[i].perut.length > 0) y++;
+    }
+
+    fprintf(fp, "%d\n", y);
+    for (int i = 0; i < dataBaseUser->Neff; i++) {
+        if (dataBaseUser->data[i].perut.length > 0) {
+            fprintf(fp, "%d ", dataBaseUser->data[i].id);
+            int val;
+            while (dataBaseUser->data[i].perut.length > 0) {
+                pop(&dataBaseUser->data[i].perut, &val);
+                fprintf(fp, "%d ", val);
+            }
+            fprintf(fp, "\n");
+        }
+    }
+
     fclose(fp);
 }
 

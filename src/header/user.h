@@ -12,13 +12,19 @@
 #include "queue.h"
 #include "boolean.h"
 
+
+/**
+ * Enumerasi Role User
+ */
 typedef enum {
     ROLE_PASIEN,
     ROLE_DOKTER,
     ROLE_MANAGER
 } Role;
 
-/* --- Struct User --- */
+/**
+ * Struct User
+ */
 typedef struct
 {   
     int id;
@@ -42,8 +48,9 @@ typedef struct
     Queue pasien;
 } User;
 
-
-/* --- Struct ListUser --- */
+/**
+ * Struct UserList
+ */
 typedef struct 
 {
     User *data;
@@ -52,7 +59,10 @@ typedef struct
     int currMaxId;
 } UserList;
 
-/* --- PROSEDUR FITUR PROGRAM --- */
+
+/**
+ * PROSEDUR SEMUA FITUR PROGRAM
+ */
 void login(UserList *list, User *current_user, boolean *isLogin); // general
 void lupa_password(UserList *list, boolean *isLogin); // general
 void logout(User *current_user, boolean *isLogin); // general
@@ -76,25 +86,23 @@ void antrianSaya(User *current_user, Matrix *denah, boolean *isLogin); // pasien
 void minumObat(User *current_user, UserList *dataBaseUser, ObatList *dataObat, boolean *isLogin); // pasien
 void minumPenawar(User *current_user, UserList *dataBaseUser, ObatList *dataObat, boolean *isLogin); // pasien
 void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *dataPenyakit, ObatList *dataObat, Obat_PenyakitList *dataObatPenyakit, Matrix *denah, boolean *isLogin); // pasien
-void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitList *obat_penyakit, Matrix *Hospital); // general
-void EXIT(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitList *obat_penyakit, Matrix *Hospital, boolean *exit);
-void LOAD(const char *folderName, UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList, Set *nama_unik, Matrix *denah);
+void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitList *obat_penyakit, Matrix *Hospital); 
 
+/* EXIT */
+void EXIT(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitList *obat_penyakit, Matrix *Hospital, boolean *exit);
 
 /* LOAD */
+void LOAD(const char *folderName, UserList *userList, PenyakitList *penyakitList, ObatList *obatList, Obat_PenyakitList *relasiList, Set *nama_unik, Matrix *denah);
 void loadDataUser(const char *filename, UserList *userList, Set *nama_unik);
 void loadDataPenyakit(const char *filename, PenyakitList *penyakitList);
 void loadDataObat(const char *filename, ObatList *obatList);
 void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasiList);
 void loadConfig(const char *filename, Matrix *denah, UserList *userList);
-// void loadDataUser(const char *filename, UserList *list, Set *nama_unik);
-// void loadDataPenyakit(const char *filename, PenyakitList *list);
-// void loadDataObat(const char *filename, ObatList *obatList);
-// void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasi);
-// void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasiList);
 
 
-/* List Dinamis untuk UserList */
+/**
+ * Prosedur Modifikasi List Dinamis untuk UserList
+ */
 void CreateListDin(UserList *l, int capacity); 
 void dealocateListDin(UserList *l); 
 void expandList(UserList *l, int num); 
@@ -103,12 +111,16 @@ void sortListByUsername(UserList *l, boolean asc);
 void sortListByID(UserList *l, boolean asc);
 
 
-/* Prosedur untuk manajemen Inventory User */
+/**
+ * Prosedur untuk manajemen Inventory User
+ */
 void insertLast(Inventory *inventory, int id);
 void deleteAt(Inventory *inventory, int *id, int idx);
 
 
-/* --- Fungsi/Prosedur Manajemen User --- */
+/**
+ * Fungsi/Prosedur Manajemen User
+ */
 void CreateUser(UserList *l, User *u, char name[], char pass[], Role role);  
 void deleteUser(UserList *l, User *u);
 User* findUser(UserList *l, char username[]);
@@ -118,7 +130,7 @@ void AddUser(UserList *l, User u);
 char* roleToStr(Role role); 
 void toLower(char *str);
 
-// Tmabahan untuk Config
+// Tambahan untuk Config
 void sortUserListByID(UserList *l);
 
 #endif

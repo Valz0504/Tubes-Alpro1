@@ -7,6 +7,31 @@ void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix
         return;
     }
     if (current_user->role == ROLE_PASIEN) {
+
+        boolean foundInAntrian = FALSE;
+        for (int i = 0; i < Hospital->rows; i++) {
+            for (int j = 0; j < Hospital->cols; j++) {
+                Queue antrian = Hospital->data[i][j].antrian;
+                Node *curr = antrian.head;
+
+                while (curr != NULL) {
+                    if (curr->info == current_user->id) {
+                        foundInAntrian = TRUE;
+                        break;
+                    }
+                    curr = curr->next;
+                }
+                if (foundInAntrian) break;
+            }
+            if (foundInAntrian) break;
+        }
+
+        if (foundInAntrian) {
+            printf(YELLOW "Anda sudah terdaftar dalam antrian check-up!\n" RESET);
+            printf(YELLOW "Silakan selesaikan check-up yang sudah terdaftar terlebih dahulu!\n\n" RESET);
+            return;
+        }
+
         float suhu;
         int tekanan_sis, tekanan_dis, jantung;
         float saturasi;

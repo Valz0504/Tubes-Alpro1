@@ -1,3 +1,6 @@
+/* File : queue.h */
+/* Deskripsi : Berisi ADT queue dengan linked list*/
+
 #ifndef QUEUE_H
 #define QUEUE_H
 

@@ -12,7 +12,7 @@ void minumObat(User *current_user, UserList *dataBaseUser, ObatList *dataObat, b
         User *pasien = findUser(dataBaseUser, current_user->username);
         
         if (pasien == NULL) {
-            printf("Tidak ditemukan!\n");
+            printf(RED "Pasien idak ditemukan!\n" RESET);
             return;
         }
 

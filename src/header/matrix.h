@@ -1,3 +1,6 @@
+/* File : matrix.h */
+/* Deskripsi : Berisi ADT matrix */
+
 #ifndef MATRIX_H
 #define MATRIX_H
 
