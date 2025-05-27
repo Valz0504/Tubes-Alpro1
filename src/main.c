@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
     boolean run_program = TRUE;
     while (run_program) {
         char prompt[100];
-
+        
         if (isLogin) {
             printf(GRAY "%s@%s " RESET, current_user.username, roleToStr(current_user.role));
         } else {

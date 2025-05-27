@@ -10,7 +10,7 @@ void minumPenawar(User *current_user, UserList *dataBaseUser, ObatList *dataObat
     if (current_user->role == ROLE_PASIEN) {
         User *pasien = findUser(dataBaseUser, current_user->username);
 
-        char answer[100];
+        char answer[10];
         if (pasien->perut.length == 0) {
             printf(YELLOW "Perut kosong!! Belum ada obat yang dimakan.\n\n" RESET);
             return;
@@ -33,7 +33,19 @@ void minumPenawar(User *current_user, UserList *dataBaseUser, ObatList *dataObat
             pop(&pasien->perut, &value);
             Obat *obat = getObatbyId(dataObat, value);
             insertLast(&pasien->inventory, value);
-            printf(GREEN "Uwekkk!!! %s keluar dari tubuhmu dan kembali ke inventory!\n\n" RESET, obat->nama);
+            printf(GREEN "Uwekkk!!! %s keluar dari tubuhmu dan kembali ke inventory, tapi...\n\n" RESET, obat->nama);
+
+            pasien->nyawa--;
+            if (pasien->nyawa == 0) {
+                printf(RED "[Dokter]: 'Tidakkk, kenapa kamu salah minum obat sampe 3 kaliii...\n" RESET);
+                printf(RED "Pasien mati... ded~\n\n" RESET);
+                deleteUser(dataBaseUser, pasien);
+                *isLogin = FALSE;
+                return;
+            } else {
+                printf(YELLOW "Nyawa berkurang 1\n" RESET);
+                printf(YELLOW "Sisa nyawa anda: %d\n\n" RESET, pasien->nyawa);
+            }
         } else {
             printf(YELLOW "Tidak jadi minum penawar...\n\n" RESET);
         }

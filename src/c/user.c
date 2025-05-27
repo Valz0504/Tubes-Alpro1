@@ -28,6 +28,29 @@ void CreateUser(UserList *l, User *u, char name[], char pass[], Role role) {
     l->currMaxId++;
 }
 
+void deleteUser(UserList *l, User *u) {
+    //cari indeks user di userList dulu
+    int left = 0, right = l->Neff-1;
+    int idx = -1;
+    while (left <= right) {
+        int mid = (left + right) / 2;
+        if (l->data[mid].id < u->id) {
+            left = mid + 1;
+        } else if (l->data[mid].id > u->id) {
+            right = mid - 1;
+        } else {
+            idx = mid;
+            break;
+        }
+    }
+
+    //hilangkan usernya dari list
+    for (int i = idx; i < l->Neff - 1; i++) {
+        l->data[i] = l->data[i+1];
+    }
+    l->Neff--;
+}
+
 void CreateListDin(UserList *l, int capacity) {
     l->Neff = 0;
     l->capacity = capacity;
@@ -175,16 +198,3 @@ void deleteAt(Inventory *inventory, int *id, int idx) {
     }
     inventory->jumlahObat -= 1;
 }
-
-// Tambahan untuk config
-// void sortUserListByID(UserList *l) {
-//     for (int i = 0; i < l->Neff - 1; i++) {
-//         for (int j = i + 1; j < l->Neff; j++) {
-//             if (l->data[i].id > l->data[j].id) {
-//                 User temp = l->data[i];
-//                 l->data[i] = l->data[j];
-//                 l->data[j] = temp;
-//             }
-//         }
-//     }
-// }

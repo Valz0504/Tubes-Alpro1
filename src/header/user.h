@@ -22,6 +22,7 @@ typedef enum {
 typedef struct
 {   
     int id;
+    int nyawa;
     char username[100];
     char password[100];
     Role role;
@@ -109,6 +110,7 @@ void deleteAt(Inventory *inventory, int *id, int idx);
 
 /* --- Fungsi/Prosedur Manajemen User --- */
 void CreateUser(UserList *l, User *u, char name[], char pass[], Role role);  
+void deleteUser(UserList *l, User *u);
 User* findUser(UserList *l, char username[]);
 User* findUserByID(UserList *l, int id);
 boolean isUsernameExist(UserList l, char username[]);
