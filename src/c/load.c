@@ -28,8 +28,6 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
         char buffer[128];
         int idx = 0, field = 0, i = 0;
 
-        memset(&u, 0, sizeof(User)); // Inisialisasi semua field jadi nol
-
         while (line[i] != '\0' && line[i] != '\n') {
             if (line[i] == ';') {
                 buffer[idx] = '\0';
@@ -43,8 +41,6 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
                         break;
                     case 1: 
                         strncpy(u.username, buffer, sizeof(u.username));
-                        // u.username[sizeof(u.username)-1] = '\0';
-                        // u.username[strcspn(u.username, "\r\n")] = 0;
                         toLower(buffer); 
                         insertSet(set, buffer);
                         break;
@@ -79,7 +75,6 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
                     case 13: u.kadar_kolesterol = atoi(buffer); break;
                     case 14: u.trombosit = atoi(buffer); break;
                 }
-
                 field++;
                 idx = 0;
             } else {
@@ -113,6 +108,8 @@ void loadDataPenyakit(const char *filename, PenyakitList *listPenyakit) {
     char line[1024];
     fgets(line, sizeof(line), filePenyakit); 
     while (fgets(line, sizeof(line), filePenyakit)) {
+
+        // perbesar penyakit list apabila sudah mencapai kapasitas
         if (listPenyakit->Neff >= listPenyakit->capacity) {
             listPenyakit->capacity *= 2;
             listPenyakit->data = realloc(listPenyakit->data, listPenyakit->capacity * sizeof(Penyakit));
@@ -184,9 +181,12 @@ void loadDataObat(const char *fileName, ObatList *listObat){
 
     char line[256];
 
-    fgets(line, sizeof(line), fileObat);  // Lewati header jika ada
+    // lewati header
+    fgets(line, sizeof(line), fileObat); 
 
     while (fgets(line, sizeof(line), fileObat)) {
+
+        // perbesar obatlist jika sudah mencapai kapasitas
         if (listObat->Neff >= listObat->capacity) {
             listObat->capacity *= 2;
             listObat->data = realloc(listObat->data, listObat->capacity * sizeof(Obat));
@@ -384,11 +384,7 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
             // Cari user berdasarkan ID
             User *dokter = findUserByID(userList, dokterId);
             if (dokter != NULL) {
-                // Salin nama asli dokter ke field nama_dokter
-                snprintf(denah->data[i][j].nama_dokter, 100, "%s", dokter->username);
-            } else {
-                // Jika tidak ditemukan, fallback
-                snprintf(denah->data[i][j].nama_dokter, 100, "%d", dokterId);
+                strcpy(denah->data[i][j].nama_dokter, dokter->username);
             }
 
             // Lewati spasi setelah dokter ID
@@ -550,7 +546,7 @@ void LOAD(const char *folderName, UserList *userList, PenyakitList *penyakitList
     char path[256];
     struct stat sb;
 
-    // Bangun path lengkap: ./file/data 1
+    // bangun path lengkap
     snprintf(path, sizeof(path), "./data/%s", folderName);
 
     // Validasi apakah folder ada

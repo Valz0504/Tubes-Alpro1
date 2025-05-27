@@ -33,14 +33,14 @@ int folder(const char *folderName){//membuat folder
         return 0;
     } 
     else {
-        perror("Gagal membuat folder");
+        perror(RED "Gagal membuat folder" RESET);
         return -1;
     }
 }
 void FileUser(const char *filePath, UserList *users){// membuat/overwrite file user
     FILE *fp = fopen(filePath, "w");
     if (!fp) {
-        printf("Gagal membuat file di path: %s\n", filePath);
+        printf(RED "Gagal membuat file di path: %s\n" RESET, filePath);
         return;
     }
     char peran[100];
@@ -83,7 +83,7 @@ void FileUser(const char *filePath, UserList *users){// membuat/overwrite file u
 void FileObat(const char *filePath, ObatList *obat){// membuat/overwrite file obat
     FILE *fp = fopen(filePath, "w");
     if (fp == NULL) {
-        printf("Gagal membuat file di path: %s\n", filePath);
+        printf(RED "Gagal membuat file di path: %s\n" RESET, filePath);
         return;
     }
     fprintf(fp,
@@ -97,7 +97,7 @@ void FileObat(const char *filePath, ObatList *obat){// membuat/overwrite file ob
 void FilePenyakit(const char *filePath, PenyakitList *sakit){// membuat/overwrite file penyakit
     FILE *fp = fopen(filePath, "w");
     if (fp == NULL) {
-        printf("Gagal membuat file di path: %s\n", filePath);
+        printf(RED "Gagal membuat file di path: %s\n" RESET, filePath);
         return;
     }
     fprintf(fp, "id,nama,suhu_tubuh_Min,suhu_tubuh_Max,tekanan_sistolik_Min,tekanan_sistolik_Max,"
@@ -119,7 +119,7 @@ void FilePenyakit(const char *filePath, PenyakitList *sakit){// membuat/overwrit
 void FileObat_Penyakit(const char *filePath, Obat_PenyakitList *obat_penyakit) {
     FILE *fp = fopen(filePath, "w");
     if (fp == NULL) {
-        printf("Gagal membuat file di path: %s\n", filePath);
+        printf(RED "Gagal membuat file di path: %s\n" RESET, filePath);
         return;
     }
 

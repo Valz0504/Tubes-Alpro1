@@ -1,3 +1,5 @@
+/* File : penyakit.h */
+/* Deskripsi : Berisi ADT penyakit,obat,obat-penyakit */
 
 #ifndef PENYAKIT_H
 #define PENYAKIT_H

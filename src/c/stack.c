@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "../header/stack.h"
+#include "../header/coloring.h"
 
 void initStack(Stack *s) {
     s->length = 0;
@@ -12,7 +13,7 @@ void push(Stack *s, int value) {
         s->top++;
         s->data[s->top] = value;
     } else {
-        printf("Stack penuh!\n");
+        printf(RED "Perut penuh!\n" RESET);
     }
 }
 
@@ -22,7 +23,7 @@ void pop(Stack *s, int *value) {
         s->top--;
         s->length--;
     } else {
-        printf("Stack kosong!\n");
+        printf(RED "Perut kosong!\n" RESET);
     }
 }
 
