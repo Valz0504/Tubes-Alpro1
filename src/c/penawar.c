@@ -11,6 +11,7 @@ void minumPenawar(User *current_user, UserList *dataBaseUser, ObatList *dataObat
         User *pasien = findUser(dataBaseUser, current_user->username);
 
         char answer[100];
+        // tidak bisa penawar jika perut kosong
         if (pasien->perut.length == 0) {
             printf(YELLOW "Perut kosong!! Belum ada obat yang dimakan.\n\n" RESET);
             return;

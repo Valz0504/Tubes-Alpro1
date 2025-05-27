@@ -31,6 +31,7 @@ void ngobatin(User *current_user, UserList *dataBaseUser, PenyakitList *dataPeny
     }
 
     Queue *antrian = &denah->data[row][col].antrian;
+    // jika antrian kosong tidak dapat ngobatin
     if (antrian->head == NULL) {
         printf(CYAN "Antrian kosong, tidak ada pasien untuk diobati!\n\n" RESET);
         return;
@@ -45,6 +46,7 @@ void ngobatin(User *current_user, UserList *dataBaseUser, PenyakitList *dataPeny
         return;
     }
 
+    // kalau pasien udah punya obat pasti udah pernah diobati
     if (pasien->inventory.jumlahObat > 0) {
         printf(GREEN "%s sudah diobati!\n\n" RESET, pasien->username);
         denah->data[row][col].serving = TRUE;
@@ -72,5 +74,5 @@ void ngobatin(User *current_user, UserList *dataBaseUser, PenyakitList *dataPeny
         pasien->inventory.obat[i] = obat->id;
         pasien->inventory.jumlahObat++;
     }
-    printf(GREEN "\nObat sudah diberikan sesuai dengan urutan minumnya!\n\n" RESET);
+    printf(GREEN "\nObat sudah diberikan berdasarkan dengan urutan minumnya!\n\n" RESET);
 }

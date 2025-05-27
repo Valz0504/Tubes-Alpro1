@@ -1,3 +1,6 @@
+/* File : stack.h */
+/* Deskripsi : Berisi ADT stack */
+
 #ifndef STACK_H
 #define STACK_H
 

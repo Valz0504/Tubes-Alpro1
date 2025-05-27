@@ -23,6 +23,7 @@ void diagnosis(User *current_user, UserList *listUser, PenyakitList *listPenyaki
             }
         }
 
+        // jika dokter tidak ditemukan di denah tidak bisa diagnosis
         if (!foundRuangan) {
             printf(YELLOW "Anda belum ditugaskan ke ruangan manapun.\n\n" RESET);
             return;
@@ -42,6 +43,7 @@ void diagnosis(User *current_user, UserList *listUser, PenyakitList *listPenyaki
             return;
         }
 
+        // jika pasien sudah punya obat atau sudah didiagnosis tidak bisa didiagnosis lagi
         if (pasien->inventory.jumlahObat > 0 || strcmp(pasien->riwayat_penyakit, "-") != 0) {
             denah->data[row][col].serving = TRUE;
         }

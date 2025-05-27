@@ -15,7 +15,8 @@ void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *da
         boolean isFront = FALSE;
         boolean isInQueue = FALSE;
 
-        for (int i = 0; i < denah->rows; i++) {
+        // cari tau apakah pasien sudah ada di antrian atau tidak
+        for (int i = 0; i < denah->rows; i++) { 
             for (int j = 0; j < denah->cols; j++) {
                 Queue *antrian = &denah->data[i][j].antrian;
                 Node *curr = antrian->head;
@@ -34,22 +35,25 @@ void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *da
                 }
             }
         }
+        // jika di belum ada di antrian tidak bisa pulangdok
         if (!isInQueue) {
             printf(YELLOW "Kamu belum berada di antrian mana pun!\n\n" RESET);
             return;
         }
 
+        // jika ada di antrian tapi tidak paling depan, tidak bisa pulang dok
         if (!isFront) {
             printf(YELLOW "Belum giliranmu untuk diperiksa, mohon bersabar!\n\n" RESET);
             return;
         }
 
+        // jika pasien belum didiagnosis tidak bisa pulangdok
         if (strcmp(pasien->riwayat_penyakit, "-") == 0) {
             printf(YELLOW "Kamu belum menerima diagnosis apapun dari dokter, jangan buru-buru pulang!\n\n" RESET);
             return;
         }
 
-
+        // jika pasien sehat tidak bisa pulangdok
         if (strcmp(pasien->riwayat_penyakit, "Sehat") == 0) {
             printf(GREEN "Kamu sudah sehat dan boleh langsung pulang, sampai jumpa!\n\n" RESET);
             int idPasien;
@@ -61,6 +65,8 @@ void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *da
         printf(CYAN "Dokter sedang memeriksa keadaanmu...\n\n" RESET);
         int idPenyakit = getIDPenyakit(dataPenyakit, pasien->riwayat_penyakit);
         int indexDiMap = getMapIndexByPenyakit(dataObatPenyakit, idPenyakit);
+
+        // jika masih ada obat yang belum diminum tidak bisa pulangdok
         if (pasien->perut.length != dataObatPenyakit->buffer[indexDiMap].jumlah_obat) {
             printf(YELLOW "Masih ada obat yang belum kamu habiskan, minum semuanya dulu yukk!\n\n" RESET);
             return;
@@ -76,7 +82,7 @@ void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *da
         if (bolehPulang) {
             emptyStack(&current_user->perut);
 
-            // reset data 
+            // reset data pasien jika dibolehin pulang
             strcpy(pasien->riwayat_penyakit, "-");
             pasien->suhu_tubuh = 0.0;
             pasien->tekanan_darah_sistolik = -1;
@@ -95,6 +101,8 @@ void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *da
 
             printf(GREEN BOLD "Selamat! Kamu sudah dinyatakan sembuh oleh dokter. Silahkan pulang dan semoga sehat selalu!\n\n" RESET);
         } else {
+
+            // jika tidak sesuai urutan minum tidak bisa pulangdok
             printf(RED "Maaf, tapi kamu masih belum bisa pulang!\n\n" RESET);
 
             printf(CYAN "Urutan peminuman obat yang diharapkan:\n" RESET);
