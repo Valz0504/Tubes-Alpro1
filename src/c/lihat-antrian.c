@@ -8,7 +8,7 @@ void lihatAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, boo
     }
 
     if (current_user->role == ROLE_MANAGER) {
-        denahRumahSakit(*denah);
+        denahRumahSakit(*denah, isLogin);
 
         // cari setiap indeks yang ada dokternya
         for (int i = 0; i < denah->rows; i++) {

@@ -4,6 +4,7 @@
 #ifndef USER_H
 #define USER_H
 
+#include <unistd.h>
 #include "coloring.h" // Iseng wkwkwk
 #include "map.h"
 #include "matrix.h"
@@ -11,7 +12,6 @@
 #include "penyakit.h"
 #include "queue.h"
 #include "boolean.h"
-
 
 /**
  * Enumerasi Role User
@@ -67,7 +67,7 @@ void lupa_password(UserList *list, boolean *isLogin); // general
 void logout(User *current_user, boolean *isLogin); // general
 void registerPasien(UserList *list, Set *set, boolean *isLogin); // pasien
 void helpMenu(User current_user, boolean *isLogin); // general
-void denahRumahSakit(Matrix M); // general
+void denahRumahSakit(Matrix M, boolean *isLogin); // general
 void lihatRuangan(Matrix denah, UserList dataBaseUser, User current_user, boolean *isLogin); // general
 void lihatAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, boolean *isLogin); // manager
 void lihatUser(UserList *dataBaseUser, User *current_user, boolean *isLogin); // manager

@@ -40,7 +40,7 @@ void minumObat(User *current_user, UserList *dataBaseUser, ObatList *dataObat, b
 
         int obat_id;
         Obat *yangDiminum = getObatbyId(dataObat, pasien->inventory.obat[choice - 1]);
-        printf(GREEN "GLEKGLEKGLEK... %s berhasil diminum!!\n\n" RESET, yangDiminum->nama);
+        printf(GREEN BOLD "GLEKGLEKGLEK...\n %s berhasil diminum!!\n\n" RESET, yangDiminum->nama);
         deleteAt(&pasien->inventory, &obat_id, choice - 1);
 
         push(&pasien->perut, obat_id);

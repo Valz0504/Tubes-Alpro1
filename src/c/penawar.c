@@ -17,7 +17,7 @@ void minumPenawar(User *current_user, UserList *dataBaseUser, ObatList *dataObat
             return;
         }
 
-        printf(CYAN "Yakin minum penawar? (" GREEN "y" RESET CYAN "/" RED "n" RESET CYAN ") " RESET);
+        printf(CYAN "Yakin minum penawar? (" GREEN BOLD"y" RESET CYAN "/" RED "n" RESET CYAN ") " RESET);
 
         do {
             scanf("%s", answer);
@@ -25,7 +25,7 @@ void minumPenawar(User *current_user, UserList *dataBaseUser, ObatList *dataObat
 
             if (strcmp(answer, "y") != 0 && strcmp(answer, "n") != 0) {
                 printf(RED "Masukan anda belum benar, coba lagi!\n\n" RESET);
-                printf(CYAN "Yakin minum penawar? (" GREEN "y" RESET CYAN "/" RED "n" RESET CYAN ") " RESET);
+                printf(CYAN "Yakin minum penawar? (" GREEN BOLD"y" RESET CYAN "/" RED "n" RESET CYAN ") " RESET);
             }
         } while (strcmp(answer, "y") != 0 && strcmp(answer, "n") != 0);
 
@@ -34,7 +34,7 @@ void minumPenawar(User *current_user, UserList *dataBaseUser, ObatList *dataObat
             pop(&pasien->perut, &value);
             Obat *obat = getObatbyId(dataObat, value);
             insertLast(&pasien->inventory, value);
-            printf(GREEN "Uwekkk!!! %s keluar dari tubuhmu dan kembali ke inventory, tapi...\n\n" RESET, obat->nama);
+            printf(GREEN BOLD"Uwekkk!!!\n %s keluar dari tubuhmu dan kembali ke inventory, tapi...\n\n" RESET, obat->nama);
 
             pasien->nyawa--;
             if (pasien->nyawa == 0) {

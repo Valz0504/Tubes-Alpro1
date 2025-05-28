@@ -236,7 +236,7 @@ void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitLis
         printf(GRAY "Membuat folder data/%s (sudah ada)\n" RESET, nama_folder);
         FileUser(pathUser, user1);
         FileConfig(pathConfig, Hospital, user1);
-        printf(GREEN "Berhasil menyimpan data di folder " CYAN "data/%s\n\n" RESET, nama_folder);
+        printf(GREEN BOLD"Berhasil menyimpan data di folder " CYAN "data/%s\n\n" RESET, nama_folder);
     }
     else if (folder_exist(FullFolder) == 1 && file_exist(FullFolder) == 0){
         printf(GRAY "Membuat folder data/%s (sudah ada)\n" RESET, nama_folder);
@@ -245,7 +245,7 @@ void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitLis
         FilePenyakit(pathPenyakit, sakit);
         FileObat_Penyakit(pathObatPenyakit, obat_penyakit);
         FileConfig(pathConfig, Hospital, user1);
-        printf(GREEN "Berhasil menyimpan data di folder " CYAN "data/%s\n\n" RESET, nama_folder);
+        printf(GREEN BOLD"Berhasil menyimpan data di folder " CYAN "data/%s\n\n" RESET, nama_folder);
     }
     else{
         printf(GRAY "Membuat folder data/%s\n" RESET, nama_folder);
@@ -255,6 +255,6 @@ void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitLis
         FilePenyakit(pathPenyakit, sakit);
         FileObat_Penyakit(pathObatPenyakit, obat_penyakit);
         FileConfig(pathConfig, Hospital, user1);
-        printf(GREEN "Berhasil menyimpan data di folder " CYAN "data/%s\n\n" RESET, nama_folder);
+        printf(GREEN BOLD"Berhasil menyimpan data di folder " CYAN "data/%s\n\n" RESET, nama_folder);
     }
 }

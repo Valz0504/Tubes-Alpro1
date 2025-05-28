@@ -41,7 +41,7 @@ void assignDokter(Matrix *denah, UserList *list, User *current_user, boolean *is
                 
                 if (kosong && !isDokterSudahAssign(denah, nama_dokter)) {
                     strcpy(denah->data[row][col].nama_dokter, nama_dokter);
-                    printf(GREEN "Dokter %s berhasil ditugaskan ke ruangan %s!\n\n" RESET, nama_dokter, ruang);
+                    printf(GREEN BOLD"Dokter %s berhasil ditugaskan ke ruangan %s!\n\n" RESET, nama_dokter, ruang);
                 } else if (kosong && isDokterSudahAssign(denah, nama_dokter)) {
                     char ruangan_asal[10];
                     getRuanganDokter(denah, nama_dokter, ruangan_asal);
@@ -91,7 +91,7 @@ void tambahDokter(UserList *list, User *current_user, Set *set, boolean *isLogin
                 CreateUser(list, &new_user, usernameTemp, password, 1);
                 AddUser(list, new_user);
                 
-                printf(GREEN "Dokter %s berhasil ditambahkan!\n\n" RESET, usernameTemp);
+                printf(GREEN BOLD"Dokter %s berhasil ditambahkan!\n\n" RESET, usernameTemp);
             } else {
                 if (temp_user != NULL) {
                     if (temp_user->role == ROLE_DOKTER) {

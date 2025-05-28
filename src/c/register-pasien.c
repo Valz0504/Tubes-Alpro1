@@ -23,7 +23,7 @@ void registerPasien(UserList *list, Set *set, boolean *isLogin) {
             CreateUser(list, &new_user, usernameTemp, password, 0);
             AddUser(list, new_user);
             
-            printf(GREEN "Pasien %s berhasil ditambahkan!\n\n", usernameTemp);
+            printf(GREEN BOLD "Pasien %s berhasil ditambahkan!\n\n", usernameTemp);
         } else {
             printf(RED "Registrasi gagal! Sudah ada User dengan nama %s.\n\n", username);
         }

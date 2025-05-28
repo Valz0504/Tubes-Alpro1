@@ -41,14 +41,14 @@ void ngobatin(User *current_user, UserList *dataBaseUser, PenyakitList *dataPeny
     User *pasien = findUserByID(dataBaseUser, idPasien);
 
     if (strcmp(pasien->riwayat_penyakit, "Sehat") == 0) {
-        printf(GREEN "%s sudah sehat! Tidak ada obat yang dapat diberikan.\n\n" RESET, pasien->username);
+        printf(GREEN BOLD"%s sudah sehat! Tidak ada obat yang dapat diberikan.\n\n" RESET, pasien->username);
         denah->data[row][col].serving = TRUE;
         return;
     }
 
     // kalau pasien udah punya obat pasti udah pernah diobati
     if (pasien->inventory.jumlahObat > 0) {
-        printf(GREEN "%s sudah diobati!\n\n" RESET, pasien->username);
+        printf(GREEN BOLD"%s sudah diobati!\n\n" RESET, pasien->username);
         denah->data[row][col].serving = TRUE;
         return;
     }
@@ -74,5 +74,5 @@ void ngobatin(User *current_user, UserList *dataBaseUser, PenyakitList *dataPeny
         pasien->inventory.obat[i] = obat->id;
         pasien->inventory.jumlahObat++;
     }
-    printf(GREEN "\nObat sudah diberikan berdasarkan dengan urutan minumnya!\n\n" RESET);
+    printf(GREEN BOLD"\nObat sudah diberikan berdasarkan dengan urutan minumnya!\n\n" RESET);
 }

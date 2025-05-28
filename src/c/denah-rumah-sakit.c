@@ -2,7 +2,12 @@
 #include <string.h>
 #include "../header/user.h"
 
-void denahRumahSakit(Matrix M) {
+void denahRumahSakit(Matrix M, boolean *isLogin) {
+    if (!(*isLogin)) {
+        printf(RED "Silakan login terlebih dahulu!\n\n" RESET);
+        return;
+    }
+
     printf(CYAN BOLD "=== Denah Rumah Sakit ===\n\n" RESET);
 
     // Header kolom

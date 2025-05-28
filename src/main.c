@@ -6,8 +6,8 @@ int main(int argc, char* argv[]) {
     system("clear");
 
     if (argc < 2) { 
-        printf("Tidak ada nama folder yang diberikan!\n");
-        printf("Usage: ./main <<nama_folder>>\n");
+        printf(RED "\nTidak ada nama folder yang diberikan!\n" RESET);
+        printf(RED "Usage: ./main <<nama_folder>>\n" RESET);
         return 0;
     }
 
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
     boolean isLogin = FALSE;
 
     // Opening Program
-    printf(BLUE);
+    printf(BRIGHT_CYAN);
     printf("========================================\n");
     printf("   SELAMAT DATANG DI SISTEM KLINIK ITB  \n");
     printf("========================================\n");
@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
         } else if (strcmp(prompt, "HELP") == 0) {
             helpMenu(current_user, &isLogin);
         } else if (strcmp(prompt, "LIHAT_DENAH") == 0) {
-            denahRumahSakit(denahRS);
+            denahRumahSakit(denahRS, &isLogin);
         } else if (strcmp(prompt, "LIHAT_RUANGAN") == 0){
             lihatRuangan(denahRS, dataBaseUser, current_user, &isLogin);
         } else if (strcmp(prompt, "EXIT") == 0) {
