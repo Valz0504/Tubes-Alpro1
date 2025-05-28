@@ -23,6 +23,7 @@ void CreateUser(UserList *l, User *u, char name[], char pass[], Role role) {
     u->tinggi_badan = -1;
     u->kadar_kolesterol = -1;
     u->trombosit = -1;
+    u->nyawa = 3;
     initStack(&u->perut);
     u->inventory.jumlahObat = 0;
     l->currMaxId++;

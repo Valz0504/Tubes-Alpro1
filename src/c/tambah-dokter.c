@@ -5,6 +5,7 @@
 
 void assignDokter(Matrix *denah, UserList *list, User *current_user, boolean *isLogin) {
     if (*isLogin) {
+
         if (current_user->role == ROLE_MANAGER) {
             printf(CYAN BOLD "=== ASSIGN DOKTER ===\n" RESET);
     
@@ -44,7 +45,7 @@ void assignDokter(Matrix *denah, UserList *list, User *current_user, boolean *is
                 } else if (kosong && isDokterSudahAssign(denah, nama_dokter)) {
                     char ruangan_asal[10];
                     getRuanganDokter(denah, nama_dokter, ruangan_asal);
-                    printf(BLUE "Dokter %s sudah diassign ke ruangan %s!\n" RESET, nama_dokter, ruangan_asal);
+                    printf(BLUE "Dokter %s sudah diassign ke ruangan %s!\n\n" RESET, nama_dokter, ruangan_asal);
                 } else if (!kosong && !isDokterSudahAssign(denah, nama_dokter)) {
                     printf(BLUE "Ruangan %s sudah ditempati dokter %s!\n" RESET, ruang, denah->data[row][col].nama_dokter);
                     printf(RED "Silakan cari ruangan lain untuk dokter %s.\n\n" RESET, nama_dokter);
@@ -68,6 +69,7 @@ void assignDokter(Matrix *denah, UserList *list, User *current_user, boolean *is
 
 void tambahDokter(UserList *list, User *current_user, Set *set, boolean *isLogin) {
     if (*isLogin) {
+
         if (current_user->role == ROLE_MANAGER) {
             printf(CYAN BOLD "=== TAMBAH DOKTER ===\n" RESET);
             char username[100], password[100];

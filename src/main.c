@@ -41,6 +41,7 @@ int main(int argc, char* argv[]) {
     while (run_program) {
         char prompt[100];
         
+
         if (isLogin) {
             printf(GRAY "%s@%s " RESET, current_user.username, roleToStr(current_user.role));
         } else {
@@ -74,7 +75,7 @@ int main(int argc, char* argv[]) {
         } else if (strcmp(prompt, "MINUM_OBAT") == 0) {
             minumObat(&current_user, &dataBaseUser,&dataObat, &isLogin);
         } else if (strcmp(prompt, "PENAWAR") == 0) {
-            minumPenawar(&current_user, &dataBaseUser,&dataObat, &isLogin);
+            minumPenawar(&current_user, &dataBaseUser,&dataObat, &denahRS, &isLogin);
         } else if (strcmp(prompt, "DIAGNOSIS") == 0) {
             diagnosis(&current_user, &dataBaseUser, &dataPenyakit, &isLogin, &denahRS);
         } else if (strcmp(prompt, "LIHAT_SEMUA_ANTRIAN") == 0) {

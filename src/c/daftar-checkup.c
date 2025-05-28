@@ -6,6 +6,7 @@ void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix
         printf(RED "Anda belum login!\n\n" RESET);
         return;
     }
+
     if (current_user->role == ROLE_PASIEN) {
 
         boolean foundInAntrian = FALSE;

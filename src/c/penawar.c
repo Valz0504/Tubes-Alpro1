@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "../header/user.h"
 
-void minumPenawar(User *current_user, UserList *dataBaseUser, ObatList *dataObat, boolean *isLogin) {
+void minumPenawar(User *current_user, UserList *dataBaseUser, ObatList *dataObat, Matrix *denah, boolean *isLogin) {
     if (!(*isLogin)) {
         printf(RED "Anda belum login!\n\n" RESET);
         return;
@@ -40,6 +40,30 @@ void minumPenawar(User *current_user, UserList *dataBaseUser, ObatList *dataObat
             if (pasien->nyawa == 0) {
                 printf(RED "[Dokter]: 'Tidakkk, kenapa kamu salah minum obat sampe 3 kaliii...\n" RESET);
                 printf(RED "Pasien mati... ded~\n\n" RESET);
+
+                int row,col;
+                Queue *antrianPasien = NULL;
+
+                for (int i = 0; i < denah->rows; i++) { 
+                    for (int j = 0; j < denah->cols; j++) {
+                        Queue *antrian = &denah->data[i][j].antrian;
+                        Node *curr = antrian->head;
+
+                        while (curr != NULL) {
+                            if (curr->info == pasien->id) {
+                                row = i; col = j;
+                                if (curr == antrian->head) {
+                                    antrianPasien = antrian;
+                                }
+                                break;
+                            }
+                            curr = curr->next;
+                        }
+                    }
+                }
+                int idPasien;
+                dequeue(antrianPasien, &idPasien);
+                denah->data[row][col].serving = FALSE;
                 deleteUser(dataBaseUser, pasien);
                 *isLogin = FALSE;
                 return;
