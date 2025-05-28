@@ -61,24 +61,26 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
                             break;
                         }
                         break;
-                    case 4: 
+                    case 4:
+                        u.aura = atoi(buffer); break;
+                    case 5: 
                         if (strlen(buffer) == 0) {
                             strncpy(u.riwayat_penyakit, "-", sizeof(u.riwayat_penyakit));
                         } else {
                             strncpy(u.riwayat_penyakit, buffer, sizeof(u.riwayat_penyakit)); 
                         }
                         break;
-                    case 5: u.suhu_tubuh = atof(buffer); break;
-                    case 6: u.tekanan_darah_sistolik = atoi(buffer); break;
-                    case 7: u.tekanan_darah_diastolik = atoi(buffer); break;
-                    case 8: u.detak_jantung = atoi(buffer); break;
-                    case 9: u.saturasi_oksigen = atof(buffer); break;
-                    case 10: u.kadar_gula_darah = atoi(buffer); break;
-                    case 11: u.berat_badan = atof(buffer); break;
-                    case 12: u.tinggi_badan = atoi(buffer); break;
-                    case 13: u.kadar_kolesterol = atoi(buffer); break;
-                    case 14: u.trombosit = atoi(buffer); break;
-                    case 15: u.nyawa = atoi(buffer); break;
+                    case 6: u.suhu_tubuh = atof(buffer); break;
+                    case 7: u.tekanan_darah_sistolik = atoi(buffer); break;
+                    case 8: u.tekanan_darah_diastolik = atoi(buffer); break;
+                    case 9: u.detak_jantung = atoi(buffer); break;
+                    case 10: u.saturasi_oksigen = atof(buffer); break;
+                    case 11: u.kadar_gula_darah = atoi(buffer); break;
+                    case 12: u.berat_badan = atof(buffer); break;
+                    case 13: u.tinggi_badan = atoi(buffer); break;
+                    case 14: u.kadar_kolesterol = atoi(buffer); break;
+                    case 15: u.trombosit = atoi(buffer); break;
+                    case 16: u.nyawa = atoi(buffer); break;
                 }
                 field++;
                 idx = 0;
@@ -90,7 +92,7 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
 
         // Ambil field terakhir (setelah koma terakhir)
         buffer[idx] = '\0';
-        if (field == 15) u.nyawa = atoi(buffer);
+        if (field == 16) u.nyawa = atoi(buffer);
         // printf("[DEBUG] password as read: '%s' %d\n", u.password, strlen(u.password));
 
         // printf("[DEBUG]username:%s password:%s nyawa:%d\n", u.username, u.password, u.nyawa);

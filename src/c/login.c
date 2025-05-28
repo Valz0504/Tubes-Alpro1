@@ -20,7 +20,6 @@ void login(UserList *list, User *current_user, boolean *isLogin) {
             printf(RED "Tidak ada Manager, Dokter, atau pun Pasien yang bernama %s\n\n", username);
             return;
         }
-        // printf("[DEBUG] input password: '%s' %d\n", password, strlen(password));
 
         if (strcmp(user->password, password) == 0) {
             if (user->role == 0) {

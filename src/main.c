@@ -41,7 +41,6 @@ int main(int argc, char* argv[]) {
     while (run_program) {
         char prompt[100];
         
-
         if (isLogin) {
             printf(GRAY "%s@%s " RESET, current_user.username, roleToStr(current_user.role));
         } else {

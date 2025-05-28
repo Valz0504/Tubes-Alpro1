@@ -29,6 +29,7 @@ typedef struct
 {   
     int id;
     int nyawa;
+    int aura;
     char username[100];
     char password[100];
     Role role;
@@ -108,6 +109,7 @@ void expandList(UserList *l, int num);
 void copyList(UserList lIn, UserList *lOut);
 void sortListByUsername(UserList *l, boolean asc);
 void sortListByID(UserList *l, boolean asc);
+void sortListByAura(UserList *l, boolean asc);
 
 
 /**

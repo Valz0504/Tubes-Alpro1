@@ -6,7 +6,6 @@ void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *da
         printf(RED "Anda belum login!\n\n" RESET);
         return;
     } 
-
     if (current_user->role == ROLE_PASIEN) {
         User *pasien = findUser(dataBaseUser, current_user->username);
         
@@ -100,6 +99,9 @@ void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *da
             dequeue(antrianPasien, &idPasien);
             emptyStack(&pasien->perut);
             denah->data[row][col].serving = FALSE;
+
+            User *dokter = findUser(dataBaseUser, denah->data[row][col].nama_dokter);
+            dokter->aura++;
 
             printf(GREEN BOLD "Selamat! Kamu sudah dinyatakan sembuh oleh dokter. Silahkan pulang dan semoga sehat selalu!\n\n" RESET);
         } else {

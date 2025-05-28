@@ -101,7 +101,7 @@ void lihatDokter(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
     if (current_user->role == ROLE_MANAGER) {
         int urutan, arahSort;
         printf(CYAN "Urutkan berdasarkan?\n" RESET);
-        printf(GRAY "1. ID\n2. Nama\n" RESET);
+        printf(GRAY "1. ID\n2. Nama\n3. Aura\n" RESET);
         printf(GRAY ">> Pilihan: " RESET);
         scanf("%d", &urutan);
 
@@ -120,8 +120,20 @@ void lihatDokter(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
 
         if (urutan == 1) {
             sortListByID(&temp, arahSort == 1);
-        } else {
+        } else if (urutan == 2){
             sortListByUsername(&temp, arahSort == 1);
+        } else if (urutan == 3) {
+            sortListByAura(&temp, arahSort == 1);
+
+            printf(BLUE BOLD "\n+-----+--------------------+------+\n" RESET);
+            printf(BLUE BOLD "| ID  | Nama               | Aura |\n" RESET);
+            printf(BLUE BOLD "+-----+--------------------+------+\n" RESET);
+            for (int i = 0; i < temp.Neff; i++) {
+                User u = temp.data[i];
+                printf(GRAY " %-3d " RESET " | " GRAY "%-18s" RESET " | " YELLOW "%-4d" RESET " |\n", u.id, u.username, u.aura);
+            }
+            printf(BLUE BOLD "+-----+--------------------+------+\n\n" RESET);
+            return;
         }
 
         printf(BLUE BOLD "\n+-----+--------------------+\n" RESET);
