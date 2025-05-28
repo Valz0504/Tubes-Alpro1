@@ -4,6 +4,7 @@
 #ifndef USER_H
 #define USER_H
 
+#include <unistd.h>
 #include "coloring.h" // Iseng wkwkwk
 #include "map.h"
 #include "matrix.h"
@@ -11,7 +12,6 @@
 #include "penyakit.h"
 #include "queue.h"
 #include "boolean.h"
-
 
 /**
  * Enumerasi Role User
@@ -28,6 +28,7 @@ typedef enum {
 typedef struct
 {   
     int id;
+    int nyawa;
     char username[100];
     char password[100];
     Role role;
@@ -41,10 +42,9 @@ typedef struct
     float berat_badan;
     int tinggi_badan;
     int kadar_kolesterol;
-    int trombosit;    
+    int trombosit;
     Inventory inventory;
     Stack perut;
-    Queue pasien;
 } User;
 
 /**
@@ -67,7 +67,7 @@ void lupa_password(UserList *list, boolean *isLogin); // general
 void logout(User *current_user, boolean *isLogin); // general
 void registerPasien(UserList *list, Set *set, boolean *isLogin); // pasien
 void helpMenu(User current_user, boolean *isLogin); // general
-void denahRumahSakit(Matrix M); // general
+void denahRumahSakit(Matrix M, boolean *isLogin); // general
 void lihatRuangan(Matrix denah, UserList dataBaseUser, User current_user, boolean *isLogin); // general
 void lihatAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, boolean *isLogin); // manager
 void lihatUser(UserList *dataBaseUser, User *current_user, boolean *isLogin); // manager
@@ -83,7 +83,7 @@ void ngobatin(User *current_user, UserList *dataBaseUser, PenyakitList *dataPeny
 void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix *Hospital); // pasien
 void antrianSaya(User *current_user, Matrix *denah, boolean *isLogin); // pasien
 void minumObat(User *current_user, UserList *dataBaseUser, ObatList *dataObat, boolean *isLogin); // pasien
-void minumPenawar(User *current_user, UserList *dataBaseUser, ObatList *dataObat, boolean *isLogin); // pasien
+void minumPenawar(User *current_user, UserList *dataBaseUser, ObatList *dataObat, Matrix *denah, boolean *isLogin); // pasien
 void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *dataPenyakit, ObatList *dataObat, Obat_PenyakitList *dataObatPenyakit, Matrix *denah, boolean *isLogin); // pasien
 void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitList *obat_penyakit, Matrix *Hospital); 
 
@@ -121,6 +121,7 @@ void deleteAt(Inventory *inventory, int *id, int idx);
  * Fungsi/Prosedur Manajemen User
  */
 void CreateUser(UserList *l, User *u, char name[], char pass[], Role role);  
+void deleteUser(UserList *l, User *u);
 User* findUser(UserList *l, char username[]);
 User* findUserByID(UserList *l, int id);
 boolean isUsernameExist(UserList l, char username[]);

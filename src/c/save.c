@@ -54,25 +54,25 @@ void FileUser(const char *filePath, UserList *users){// membuat/overwrite file u
         if (u.role == 0) {
             strcpy(peran, "pasien");
             fprintf(fp,
-                "%d;%s;%s;%s;%s;%.1f;%d;%d;%d;%.1f;%d;%.1f;%d;%d;%d\n",
+                "%d;%s;%s;%s;%s;%.1f;%d;%d;%d;%.1f;%d;%.1f;%d;%d;%d;%d\n",
                 u.id, u.username, u.password, peran, u.riwayat_penyakit,
                 u.suhu_tubuh, u.tekanan_darah_sistolik, u.tekanan_darah_diastolik,
                 u.detak_jantung, u.saturasi_oksigen, u.kadar_gula_darah,
                 u.berat_badan, u.tinggi_badan, u.kadar_kolesterol,
-                u.trombosit
+                u.trombosit, u.nyawa
             );
         } 
         else if (u.role == 1) {
             strcpy(peran, "dokter");
             fprintf(fp,
-                "%d;%s;%s;%s;;;;;;;;\n",
+                "%d;%s;%s;%s;;;;;;;;;\n",
                 u.id, u.username, u.password, peran
             );
         } 
         else if (u.role == 2) {
             strcpy(peran, "manager");
             fprintf(fp,
-                "%d;%s;%s;%s;;;;;;;;\n",
+                "%d;%s;%s;%s;;;;;;;;;\n",
                 u.id, u.username, u.password, peran
             );
         }
@@ -236,7 +236,7 @@ void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitLis
         printf(GRAY "Membuat folder data/%s (sudah ada)\n" RESET, nama_folder);
         FileUser(pathUser, user1);
         FileConfig(pathConfig, Hospital, user1);
-        printf(GREEN "Berhasil menyimpan data di folder " CYAN "data/%s\n\n" RESET, nama_folder);
+        printf(GREEN BOLD"Berhasil menyimpan data di folder " CYAN "data/%s\n\n" RESET, nama_folder);
     }
     else if (folder_exist(FullFolder) == 1 && file_exist(FullFolder) == 0){
         printf(GRAY "Membuat folder data/%s (sudah ada)\n" RESET, nama_folder);
@@ -245,7 +245,7 @@ void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitLis
         FilePenyakit(pathPenyakit, sakit);
         FileObat_Penyakit(pathObatPenyakit, obat_penyakit);
         FileConfig(pathConfig, Hospital, user1);
-        printf(GREEN "Berhasil menyimpan data di folder " CYAN "data/%s\n\n" RESET, nama_folder);
+        printf(GREEN BOLD"Berhasil menyimpan data di folder " CYAN "data/%s\n\n" RESET, nama_folder);
     }
     else{
         printf(GRAY "Membuat folder data/%s\n" RESET, nama_folder);
@@ -255,6 +255,6 @@ void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitLis
         FilePenyakit(pathPenyakit, sakit);
         FileObat_Penyakit(pathObatPenyakit, obat_penyakit);
         FileConfig(pathConfig, Hospital, user1);
-        printf(GREEN "Berhasil menyimpan data di folder " CYAN "data/%s\n\n" RESET, nama_folder);
+        printf(GREEN BOLD"Berhasil menyimpan data di folder " CYAN "data/%s\n\n" RESET, nama_folder);
     }
 }

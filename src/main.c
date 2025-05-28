@@ -6,8 +6,8 @@ int main(int argc, char* argv[]) {
     system("clear");
 
     if (argc < 2) { 
-        printf("Tidak ada nama folder yang diberikan!\n");
-        printf("Usage: ./main <<nama_folder>>\n");
+        printf(RED "\nTidak ada nama folder yang diberikan!\n" RESET);
+        printf(RED "Usage: ./main <<nama_folder>>\n" RESET);
         return 0;
     }
 
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
     boolean isLogin = FALSE;
 
     // Opening Program
-    printf(BLUE);
+    printf(BRIGHT_CYAN);
     printf("========================================\n");
     printf("   SELAMAT DATANG DI SISTEM KLINIK ITB  \n");
     printf("========================================\n");
@@ -40,6 +40,7 @@ int main(int argc, char* argv[]) {
     boolean run_program = TRUE;
     while (run_program) {
         char prompt[100];
+        
 
         if (isLogin) {
             printf(GRAY "%s@%s " RESET, current_user.username, roleToStr(current_user.role));
@@ -62,7 +63,7 @@ int main(int argc, char* argv[]) {
         } else if (strcmp(prompt, "HELP") == 0) {
             helpMenu(current_user, &isLogin);
         } else if (strcmp(prompt, "LIHAT_DENAH") == 0) {
-            denahRumahSakit(denahRS);
+            denahRumahSakit(denahRS, &isLogin);
         } else if (strcmp(prompt, "LIHAT_RUANGAN") == 0){
             lihatRuangan(denahRS, dataBaseUser, current_user, &isLogin);
         } else if (strcmp(prompt, "EXIT") == 0) {
@@ -74,7 +75,7 @@ int main(int argc, char* argv[]) {
         } else if (strcmp(prompt, "MINUM_OBAT") == 0) {
             minumObat(&current_user, &dataBaseUser,&dataObat, &isLogin);
         } else if (strcmp(prompt, "PENAWAR") == 0) {
-            minumPenawar(&current_user, &dataBaseUser,&dataObat, &isLogin);
+            minumPenawar(&current_user, &dataBaseUser,&dataObat, &denahRS, &isLogin);
         } else if (strcmp(prompt, "DIAGNOSIS") == 0) {
             diagnosis(&current_user, &dataBaseUser, &dataPenyakit, &isLogin, &denahRS);
         } else if (strcmp(prompt, "LIHAT_SEMUA_ANTRIAN") == 0) {

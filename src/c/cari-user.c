@@ -61,7 +61,7 @@ void cariUser(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
                 if (u == NULL) {
                     printf(RED "Tidak ditemukan pengguna dengan ID %d\n\n" RESET, nomor_id);
                 } else {
-                    printf(GREEN "\nMenampilkan pengguna dengan nomor ID %d...\n" RESET, nomor_id);
+                    printf(GREEN BOLD"\nMenampilkan pengguna dengan nomor ID %d...\n" RESET, nomor_id);
                     printUserTableHeader();
                     printUserTableRow(u);
                     printf(BLUE BOLD "+-----+----------------------+-----------+----------------------+\n\n" RESET);
@@ -77,7 +77,7 @@ void cariUser(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
                 if (u == NULL) {
                     printf(RED "Tidak ditemukan pengguna dengan nama %s\n\n" RESET, username);
                 } else {
-                    printf(GREEN "\nMenampilkan pengguna dengan username %s...\n" RESET, username);
+                    printf(GREEN BOLD"\nMenampilkan pengguna dengan username %s...\n" RESET, username);
                     printUserTableHeader();
                     printUserTableRow(u);
                     printf(BLUE BOLD "+-----+----------------------+-----------+----------------------+\n\n" RESET);
@@ -120,7 +120,7 @@ void cariPasien(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
                     printf(RED "Tidak ditemukan pasien dengan ID %d\n\n" RESET, nomor_id);
                 } else {
                     if (u->role == ROLE_PASIEN) {
-                        printf(GREEN "\nMenampilkan pasien dengan nomor ID %d...\n" RESET, nomor_id);
+                        printf(GREEN BOLD"\nMenampilkan pasien dengan nomor ID %d...\n" RESET, nomor_id);
                         printPasienTableHeader();
                         printPasienTableRow(u);
                         printf(BLUE BOLD "+-----+----------------------+----------------------+\n\n" RESET);
@@ -140,7 +140,7 @@ void cariPasien(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
                     printf(RED "Tidak ditemukan pasien dengan nama %s\n\n" RESET, username);
                 } else {
                     if (u->role == ROLE_PASIEN) {
-                        printf(GREEN "\nMenampilkan pasien dengan username %s...\n" RESET, username);
+                        printf(GREEN BOLD"\nMenampilkan pasien dengan username %s...\n" RESET, username);
                         printPasienTableHeader();
                         printPasienTableRow(u);
                         printf(BLUE BOLD "+-----+----------------------+----------------------+\n\n" RESET);
@@ -171,7 +171,7 @@ void cariPasien(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
                         scanf("%d", &urut);
                         switch (urut) {
                             case 1:
-                                printf(GREEN "\nMenampilkan pasien dengan penyakit %s dengan ID terurut ascendant...\n" RESET, penyakit);
+                                printf(GREEN BOLD"\nMenampilkan pasien dengan penyakit %s dengan ID terurut ascendant...\n" RESET, penyakit);
                                 printPasienTableHeader();
                                 for (int i = 0; i < dataBaseUser->Neff; i++) {
                                     if (dataBaseUser->data[i].role == ROLE_PASIEN && strcmp(dataBaseUser->data[i].riwayat_penyakit, penyakit) == 0) {
@@ -185,7 +185,7 @@ void cariPasien(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
                                 }
                                 break;
                             case 2:
-                                printf(GREEN "\nMenampilkan pasien dengan penyakit %s dengan ID terurut descendant...\n" RESET, penyakit);
+                                printf(GREEN BOLD"\nMenampilkan pasien dengan penyakit %s dengan ID terurut descendant...\n" RESET, penyakit);
                                 printPasienTableHeader();
                                 for (int i = dataBaseUser->Neff - 1; i >= 0; i--) {
                                     if (dataBaseUser->data[i].role == ROLE_PASIEN && strcmp(dataBaseUser->data[i].riwayat_penyakit, penyakit) == 0) {
@@ -215,7 +215,7 @@ void cariPasien(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
                         switch (urut) {
                             case 1:
                                 sortListByUsername(&temp, TRUE);
-                                printf(GREEN "\nMenampilkan pasien dengan penyakit %s dengan Nama terurut ascendant...\n" RESET, penyakit);
+                                printf(GREEN BOLD"\nMenampilkan pasien dengan penyakit %s dengan Nama terurut ascendant...\n" RESET, penyakit);
                                 printPasienTableHeader();
                                 for (int i = 0; i < temp.Neff; i++) {
                                     if (temp.data[i].role == ROLE_PASIEN && strcmp(temp.data[i].riwayat_penyakit, penyakit) == 0) {
@@ -230,7 +230,7 @@ void cariPasien(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
                                 break;
                             case 2:
                                 sortListByUsername(&temp, FALSE);
-                                printf(GREEN "\nMenampilkan pasien dengan penyakit %s dengan Nama terurut descendant...\n" RESET, penyakit);
+                                printf(GREEN BOLD"\nMenampilkan pasien dengan penyakit %s dengan Nama terurut descendant...\n" RESET, penyakit);
                                 printPasienTableHeader();
                                 for (int i = 0; i < temp.Neff; i++) {
                                     if (temp.data[i].role == ROLE_PASIEN && strcmp(temp.data[i].riwayat_penyakit, penyakit) == 0) {
@@ -290,7 +290,7 @@ void cariDokter(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
                     printf(RED "Tidak ditemukan dokter dengan ID %d\n\n" RESET, nomor_id);
                 } else {
                     if (u->role == ROLE_DOKTER) {
-                        printf(GREEN "\nMenampilkan dokter dengan nomor ID %d...\n" RESET, nomor_id);
+                        printf(GREEN BOLD"\nMenampilkan dokter dengan nomor ID %d...\n" RESET, nomor_id);
                         printDokterTableHeader();
                         printDokterTableRow(u);
                         printf(BLUE BOLD "+-----+----------------------+\n\n" RESET);
@@ -310,7 +310,7 @@ void cariDokter(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
                     printf(RED "Tidak ditemukan dokter dengan nama %s\n\n" RESET, username);
                 } else {
                     if (u->role == ROLE_DOKTER) {
-                        printf(GREEN "\nMenampilkan dokter dengan username %s...\n" RESET, username);
+                        printf(GREEN BOLD "\nMenampilkan dokter dengan username %s...\n" RESET, username);
                         printDokterTableHeader();
                         printDokterTableRow(u);
                         printf(BLUE BOLD "+-----+----------------------+\n\n" RESET);

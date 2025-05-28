@@ -16,9 +16,9 @@ void EXIT(UserList *databaseuser, ObatList *DataObat, PenyakitList *Datapenyakit
     } while (strcmp(input, "y") != 0 && strcmp(input, "n") != 0);
 
     if(strcmp(input, "y") == 0){
-        printf(GREEN "Menyimpan data ke file...\n" RESET);
+        printf(GREEN BOLD"Menyimpan data ke file...\n" RESET);
         SAVE(databaseuser, DataObat, Datapenyakit, Data_obat_penyakit, Hospital);
-        printf(GREEN "Data berhasil disimpan. Sampai jumpa!\n\n" RESET);
+        printf(GREEN BOLD"Data berhasil disimpan. Sampai jumpa!\n\n" RESET);
         *run_program = FALSE;
         return;
     }

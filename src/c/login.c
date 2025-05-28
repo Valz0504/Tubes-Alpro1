@@ -20,14 +20,15 @@ void login(UserList *list, User *current_user, boolean *isLogin) {
             printf(RED "Tidak ada Manager, Dokter, atau pun Pasien yang bernama %s\n\n", username);
             return;
         }
-    
+        // printf("[DEBUG] input password: '%s' %d\n", password, strlen(password));
+
         if (strcmp(user->password, password) == 0) {
             if (user->role == 0) {
-                printf(GREEN "Selamat pagi %s! Ada keluhan apa ?\n\n", user->username);
+                printf(GREEN BOLD"Selamat pagi %s! Ada keluhan apa ?\n\n", user->username);
             } else if (user->role == 1) {
-                printf(GREEN "Selamat pagi %s %s!\n\n", roleToStr(user->role), user->username);
+                printf(GREEN BOLD"Selamat pagi %s %s!\n\n", roleToStr(user->role), user->username);
             } else if (user->role == 2) {
-                printf(GREEN "Selamat pagi %s %s!\n\n", roleToStr(user->role) ,user->username);
+                printf(GREEN BOLD"Selamat pagi %s %s!\n\n", roleToStr(user->role) ,user->username);
             }
             *current_user = *user;
             *isLogin = TRUE;

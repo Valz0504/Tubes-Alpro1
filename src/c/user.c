@@ -23,9 +23,33 @@ void CreateUser(UserList *l, User *u, char name[], char pass[], Role role) {
     u->tinggi_badan = -1;
     u->kadar_kolesterol = -1;
     u->trombosit = -1;
+    u->nyawa = 3;
     initStack(&u->perut);
     u->inventory.jumlahObat = 0;
     l->currMaxId++;
+}
+
+void deleteUser(UserList *l, User *u) {
+    //cari indeks user di userList dulu
+    int left = 0, right = l->Neff-1;
+    int idx = -1;
+    while (left <= right) {
+        int mid = (left + right) / 2;
+        if (l->data[mid].id < u->id) {
+            left = mid + 1;
+        } else if (l->data[mid].id > u->id) {
+            right = mid - 1;
+        } else {
+            idx = mid;
+            break;
+        }
+    }
+
+    //hilangkan usernya dari list
+    for (int i = idx; i < l->Neff - 1; i++) {
+        l->data[i] = l->data[i+1];
+    }
+    l->Neff--;
 }
 
 void CreateListDin(UserList *l, int capacity) {

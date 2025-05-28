@@ -6,6 +6,7 @@ void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix
         printf(RED "Anda belum login!\n\n" RESET);
         return;
     }
+
     if (current_user->role == ROLE_PASIEN) {
 
         boolean foundInAntrian = FALSE;
@@ -178,9 +179,9 @@ void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix
         getRuanganDokter(Hospital, C->username, ruangan);
 
         enqueue(B, current_user->id);
-        printf(GREEN "\nPendaftaran check-up berhasil!\n" RESET);
-        printf(GREEN "Anda terdaftar pada antrian Dr. %s di ruangan %s.\n" RESET, C->username, ruangan);
-        printf(GREEN "Posisi antrian Anda: %d\n\n" RESET, countQueue(*B));
+        printf(GREEN BOLD"\nPendaftaran check-up berhasil!\n" RESET);
+        printf(GREEN BOLD"Anda terdaftar pada antrian Dr. %s di ruangan %s.\n" RESET, C->username, ruangan);
+        printf(GREEN BOLD"Posisi antrian Anda: %d\n\n" RESET, countQueue(*B));
     } else {
         printf(RED "Anda bukan pasien! Tidak bisa daftar checkup!\n\n" RESET);
     }

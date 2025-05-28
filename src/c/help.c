@@ -12,7 +12,7 @@ void helpMenu(User current_user, boolean *isLogin) {
         printf(GRAY BOLD "  %-18s " YELLOW ": Lupa password akun? Gunakan command ini\n\n" RESET, "LUPA_PASSWORD");
     } else {
         if (current_user.role == 0 || current_user.role == 1) {
-            printf(GREEN "Halo %s %s!\n" RESET, roleToStr(current_user.role), current_user.username);
+            printf(GREEN BOLD"Halo %s %s!\n" RESET, roleToStr(current_user.role), current_user.username);
             printf(CYAN "Berikut adalah hal-hal yang dapat kamu lakukan sekarang:\n\n" RESET);
             if (current_user.role == 0) {
                 printf(GRAY BOLD "  %-18s " YELLOW ": Keluar dari akun yang sedang digunakan\n" RESET, "LOGOUT");
@@ -33,7 +33,7 @@ void helpMenu(User current_user, boolean *isLogin) {
                 printf(GRAY BOLD "  %-18s " YELLOW ": Keluar dari Rumah Sakit\n\n" RESET, "EXIT");
             }
         } else if (current_user.role == 2) {
-            printf(GREEN "Halo Manager %s!\n" RESET, current_user.username);
+            printf(GREEN BOLD"Halo Manager %s!\n" RESET, current_user.username);
             printf(CYAN "Berikut adalah hal-hal yang dapat kamu lakukan sekarang:\n\n" RESET);
             printf(GRAY BOLD "  %-18s " YELLOW ": Keluar dari akun yang sedang digunakan\n" RESET, "LOGOUT");
             printf(GRAY BOLD "  %-18s " YELLOW ": Mendaftarkan dokter baru ke sistem\n" RESET, "TAMBAH_DOKTER");

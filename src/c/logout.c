@@ -11,14 +11,14 @@ void logout(User *current_user, boolean *isLogin) {
     }
 
     char answer[100];
-    printf(CYAN "Apakah anda yakin untuk logout? (y/n)\n" RESET);
+    printf(CYAN "Apakah anda yakin untuk logout? (" GREEN BOLD"y" RESET CYAN "/" RED "n" RESET CYAN ") " RESET);
     do {
         scanf("%s", answer);
         toLower(answer);
 
         if (strcmp(answer, "y") != 0 && strcmp(answer, "n") != 0) {
             printf(RED "Masukan anda belum benar, coba lagi!\n\n" RESET);
-            printf(CYAN "Apakah anda yakin untuk logout? (y/n)\n" RESET);
+            printf(CYAN "Apakah anda yakin untuk logout? (" GREEN BOLD"y" RESET CYAN "/" RED "n" RESET CYAN ") " RESET);
         }
     } while (strcmp(answer, "y") != 0  && strcmp(answer, "n") != 0);
     
@@ -27,6 +27,9 @@ void logout(User *current_user, boolean *isLogin) {
         *isLogin = FALSE;
         printf(GREEN "Sampai jumpa!\n\n\n" RESET);
 
+        sleep(2);
+        system("clear");
+        
         printf(BLUE);
         printf("========================================\n");
         printf("   SELAMAT DATANG DI SISTEM KLINIK ITB  \n");

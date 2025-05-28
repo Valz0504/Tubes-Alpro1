@@ -10,6 +10,7 @@ void lihatRuangan(Matrix denah, UserList dataBaseUser, User current_user, boolea
     }
     char kode[5];
     int row, col;
+    printf(YELLOW "Ruangan: " RESET);
     scanf("%s", kode);
 
     row = kode[0] - 'A';

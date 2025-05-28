@@ -54,15 +54,16 @@ void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *da
         }
 
         // jika pasien sehat tidak bisa pulangdok
+        printf(CYAN "Dokter sedang memeriksa keadaanmu...\n\n" RESET);
+        sleep(1);
         if (strcmp(pasien->riwayat_penyakit, "Sehat") == 0) {
-            printf(GREEN "Kamu sudah sehat dan boleh langsung pulang, sampai jumpa!\n\n" RESET);
+            printf(GREEN BOLD "Kamu sudah sehat dan boleh langsung pulang, sampai jumpa!\n\n" RESET);
             int idPasien;
             dequeue(antrianPasien, &idPasien);
             denah->data[row][col].serving = FALSE;
             return;
         }
 
-        printf(CYAN "Dokter sedang memeriksa keadaanmu...\n\n" RESET);
         int idPenyakit = getIDPenyakit(dataPenyakit, pasien->riwayat_penyakit);
         int indexDiMap = getMapIndexByPenyakit(dataObatPenyakit, idPenyakit);
 
@@ -80,8 +81,7 @@ void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *da
         }
 
         if (bolehPulang) {
-            emptyStack(&current_user->perut);
-
+            
             // reset data pasien jika dibolehin pulang
             strcpy(pasien->riwayat_penyakit, "-");
             pasien->suhu_tubuh = 0.0;
@@ -94,9 +94,11 @@ void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *da
             pasien->tinggi_badan = -1;
             pasien->kadar_kolesterol = -1;
             pasien->trombosit = -1;
-
+            pasien->nyawa = 3;
+            
             int idPasien;
             dequeue(antrianPasien, &idPasien);
+            emptyStack(&pasien->perut);
             denah->data[row][col].serving = FALSE;
 
             printf(GREEN BOLD "Selamat! Kamu sudah dinyatakan sembuh oleh dokter. Silahkan pulang dan semoga sehat selalu!\n\n" RESET);
@@ -116,11 +118,16 @@ void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *da
             }
             printf(RESET "\n");
 
-            printf(MAGENTA "Urutan obat yang kamu minum:\n" RESET);
-            printf(YELLOW "  ");
+            printf(CYAN "Urutan obat yang kamu minum:\n" RESET);
+            printf(YELLOW "  " RESET);
             for (int i = 0; i < pasien->perut.length; i++) {
                 Obat *obat = getObatbyId(dataObat, pasien->perut.data[i]);
-                printf("%s", obat->nama);
+                Obat *obatUrut = getObatbyId(dataObat, dataObatPenyakit->buffer[indexDiMap].urutan_obat[i]);
+                if (strcmp(obat->nama, obatUrut->nama) != 0) {
+                    printf(RED "%s" RESET, obat->nama);
+                } else {
+                    printf(YELLOW "%s" RESET, obat->nama);
+                }
                 if (i != pasien->perut.length - 1) {
                     printf(" " YELLOW "->" YELLOW " ");
                 }

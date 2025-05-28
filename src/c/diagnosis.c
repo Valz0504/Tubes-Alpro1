@@ -48,7 +48,7 @@ void diagnosis(User *current_user, UserList *listUser, PenyakitList *listPenyaki
             denah->data[row][col].serving = TRUE;
         }
         if (denah->data[row][col].serving) {
-            printf(GREEN "Anda sudah mendiagnosis %s.\n\n" RESET, pasien->username);
+            printf(RED BOLD "Anda sudah mendiagnosis %s.\n\n" RESET, pasien->username);
             return;
         }
 
@@ -70,7 +70,7 @@ void diagnosis(User *current_user, UserList *listUser, PenyakitList *listPenyaki
                 pasien->kadar_kolesterol >= p.kolesterol_Min && pasien->kadar_kolesterol <= p.kolesterol_Max &&
                 pasien->trombosit >= p.trombosit_Min && pasien->trombosit <= p.trombosit_Max
             ) {
-                printf(GREEN "%s terdiagnosa penyakit %s!\n\n" RESET, pasien->username, p.nama);
+                printf(GREEN BOLD"%s terdiagnosa penyakit %s!\n\n" RESET, pasien->username, p.nama);
                 strncpy(pasien->riwayat_penyakit, p.nama, sizeof(pasien->riwayat_penyakit));
                 foundPenyakit = TRUE;
                 break;
