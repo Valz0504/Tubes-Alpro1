@@ -11,6 +11,7 @@ void CreateUser(UserList *l, User *u, char name[], char pass[], Role role) {
     u->id = l->currMaxId + 1;
     strcpy(u->username, name);
     strcpy(u->password, pass);
+    u->aura = 0;
     u->role = role;
     strcpy(u->riwayat_penyakit, "-");
     u->suhu_tubuh = 0.0;
@@ -112,6 +113,25 @@ void sortListByID(UserList *l, boolean asc) {
                 User temp = l->data[j];
                 l->data[j] = l->data[j + 1];
                 l->data[j + 1] = temp;
+            }
+        }
+    }
+}
+
+void sortListByAura(UserList *l, boolean asc) {
+    for (int i = 0; i < l->Neff - 1; i++) {
+        for (int j = 0; j < l->Neff - i - 1; j++) {
+            boolean kondisi;
+            if (asc) {
+                kondisi = (l->data[j].aura > l->data[j+1].aura);
+            } else {
+                kondisi = (l->data[j].aura < l->data[j+1].aura);
+            }
+
+            if (kondisi) {
+                User temp = l->data[j];
+                l->data[j] = l->data[j+1];
+                l->data[j+1] = temp;
             }
         }
     }
