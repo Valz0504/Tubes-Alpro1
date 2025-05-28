@@ -28,6 +28,7 @@ typedef enum {
 typedef struct
 {   
     int id;
+    int nyawa;
     char username[100];
     char password[100];
     Role role;
@@ -41,10 +42,9 @@ typedef struct
     float berat_badan;
     int tinggi_badan;
     int kadar_kolesterol;
-    int trombosit;    
+    int trombosit;
     Inventory inventory;
     Stack perut;
-    Queue pasien;
 } User;
 
 /**
@@ -83,7 +83,7 @@ void ngobatin(User *current_user, UserList *dataBaseUser, PenyakitList *dataPeny
 void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix *Hospital); // pasien
 void antrianSaya(User *current_user, Matrix *denah, boolean *isLogin); // pasien
 void minumObat(User *current_user, UserList *dataBaseUser, ObatList *dataObat, boolean *isLogin); // pasien
-void minumPenawar(User *current_user, UserList *dataBaseUser, ObatList *dataObat, boolean *isLogin); // pasien
+void minumPenawar(User *current_user, UserList *dataBaseUser, ObatList *dataObat, Matrix *denah, boolean *isLogin); // pasien
 void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *dataPenyakit, ObatList *dataObat, Obat_PenyakitList *dataObatPenyakit, Matrix *denah, boolean *isLogin); // pasien
 void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitList *obat_penyakit, Matrix *Hospital); 
 
@@ -121,6 +121,7 @@ void deleteAt(Inventory *inventory, int *id, int idx);
  * Fungsi/Prosedur Manajemen User
  */
 void CreateUser(UserList *l, User *u, char name[], char pass[], Role role);  
+void deleteUser(UserList *l, User *u);
 User* findUser(UserList *l, char username[]);
 User* findUserByID(UserList *l, int id);
 boolean isUsernameExist(UserList l, char username[]);

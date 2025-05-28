@@ -44,7 +44,11 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
                         toLower(buffer); 
                         insertSet(set, buffer);
                         break;
-                    case 2: strncpy(u.password, buffer, sizeof(u.password)); break;
+                    case 2: 
+                        strncpy(u.password, buffer, sizeof(u.password)); 
+                        // u.password[sizeof(u.password)-1] = '\0';
+                        // u.password[strcspn(u.password, "\r\n")] = '\0';
+                        break;
                     case 3: 
                         if (strcmp(buffer, "pasien") == 0) {
                             u.role = ROLE_PASIEN;
@@ -74,6 +78,7 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
                     case 12: u.tinggi_badan = atoi(buffer); break;
                     case 13: u.kadar_kolesterol = atoi(buffer); break;
                     case 14: u.trombosit = atoi(buffer); break;
+                    case 15: u.nyawa = atoi(buffer); break;
                 }
                 field++;
                 idx = 0;
@@ -85,8 +90,11 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
 
         // Ambil field terakhir (setelah koma terakhir)
         buffer[idx] = '\0';
-        if (field == 14) u.trombosit = atoi(buffer);
-        
+        if (field == 15) u.nyawa = atoi(buffer);
+        // printf("[DEBUG] password as read: '%s' %d\n", u.password, strlen(u.password));
+
+        // printf("[DEBUG]username:%s password:%s nyawa:%d\n", u.username, u.password, u.nyawa);
+
         initStack(&u.perut);
         AddUser(userList, u);
     }

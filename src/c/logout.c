@@ -11,14 +11,14 @@ void logout(User *current_user, boolean *isLogin) {
     }
 
     char answer[100];
-    printf(CYAN "Apakah anda yakin untuk logout? (y/n)\n" RESET);
+    printf(CYAN "Apakah anda yakin untuk logout? (" GREEN "y" RESET CYAN "/" RED "n" RESET CYAN ") " RESET);
     do {
         scanf("%s", answer);
         toLower(answer);
 
         if (strcmp(answer, "y") != 0 && strcmp(answer, "n") != 0) {
             printf(RED "Masukan anda belum benar, coba lagi!\n\n" RESET);
-            printf(CYAN "Apakah anda yakin untuk logout? (y/n)\n" RESET);
+            printf(CYAN "Apakah anda yakin untuk logout? (" GREEN "y" RESET CYAN "/" RED "n" RESET CYAN ") " RESET);
         }
     } while (strcmp(answer, "y") != 0  && strcmp(answer, "n") != 0);
     

@@ -30,14 +30,13 @@ void minumObat(User *current_user, UserList *dataBaseUser, ObatList *dataObat, b
         printf("\n");
 
         int choice;
-        do {
-            printf(CYAN ">>> Pilih obat untuk diminum: " RESET);
-            scanf("%d", &choice);
+        printf(CYAN ">>> Pilih obat untuk diminum: " RESET);
+        scanf("%d", &choice);
 
-            if (choice <= 0 || choice > pasien->inventory.jumlahObat) {
-                printf(RED "Pilihan nomor tidak tersedia!\n\n" RESET);
-            }
-        } while (choice <= 0 || choice > pasien->inventory.jumlahObat);
+        if (choice <= 0 || choice > pasien->inventory.jumlahObat) {
+            printf(RED "Pilihan nomor tidak tersedia!\n\n" RESET);
+            return;
+        }
 
         int obat_id;
         Obat *yangDiminum = getObatbyId(dataObat, pasien->inventory.obat[choice - 1]);

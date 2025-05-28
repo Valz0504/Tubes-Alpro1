@@ -94,6 +94,7 @@ void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *da
             pasien->tinggi_badan = -1;
             pasien->kadar_kolesterol = -1;
             pasien->trombosit = -1;
+            pasien->nyawa = 3;
 
             int idPasien;
             dequeue(antrianPasien, &idPasien);

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "../header/user.h"
 
-void minumPenawar(User *current_user, UserList *dataBaseUser, ObatList *dataObat, boolean *isLogin) {
+void minumPenawar(User *current_user, UserList *dataBaseUser, ObatList *dataObat, Matrix *denah, boolean *isLogin) {
     if (!(*isLogin)) {
         printf(RED "Anda belum login!\n\n" RESET);
         return;
@@ -10,7 +10,7 @@ void minumPenawar(User *current_user, UserList *dataBaseUser, ObatList *dataObat
     if (current_user->role == ROLE_PASIEN) {
         User *pasien = findUser(dataBaseUser, current_user->username);
 
-        char answer[100];
+        char answer[10];
         // tidak bisa penawar jika perut kosong
         if (pasien->perut.length == 0) {
             printf(YELLOW "Perut kosong!! Belum ada obat yang dimakan.\n\n" RESET);
@@ -34,7 +34,43 @@ void minumPenawar(User *current_user, UserList *dataBaseUser, ObatList *dataObat
             pop(&pasien->perut, &value);
             Obat *obat = getObatbyId(dataObat, value);
             insertLast(&pasien->inventory, value);
-            printf(GREEN "Uwekkk!!! %s keluar dari tubuhmu dan kembali ke inventory!\n\n" RESET, obat->nama);
+            printf(GREEN "Uwekkk!!! %s keluar dari tubuhmu dan kembali ke inventory, tapi...\n\n" RESET, obat->nama);
+
+            pasien->nyawa--;
+            if (pasien->nyawa == 0) {
+                printf(RED "[Dokter]: 'Tidakkk, kenapa kamu salah minum obat sampe 3 kaliii...\n" RESET);
+                printf(RED "Pasien mati... ded~\n\n" RESET);
+
+                int row,col;
+                Queue *antrianPasien = NULL;
+
+                for (int i = 0; i < denah->rows; i++) { 
+                    for (int j = 0; j < denah->cols; j++) {
+                        Queue *antrian = &denah->data[i][j].antrian;
+                        Node *curr = antrian->head;
+
+                        while (curr != NULL) {
+                            if (curr->info == pasien->id) {
+                                row = i; col = j;
+                                if (curr == antrian->head) {
+                                    antrianPasien = antrian;
+                                }
+                                break;
+                            }
+                            curr = curr->next;
+                        }
+                    }
+                }
+                int idPasien;
+                dequeue(antrianPasien, &idPasien);
+                denah->data[row][col].serving = FALSE;
+                deleteUser(dataBaseUser, pasien);
+                *isLogin = FALSE;
+                return;
+            } else {
+                printf(YELLOW "Nyawa berkurang 1\n" RESET);
+                printf(YELLOW "Sisa nyawa anda: %d\n\n" RESET, pasien->nyawa);
+            }
         } else {
             printf(YELLOW "Tidak jadi minum penawar...\n\n" RESET);
         }
