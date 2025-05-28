@@ -26,9 +26,11 @@ void lihatUser(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
         if (urutan == 1) {
             if (arahSort == 1) sortListByID(&temp, 1);
             else if (arahSort == 2) sortListByID(&temp, 0);
-        } else {
+        } else if (urutan == 2) {
             if (arahSort == 1) sortListByUsername(&temp, 1);
             else if (arahSort == 2) sortListByUsername(&temp, 0);
+        } else {
+            printf(RED "Pilihan tidak valid!" RESET);
         }
 
         printf(BLUE BOLD "\n+-----+--------------------+-----------+----------------------+\n" RESET);
