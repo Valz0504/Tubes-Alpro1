@@ -101,6 +101,7 @@ void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *da
             emptyStack(&pasien->perut);
             denah->data[row][col].serving = FALSE;
 
+            printSembuh();
             printf(GREEN BOLD "Selamat! Kamu sudah dinyatakan sembuh oleh dokter. Silahkan pulang dan semoga sehat selalu!\n\n" RESET);
         } else {
 

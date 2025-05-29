@@ -12,6 +12,7 @@
 #include "penyakit.h"
 #include "queue.h"
 #include "boolean.h"
+#include "ascii.h"
 
 /**
  * Enumerasi Role User

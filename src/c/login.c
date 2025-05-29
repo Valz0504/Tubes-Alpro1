@@ -7,7 +7,6 @@
 void login(UserList *list, User *current_user, boolean *isLogin) {
     if (!(*isLogin)) {
         printf(CYAN BOLD "=== LOGIN ===\n" RESET );
-        
         char username[100], password[100];
         
         printf(YELLOW "Username: " RESET);
