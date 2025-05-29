@@ -160,8 +160,8 @@ void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix
         for (int i = 0; i < asalan; i++) {
             User *A = findUserByID(user1, dokter_available[i][0]);
             getRuanganDokter(Hospital, A->username, ruangan);
-            printf(YELLOW "%d. Dr. %s - Spesialis Umum - Ruangan %s (Antrian: %d orang)\n" RESET,
-                   i + 1, A->username, ruangan, dokter_available[i][1]);
+            printf(YELLOW "%d. Dr. %s - Spesialis Umum - Ruangan %s (Antrian: %d orang) - Aura %d\n" RESET,
+                   i + 1, A->username, ruangan, dokter_available[i][1], A->aura);
         }
 
         int pilihanDokter;
