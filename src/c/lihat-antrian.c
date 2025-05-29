@@ -56,4 +56,5 @@ void lihatAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, boo
     } else {
         printf(RED "Anda bukan manager! Tidak bisa lihat semua antrian!\n\n" RESET);
     }
+    printf("\n");
 }

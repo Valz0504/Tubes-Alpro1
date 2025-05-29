@@ -98,7 +98,8 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
         // printf("[DEBUG]username:%s password:%s nyawa:%d\n", u.username, u.password, u.nyawa);
 
         initStack(&u.perut);
-        AddUser(userList, u);
+        AddUser(userList, &u);
+        // printf("[DEBUG] isiPerut:%d\n", userList->data[userList->Neff-1].perut.length);
     }
 
     fclose(fileUser);

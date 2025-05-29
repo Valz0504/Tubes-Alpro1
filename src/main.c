@@ -94,6 +94,10 @@ int main(int argc, char* argv[]) {
             bolehPulangGaa(&current_user,  &dataBaseUser,&dataPenyakit, &dataObat, &dataObatPenyakit, &denahRS, &isLogin);
         } else if (strcmp(prompt, "NGOBATIN") == 0) {
             ngobatin(&current_user, &dataBaseUser, &dataPenyakit, &dataObat, &dataObatPenyakit, &denahRS, &isLogin);
+        } else if (strcmp(prompt, "SKIP_ANTRIAN") == 0) {
+            skipAntrian(&dataBaseUser, &current_user, &denahRS, &isLogin);
+        } else if (strcmp(prompt, "CANCEL_ANTRIAN") == 0) {
+            cancelAntrian(&dataBaseUser, &current_user, &denahRS, &isLogin);
         }
         else {
             printf(RED "Nama fungsi tidak terdaftar atau kesalahan pengetikan command!\n\n" RESET);

@@ -196,6 +196,7 @@ void FileConfig(const char *filePath, Matrix *Hospital, UserList *dataBaseUser){
 
     fprintf(fp, "%d\n", y);
     for (int i = 0; i < dataBaseUser->Neff; i++) {
+        // printf("[DEBUG] isiPerut:%d\n", dataBaseUser->data[i].perut.length);
         if (dataBaseUser->data[i].perut.length > 0) {
             fprintf(fp, "%d ", dataBaseUser->data[i].id);
             int val;

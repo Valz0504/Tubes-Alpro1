@@ -28,6 +28,7 @@ void CreateUser(UserList *l, User *u, char name[], char pass[], Role role) {
     initStack(&u->perut);
     u->inventory.jumlahObat = 0;
     l->currMaxId++;
+    // printf("[DEBUG] isiPerut: %d\n", u->perut.length);
 }
 
 void deleteUser(UserList *l, User *u) {
@@ -168,12 +169,13 @@ boolean isUsernameExist(UserList l, char username[]) {
     else return FALSE;
 }
 
-void AddUser(UserList *l, User u) {
+void AddUser(UserList *l, User *u) {
     if (l->Neff == l->capacity) {
         expandList(l, 2);
     }
-    l->data[l->Neff] = u;
+    l->data[l->Neff] = *u;
     l->Neff += 1;
+    // printf("[DEBUG] isiPerut: %d\n", u->perut.length);
 }
 
 char* roleToStr(Role role) {
