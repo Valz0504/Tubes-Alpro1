@@ -30,11 +30,7 @@ void logout(User *current_user, boolean *isLogin) {
         sleep(2);
         system("clear");
         
-        printf(BLUE);
-        printf("========================================\n");
-        printf("   SELAMAT DATANG DI SISTEM KLINIK ITB  \n");
-        printf("========================================\n");
-        printf(RESET);
+        printBanner();
         printf(CYAN "Ketik command " YELLOW BOLD "HELP" RESET CYAN " untuk melihat apa saja yang dapat kamu lakukan sekarang!\n\n" RESET);
 
         return;

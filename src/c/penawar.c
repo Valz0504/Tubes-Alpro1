@@ -38,7 +38,8 @@ void minumPenawar(User *current_user, UserList *dataBaseUser, ObatList *dataObat
 
             pasien->nyawa--;
             if (pasien->nyawa == 0) {
-                printf(RED "[Dokter]: 'Tidakkk, kenapa kamu salah minum obat sampe 3 kaliii...\n" RESET);
+                printDead();
+                printf(RED "[Dokter]: 'Tidakkk, kenapa kamu salah minum obat sampe 3 kaliii...'\n" RESET);
                 printf(RED "Pasien mati... ded~\n\n" RESET);
 
                 int row,col;

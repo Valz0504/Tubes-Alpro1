@@ -28,12 +28,7 @@ int main(int argc, char* argv[]) {
     User current_user;
     boolean isLogin = FALSE;
 
-    // Opening Program
-    printf(BRIGHT_CYAN);
-    printf("========================================\n");
-    printf("   SELAMAT DATANG DI SISTEM KLINIK ITB  \n");
-    printf("========================================\n");
-    printf(RESET);
+    printBanner();
     printf(CYAN "Ketik command " YELLOW BOLD "HELP" RESET CYAN " untuk melihat apa saja yang dapat kamu lakukan sekarang!\n\n" RESET);
 
     // Program Utama

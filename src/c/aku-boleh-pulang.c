@@ -100,6 +100,7 @@ void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *da
             emptyStack(&pasien->perut);
             denah->data[row][col].serving = FALSE;
 
+            printSembuh();
             User *dokter = findUser(dataBaseUser, denah->data[row][col].nama_dokter);
             dokter->aura++;
 

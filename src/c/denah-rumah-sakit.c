@@ -20,9 +20,9 @@ void denahRumahSakit(Matrix M, boolean *isLogin) {
     // Garis atas
     printf("   ");
     for (int col = 0; col < M.cols; col++) {
-        printf(BLUE "-----------" RESET);
+        printf(BLUE BOLD"-----------" RESET);
     }
-    printf(BLUE "-\n" RESET);
+    printf(BLUE BOLD  "-\n" RESET);
 
     for (int row = 0; row < M.rows; row++) {
         printf(GRAY BOLD " %c " RESET "|", 'A' + row);
@@ -34,8 +34,9 @@ void denahRumahSakit(Matrix M, boolean *isLogin) {
         // Garis bawah tiap baris
         printf("   ");
         for (int col = 0; col < M.cols; col++) {
-            printf(BLUE "-----------" RESET);
+            printf(BLUE BOLD"-----------" RESET);
         }
-        printf(BLUE "-\n" RESET);
+        printf(BLUE BOLD"-\n" RESET);
     }
+    printf("\n");
 }

@@ -4,7 +4,6 @@
 
 void helpMenu(User current_user, boolean *isLogin) {
     printf(CYAN BOLD "==========[ HELP MENU ]==========\n\n" RESET);
-
     if (!(*isLogin)) {
         printf(YELLOW "Kamu belum login sebagai role apapun. Silakan login terlebih dahulu.\n\n" RESET);
         printf(GRAY BOLD "  %-18s " YELLOW ": Masuk ke dalam akun yang sudah terdaftar\n" RESET, "LOGIN");
@@ -46,7 +45,7 @@ void helpMenu(User current_user, boolean *isLogin) {
             printf(GRAY BOLD "  %-18s " YELLOW ": Menampilkan pasien secara spesifik\n" RESET, "CARI_PASIEN");
             printf(GRAY BOLD "  %-18s " YELLOW ": Menampilkan dokter secara spesifik\n" RESET, "CARI_DOKTER");
             printf(GRAY BOLD "  %-18s " YELLOW ": Melihat keseluruhan bangunan dari rumah sakit\n" RESET, "LIHAT_DENAH");
-            printf(GRAY BOLD "  %-18s " YELLOW ": Melihat nama dokter & pasien di ruangan\n" RESET, "LIHAT_RUANGAN <<nama_ruangan>>");
+            printf(GRAY BOLD "  %-18s " YELLOW ": Melihat nama dokter & pasien di ruangan\n" RESET, "LIHAT_RUANGAN");
             printf(GRAY BOLD "  %-18s " YELLOW ": Keluar dari Rumah Sakit\n\n" RESET, "EXIT");
         }
     }
