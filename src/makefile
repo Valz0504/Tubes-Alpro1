@@ -40,4 +40,4 @@ $(CBUILD_DIR)/%.o: $(CDIR)/%.c
 
 # Clean
 clean:
-	rm -rf $(BUILD_DIR) $(TARGET)
+	rm -rf $(BUILD_DIR) $(TARGET)

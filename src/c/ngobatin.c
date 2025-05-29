@@ -48,7 +48,7 @@ void ngobatin(User *current_user, UserList *dataBaseUser, PenyakitList *dataPeny
 
     // kalau pasien udah punya obat pasti udah pernah diobati
     if (pasien->inventory.jumlahObat > 0) {
-        printf(GREEN BOLD"%s sudah diobati!\n\n" RESET, pasien->username);
+        printf(RED BOLD"%s sudah diobati!\n\n" RESET, pasien->username);
         denah->data[row][col].serving = TRUE;
         return;
     }
@@ -56,7 +56,7 @@ void ngobatin(User *current_user, UserList *dataBaseUser, PenyakitList *dataPeny
     printf(CYAN "Anda sedang mengobati %s...\n" RESET, pasien->username);
 
     if (strcmp(pasien->riwayat_penyakit, "-") == 0) {
-        printf(RED "%s tidak memiliki penyakit!\n" RESET, pasien->username);
+        printf(RED BOLD "%s tidak memiliki penyakit!\n" RESET, pasien->username);
         printf(YELLOW "%s belum didiagnosis!\n\n" RESET, pasien->username);
         return;
     }

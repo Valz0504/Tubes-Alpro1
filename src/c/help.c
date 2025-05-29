@@ -21,14 +21,14 @@ void helpMenu(User current_user, boolean *isLogin) {
                 printf(GRAY BOLD "  %-18s " YELLOW ": Mengeluarkan obat terakhir yang diminum\n" RESET, "PENAWAR");
                 printf(GRAY BOLD "  %-18s " YELLOW ": Konsultasi ulang ke dokter untuk izin pulang\n" RESET, "PULANGDOK");
                 printf(GRAY BOLD "  %-18s " YELLOW ": Melihat keseluruhan bangunan dari rumah sakit\n" RESET, "LIHAT_DENAH");
-                printf(GRAY BOLD "  %-18s " YELLOW ": Melihat nama dokter & pasien di ruangan\n" RESET, "LIHAT_RUANGAN <<nama_ruangan>>");
+                printf(GRAY BOLD "  %-18s " YELLOW ": Melihat nama dokter & pasien di ruangan\n" RESET, "LIHAT_RUANGAN");
                 printf(GRAY BOLD "  %-18s " YELLOW ": Keluar dari Rumah Sakit\n\n" RESET, "EXIT");
             } else if (current_user.role == 1) {
                 printf(GRAY BOLD "  %-18s " YELLOW ": Keluar dari akun yang sedang digunakan\n" RESET, "LOGOUT");
                 printf(GRAY BOLD "  %-18s " YELLOW ": Diagnosis penyakit pasien\n" RESET, "DIAGNOSIS");
                 printf(GRAY BOLD "  %-18s " YELLOW ": Memberikan obat sesuai penyakit\n" RESET, "NGOBATIN");
                 printf(GRAY BOLD "  %-18s " YELLOW ": Melihat keseluruhan bangunan dari rumah sakit\n" RESET, "LIHAT_DENAH");
-                printf(GRAY BOLD "  %-18s " YELLOW ": Melihat nama dokter & pasien di ruangan\n" RESET, "LIHAT_RUANGAN <<nama_ruangan>>");
+                printf(GRAY BOLD "  %-18s " YELLOW ": Melihat nama dokter & pasien di ruangan\n" RESET, "LIHAT_RUANGAN");
                 printf(GRAY BOLD "  %-18s " YELLOW ": Keluar dari Rumah Sakit\n\n" RESET, "EXIT");
             }
         } else if (current_user.role == 2) {
