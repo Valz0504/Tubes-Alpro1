@@ -89,7 +89,7 @@ void tambahDokter(UserList *list, User *current_user, Set *set, boolean *isLogin
     
                 User new_user;
                 CreateUser(list, &new_user, usernameTemp, password, 1);
-                AddUser(list, new_user);
+                AddUser(list, &new_user);
                 
                 printf(GREEN BOLD"Dokter %s berhasil ditambahkan!\n\n" RESET, usernameTemp);
             } else {

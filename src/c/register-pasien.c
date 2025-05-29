@@ -21,7 +21,7 @@ void registerPasien(UserList *list, Set *set, boolean *isLogin) {
 
             User new_user;
             CreateUser(list, &new_user, usernameTemp, password, 0);
-            AddUser(list, new_user);
+            AddUser(list, &new_user);
             
             printf(GREEN BOLD "Pasien %s berhasil ditambahkan!\n\n", usernameTemp);
         } else {

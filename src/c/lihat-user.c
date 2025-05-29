@@ -68,7 +68,7 @@ void lihatPasien(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
         CreateListDin(&temp, dataBaseUser->capacity);
         for (int i = 0; i < dataBaseUser->Neff; i++) {
             if (dataBaseUser->data[i].role == ROLE_PASIEN) {
-                AddUser(&temp, dataBaseUser->data[i]);
+                AddUser(&temp, &dataBaseUser->data[i]);
             }
         }
 
@@ -114,7 +114,7 @@ void lihatDokter(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
         CreateListDin(&temp, dataBaseUser->capacity);
         for (int i = 0; i < dataBaseUser->Neff; i++) {
             if (dataBaseUser->data[i].role == ROLE_DOKTER) {
-                AddUser(&temp, dataBaseUser->data[i]);
+                AddUser(&temp, &dataBaseUser->data[i]);
             }
         }
 
