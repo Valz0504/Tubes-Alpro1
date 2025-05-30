@@ -2,7 +2,7 @@
 #include <string.h>
 #include "../header/user.h"
 
-void diagnosis(User *current_user, UserList *listUser, PenyakitList *listPenyakit, boolean *isLogin, Matrix *denah) {
+void diagnosis(User *currentUser, UserList *listUser, PenyakitList *listPenyakit, boolean *isLogin, Matrix *denah) {
     if (!(*isLogin)) {
         printf(RED "Login sebagai Dokter terlebih dahulu!\n\n" RESET);
         return;
@@ -11,11 +11,11 @@ void diagnosis(User *current_user, UserList *listUser, PenyakitList *listPenyaki
     int row, col;
     boolean foundRuangan = FALSE;
 
-    if (current_user->role == ROLE_DOKTER) {
+    if (currentUser->role == ROLE_DOKTER) {
         // Cari ruangan dokter berdasarkan username
         for (int i = 0; i < denah->rows; i++) {
             for (int j = 0; j < denah->cols; j++) {
-                if (strcmp(current_user->username, denah->data[i][j].nama_dokter) == 0) {
+                if (strcmp(currentUser->username, denah->data[i][j].namaDokter) == 0) {
                     row = i;
                     col = j;
                     foundRuangan = TRUE;
@@ -44,7 +44,7 @@ void diagnosis(User *current_user, UserList *listUser, PenyakitList *listPenyaki
         }
 
         // jika pasien sudah punya obat atau sudah didiagnosis tidak bisa didiagnosis lagi
-        if (pasien->inventory.jumlahObat > 0 || strcmp(pasien->riwayat_penyakit, "-") != 0) {
+        if (pasien->inventory.jumlahObat > 0 || strcmp(pasien->riwayatPenyakit, "-") != 0) {
             denah->data[row][col].serving = TRUE;
         }
         if (denah->data[row][col].serving) {
@@ -59,19 +59,19 @@ void diagnosis(User *current_user, UserList *listUser, PenyakitList *listPenyaki
             Penyakit p = listPenyakit->data[i];
 
             if (
-                pasien->suhu_tubuh >= p.suhu_tubuh_Min && pasien->suhu_tubuh <= p.suhu_tubuh_Max &&
-                pasien->tekanan_darah_sistolik >= p.tekanan_sistolik_Min && pasien->tekanan_darah_sistolik <= p.tekanan_sistolik_Max &&
-                pasien->tekanan_darah_diastolik >= p.tekanan_diastolik_Min && pasien->tekanan_darah_diastolik <= p.tekanan_diastolik_Max &&
-                pasien->detak_jantung >= p.detak_jantung_Min && pasien->detak_jantung <= p.detak_jantung_Max &&
-                pasien->saturasi_oksigen >= p.saturasi_Min && pasien->saturasi_oksigen <= p.saturasi_Max &&
-                pasien->kadar_gula_darah >= p.kadar_gula_Min && pasien->kadar_gula_darah <= p.kadar_gula_Max &&
-                pasien->berat_badan >= p.berat_badan_Min && pasien->berat_badan <= p.berat_badan_Max &&
-                pasien->tinggi_badan >= p.tinggi_badan_Min && pasien->tinggi_badan <= p.tinggi_badan_Max &&
-                pasien->kadar_kolesterol >= p.kolesterol_Min && pasien->kadar_kolesterol <= p.kolesterol_Max &&
-                pasien->trombosit >= p.trombosit_Min && pasien->trombosit <= p.trombosit_Max
+                pasien->suhuTubuh >= p.suhuTubuhMin && pasien->suhuTubuh <= p.suhuTubuhMax &&
+                pasien->tekananDarahSistolik >= p.tekananSistolikMin && pasien->tekananDarahSistolik <= p.tekananSistolikMax &&
+                pasien->tekananDarahDiastolik >= p.tekananDiastolikMin && pasien->tekananDarahDiastolik <= p.tekananDiastolikMax &&
+                pasien->detakJantung >= p.detakJantungMin && pasien->detakJantung <= p.detakJantungMax &&
+                pasien->saturasiOksigen >= p.saturasiMin && pasien->saturasiOksigen <= p.saturasiMax &&
+                pasien->kadarGulaDarah >= p.kadarGulaMin && pasien->kadarGulaDarah <= p.kadarGulaMax &&
+                pasien->beratBadan >= p.beratBadanMin && pasien->beratBadan <= p.beratBadanMax &&
+                pasien->tinggiBadan >= p.tinggiBadanMin && pasien->tinggiBadan <= p.tinggiBadanMax &&
+                pasien->kadarKolesterol >= p.kolesterolMin && pasien->kadarKolesterol <= p.kolesterolMax &&
+                pasien->trombosit >= p.trombositMin && pasien->trombosit <= p.trombositMax
             ) {
                 printf(GREEN BOLD"%s terdiagnosa penyakit %s!\n\n" RESET, pasien->username, p.nama);
-                strncpy(pasien->riwayat_penyakit, p.nama, sizeof(pasien->riwayat_penyakit));
+                strncpy(pasien->riwayatPenyakit, p.nama, sizeof(pasien->riwayatPenyakit));
                 foundPenyakit = TRUE;
                 break;
             }
@@ -79,8 +79,8 @@ void diagnosis(User *current_user, UserList *listUser, PenyakitList *listPenyaki
 
         if (!foundPenyakit) {
             printf(YELLOW "%s tidak terdiagnosa penyakit apapun\n\n" RESET, pasien->username);
-            strcpy(pasien->riwayat_penyakit, "Sehat");
-            pasien->riwayat_penyakit[sizeof(pasien->riwayat_penyakit) - 1] = '\0';
+            strcpy(pasien->riwayatPenyakit, "Sehat");
+            pasien->riwayatPenyakit[sizeof(pasien->riwayatPenyakit) - 1] = '\0';
         }
     } else {
         printf(RED "Anda bukan dokter! Tidak bisa diagnosis pasien!\n\n" RESET);

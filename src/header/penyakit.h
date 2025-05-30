@@ -10,26 +10,26 @@
 typedef struct {
     int id;
     char nama[100];
-    float suhu_tubuh_Min;
-    float suhu_tubuh_Max;
-    int tekanan_sistolik_Min;
-    int tekanan_sistolik_Max;
-    int tekanan_diastolik_Min;
-    int tekanan_diastolik_Max;
-    int detak_jantung_Min;
-    int detak_jantung_Max;
-    float saturasi_Min;
-    float saturasi_Max;
-    int kadar_gula_Min;
-    int kadar_gula_Max;
-    float berat_badan_Min;
-    float berat_badan_Max;
-    int tinggi_badan_Min;
-    int tinggi_badan_Max;
-    int kolesterol_Min;
-    int kolesterol_Max;
-    int trombosit_Min;
-    int trombosit_Max;
+    float suhuTubuhMin;
+    float suhuTubuhMax;
+    int tekananSistolikMin;
+    int tekananSistolikMax;
+    int tekananDiastolikMin;
+    int tekananDiastolikMax;
+    int detakJantungMin;
+    int detakJantungMax;
+    float saturasiMin;
+    float saturasiMax;
+    int kadarGulaMin;
+    int kadarGulaMax;
+    float beratBadanMin;
+    float beratBadanMax;
+    int tinggiBadanMin;
+    int tinggiBadanMax;
+    int kolesterolMin;
+    int kolesterolMax;
+    int trombositMin;
+    int trombositMax;
 } Penyakit;
 
 typedef struct 

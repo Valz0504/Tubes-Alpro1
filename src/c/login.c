@@ -4,7 +4,7 @@
 
 #include "../header/user.h"
 
-void login(UserList *list, User *current_user, boolean *isLogin) {
+void login(UserList *list, User *currentUser, boolean *isLogin) {
     if (!(*isLogin)) {
         printf(CYAN BOLD "=== LOGIN ===\n" RESET );
         char username[100], password[100];
@@ -28,7 +28,7 @@ void login(UserList *list, User *current_user, boolean *isLogin) {
             } else if (user->role == 2) {
                 printf(GREEN BOLD"Selamat pagi %s %s!\n\n", roleToStr(user->role) ,user->username);
             }
-            *current_user = *user;
+            *currentUser = *user;
             *isLogin = TRUE;
         } else {
             printf(RED "Username atau password salah untuk pengguna yang bernama %s\n\n", username);

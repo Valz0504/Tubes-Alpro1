@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include "../header/user.h"
 
-void lihatAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, boolean *isLogin) {
+void lihatAntrian(UserList *dataBaseUser, User *currentUser, Matrix *denah, boolean *isLogin) {
     if (!(*isLogin)) {
         printf(RED "Login sebagai Manager terlebih dahulu!\n\n" RESET);
         return;
     }
 
-    if (current_user->role == ROLE_MANAGER) {
+    if (currentUser->role == ROLE_MANAGER) {
         denahRumahSakit(*denah, isLogin);
 
         // cari setiap indeks yang ada dokternya
@@ -16,7 +16,7 @@ void lihatAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, boo
                 if (!isRuanganKosong(denah->data[i][j])) {
                     printf(BLUE BOLD "============ %c%d ============\n" RESET, 'A' + i, j + 1);
                     printf(GRAY "Kapasitas   : " RESET YELLOW "%d\n" RESET, denah->kapasitasRuangan);
-                    printf(GRAY "Dokter      : " RESET CYAN "%s\n" RESET, denah->data[i][j].nama_dokter);
+                    printf(GRAY "Dokter      : " RESET CYAN "%s\n" RESET, denah->data[i][j].namaDokter);
 
                     Node *curr = denah->data[i][j].antrian.head;
                     printf(GRAY "Pasien di antrian dalam ruangan:\n" RESET);

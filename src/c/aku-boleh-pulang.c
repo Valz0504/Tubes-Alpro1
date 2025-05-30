@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include "../header/user.h"
 
-void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *dataPenyakit, ObatList *dataObat, Obat_PenyakitList *dataObatPenyakit, Matrix *denah, boolean *isLogin) {
+void bolehPulangGaa(User *currentUser, UserList *dataBaseUser, PenyakitList *dataPenyakit, ObatList *dataObat, Obat_PenyakitList *dataObatPenyakit, Matrix *denah, boolean *isLogin) {
     if (!(*isLogin)) {
         printf(RED "Anda belum login!\n\n" RESET);
         return;
     } 
-    if (current_user->role == ROLE_PASIEN) {
-        User *pasien = findUser(dataBaseUser, current_user->username);
+    if (currentUser->role == ROLE_PASIEN) {
+        User *pasien = findUser(dataBaseUser, currentUser->username);
         
         int row,col;
         Queue *antrianPasien = NULL;
@@ -48,7 +48,7 @@ void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *da
         }
 
         // jika pasien belum didiagnosis tidak bisa pulangdok
-        if (strcmp(pasien->riwayat_penyakit, "-") == 0) {
+        if (strcmp(pasien->riwayatPenyakit, "-") == 0) {
             printf(YELLOW "Kamu belum menerima diagnosis apapun dari dokter, jangan buru-buru pulang!\n\n" RESET);
             return;
         }
@@ -56,7 +56,7 @@ void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *da
         // jika pasien sehat tidak bisa pulangdok
         printf(CYAN "Dokter sedang memeriksa keadaanmu...\n\n" RESET);
         sleep(1);
-        if (strcmp(pasien->riwayat_penyakit, "Sehat") == 0) {
+        if (strcmp(pasien->riwayatPenyakit, "Sehat") == 0) {
             printf(GREEN BOLD "Kamu sudah sehat dan boleh langsung pulang, sampai jumpa!\n\n" RESET);
             int idPasien;
             dequeue(antrianPasien, &idPasien);
@@ -64,18 +64,18 @@ void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *da
             return;
         }
 
-        int idPenyakit = getIDPenyakit(dataPenyakit, pasien->riwayat_penyakit);
+        int idPenyakit = getIDPenyakit(dataPenyakit, pasien->riwayatPenyakit);
         int indexDiMap = getMapIndexByPenyakit(dataObatPenyakit, idPenyakit);
 
         // jika masih ada obat yang belum diminum tidak bisa pulangdok
-        if (pasien->perut.length != dataObatPenyakit->buffer[indexDiMap].jumlah_obat) {
+        if (pasien->perut.length != dataObatPenyakit->buffer[indexDiMap].jumlahObat) {
             printf(YELLOW "Masih ada obat yang belum kamu habiskan, minum semuanya dulu yukk!\n\n" RESET);
             return;
         }
 
         boolean bolehPulang = TRUE;
         for (int i = 0; i < pasien->perut.length; i++) {
-            if (pasien->perut.data[i] != dataObatPenyakit->buffer[indexDiMap].urutan_obat[i]) {
+            if (pasien->perut.data[i] != dataObatPenyakit->buffer[indexDiMap].urutanObat[i]) {
                 bolehPulang = FALSE;
             }
         }
@@ -83,16 +83,16 @@ void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *da
         if (bolehPulang) {
             
             // reset data pasien jika dibolehin pulang
-            strcpy(pasien->riwayat_penyakit, "-");
-            pasien->suhu_tubuh = 0.0;
-            pasien->tekanan_darah_sistolik = -1;
-            pasien->tekanan_darah_diastolik = -1;
-            pasien->detak_jantung = -1;
-            pasien->saturasi_oksigen = 0.0;
-            pasien->kadar_gula_darah = -1;
-            pasien->berat_badan = 0.0;
-            pasien->tinggi_badan = -1;
-            pasien->kadar_kolesterol = -1;
+            strcpy(pasien->riwayatPenyakit, "-");
+            pasien->suhuTubuh = 0.0;
+            pasien->tekananDarahSistolik = -1;
+            pasien->tekananDarahDiastolik = -1;
+            pasien->detakJantung = -1;
+            pasien->saturasiOksigen = 0.0;
+            pasien->kadarGulaDarah = -1;
+            pasien->beratBadan = 0.0;
+            pasien->tinggiBadan = -1;
+            pasien->kadarKolesterol = -1;
             pasien->trombosit = -1;
             pasien->nyawa = 3;
             
@@ -106,7 +106,7 @@ void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *da
             denah->data[row][col].serving = FALSE;
 
             printSembuh();
-            User *dokter = findUser(dataBaseUser, denah->data[row][col].nama_dokter);
+            User *dokter = findUser(dataBaseUser, denah->data[row][col].namaDokter);
             dokter->aura++;
 
             printf(GREEN BOLD "Selamat! Kamu sudah dinyatakan sembuh oleh dokter. Silahkan pulang dan semoga sehat selalu!\n\n" RESET);
@@ -117,10 +117,10 @@ void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *da
 
             printf(CYAN "Urutan peminuman obat yang diharapkan:\n" RESET);
             printf(BLUE BOLD "  ");
-            for (int i = 0; i < dataObatPenyakit->buffer[indexDiMap].jumlah_obat; i++) {
-                Obat *obat = getObatbyId(dataObat, dataObatPenyakit->buffer[indexDiMap].urutan_obat[i]);
+            for (int i = 0; i < dataObatPenyakit->buffer[indexDiMap].jumlahObat; i++) {
+                Obat *obat = getObatbyId(dataObat, dataObatPenyakit->buffer[indexDiMap].urutanObat[i]);
                 printf("%s", obat->nama);
-                if (i != dataObatPenyakit->buffer[indexDiMap].jumlah_obat - 1) {
+                if (i != dataObatPenyakit->buffer[indexDiMap].jumlahObat - 1) {
                     printf(" " YELLOW "->" BLUE BOLD " ");
                 }
             }
@@ -130,7 +130,7 @@ void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *da
             printf(YELLOW "  " RESET);
             for (int i = 0; i < pasien->perut.length; i++) {
                 Obat *obat = getObatbyId(dataObat, pasien->perut.data[i]);
-                Obat *obatUrut = getObatbyId(dataObat, dataObatPenyakit->buffer[indexDiMap].urutan_obat[i]);
+                Obat *obatUrut = getObatbyId(dataObat, dataObatPenyakit->buffer[indexDiMap].urutanObat[i]);
                 if (strcmp(obat->nama, obatUrut->nama) != 0) {
                     printf(RED "%s" RESET, obat->nama);
                 } else {

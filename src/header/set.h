@@ -11,7 +11,7 @@
 /* --- Struct Set --- */
 typedef struct 
 {
-    char **unique_username;
+    char **uniqueUsername;
     int size;
     int capacity;
 } Set;

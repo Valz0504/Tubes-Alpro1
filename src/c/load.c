@@ -64,20 +64,20 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
                         u.aura = atoi(buffer); break;
                     case 5:  // riwayat penyakit
                         if (strlen(buffer) == 0) {
-                            strncpy(u.riwayat_penyakit, "-", sizeof(u.riwayat_penyakit));
+                            strncpy(u.riwayatPenyakit, "-", sizeof(u.riwayatPenyakit));
                         } else {
-                            strncpy(u.riwayat_penyakit, buffer, sizeof(u.riwayat_penyakit)); 
+                            strncpy(u.riwayatPenyakit, buffer, sizeof(u.riwayatPenyakit)); 
                         }
                         break;
-                    case 6: u.suhu_tubuh = atof(buffer); break;
-                    case 7: u.tekanan_darah_sistolik = atoi(buffer); break;
-                    case 8: u.tekanan_darah_diastolik = atoi(buffer); break;
-                    case 9: u.detak_jantung = atoi(buffer); break;
-                    case 10: u.saturasi_oksigen = atof(buffer); break;
-                    case 11: u.kadar_gula_darah = atoi(buffer); break;
-                    case 12: u.berat_badan = atof(buffer); break;
-                    case 13: u.tinggi_badan = atoi(buffer); break;
-                    case 14: u.kadar_kolesterol = atoi(buffer); break;
+                    case 6: u.suhuTubuh = atof(buffer); break;
+                    case 7: u.tekananDarahSistolik = atoi(buffer); break;
+                    case 8: u.tekananDarahDiastolik = atoi(buffer); break;
+                    case 9: u.detakJantung = atoi(buffer); break;
+                    case 10: u.saturasiOksigen = atof(buffer); break;
+                    case 11: u.kadarGulaDarah = atoi(buffer); break;
+                    case 12: u.beratBadan = atof(buffer); break;
+                    case 13: u.tinggiBadan = atoi(buffer); break;
+                    case 14: u.kadarKolesterol = atoi(buffer); break;
                     case 15: u.trombosit = atoi(buffer); break;
                     case 16: u.nyawa = atoi(buffer); break;
                 }
@@ -135,25 +135,25 @@ void loadDataPenyakit(const char *filename, PenyakitList *listPenyakit) {
                 switch (field) {
                     case 0: p->id = atoi(buffer); break;
                     case 1: strncpy(p->nama, buffer, sizeof(p->nama)); break;
-                    case 2: p->suhu_tubuh_Min = atof(buffer); break;
-                    case 3: p->suhu_tubuh_Max = atof(buffer); break;
-                    case 4: p->tekanan_sistolik_Min = atoi(buffer); break;
-                    case 5: p->tekanan_sistolik_Max = atoi(buffer); break;
-                    case 6: p->tekanan_diastolik_Min = atoi(buffer); break;
-                    case 7: p->tekanan_diastolik_Max = atoi(buffer); break;
-                    case 8: p->detak_jantung_Min = atoi(buffer); break;
-                    case 9: p->detak_jantung_Max = atoi(buffer); break;
-                    case 10: p->saturasi_Min = atof(buffer); break;
-                    case 11: p->saturasi_Max = atof(buffer); break;
-                    case 12: p->kadar_gula_Min = atoi(buffer); break;
-                    case 13: p->kadar_gula_Max = atoi(buffer); break;
-                    case 14: p->berat_badan_Min = atof(buffer); break;
-                    case 15: p->berat_badan_Max = atof(buffer); break;
-                    case 16: p->tinggi_badan_Min = atoi(buffer); break;
-                    case 17: p->tinggi_badan_Max = atoi(buffer); break;
-                    case 18: p->kolesterol_Min = atoi(buffer); break;
-                    case 19: p->kolesterol_Max = atoi(buffer); break;
-                    case 20: p->trombosit_Min = atoi(buffer); break;
+                    case 2: p->suhuTubuhMin = atof(buffer); break;
+                    case 3: p->suhuTubuhMax = atof(buffer); break;
+                    case 4: p->tekananSistolikMin = atoi(buffer); break;
+                    case 5: p->tekananSistolikMax = atoi(buffer); break;
+                    case 6: p->tekananDiastolikMin = atoi(buffer); break;
+                    case 7: p->tekananDiastolikMax = atoi(buffer); break;
+                    case 8: p->detakJantungMin = atoi(buffer); break;
+                    case 9: p->detakJantungMax = atoi(buffer); break;
+                    case 10: p->saturasiMin = atof(buffer); break;
+                    case 11: p->saturasiMax = atof(buffer); break;
+                    case 12: p->kadarGulaMin = atoi(buffer); break;
+                    case 13: p->kadarGulaMax = atoi(buffer); break;
+                    case 14: p->beratBadanMin = atof(buffer); break;
+                    case 15: p->beratBadanMax = atof(buffer); break;
+                    case 16: p->tinggiBadanMin = atoi(buffer); break;
+                    case 17: p->tinggiBadanMax = atoi(buffer); break;
+                    case 18: p->kolesterolMin = atoi(buffer); break;
+                    case 19: p->kolesterolMax = atoi(buffer); break;
+                    case 20: p->trombositMin = atoi(buffer); break;
                 }
 
                 field++;
@@ -164,9 +164,9 @@ void loadDataPenyakit(const char *filename, PenyakitList *listPenyakit) {
             i++;
         }
 
-        // Field terakhir (trombosit_Max)
+        // Field terakhir (trombositMax)
         buffer[idx] = '\0';
-        if (field == 21) p->trombosit_Max = atoi(buffer);
+        if (field == 21) p->trombositMax = atoi(buffer);
 
         listPenyakit->Neff++;
     }
@@ -272,7 +272,7 @@ void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasiList) {
         // Cari apakah penyakit sudah ada
         int index = -1;
         for (int i = 0; i < relasiList->length; i++) {
-            if (relasiList->buffer[i].id_penyakit == temp.idPenyakit) {
+            if (relasiList->buffer[i].idPenyakit == temp.idPenyakit) {
                 index = i;
                 break;
             }
@@ -281,13 +281,13 @@ void loadDataObatPenyakit(const char *filename, Obat_PenyakitList *relasiList) {
         // Kalau belum ada, tambah entry baru
         if (index == -1) {
             index = relasiList->length++;
-            relasiList->buffer[index].id_penyakit = temp.idPenyakit;
+            relasiList->buffer[index].idPenyakit = temp.idPenyakit;
         }
 
         // Masukkan obat ke urutan yang benar
         int pos = temp.urutanMinum - 1;
-        relasiList->buffer[index].urutan_obat[pos] = temp.idObat;
-        relasiList->buffer[index].jumlah_obat++;
+        relasiList->buffer[index].urutanObat[pos] = temp.idObat;
+        relasiList->buffer[index].jumlahObat++;
     }
     fclose(fileOP);
 }
@@ -358,7 +358,7 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
     for (int i = 0; i < denah->rows; i++) {
         for (int j = 0; j < denah->cols; j++) {
             denah->data[i][j].serving = FALSE;
-            strcpy(denah->data[i][j].nama_dokter, "");
+            strcpy(denah->data[i][j].namaDokter, "");
             initQueue(&denah->data[i][j].antrian);
         }
     }
@@ -377,7 +377,7 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
 
             // Jika ruangan kosong
             if (strcmp(buffer, "0") == 0) {
-                denah->data[i][j].nama_dokter[0] = '\0';
+                denah->data[i][j].namaDokter[0] = '\0';
                 continue;
             }
 
@@ -392,7 +392,7 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
             // Cari user berdasarkan ID
             User *dokter = findUserByID(userList, dokterId);
             if (dokter != NULL) {
-                strcpy(denah->data[i][j].nama_dokter, dokter->username);
+                strcpy(denah->data[i][j].namaDokter, dokter->username);
             }
 
             // Lewati spasi setelah dokter ID

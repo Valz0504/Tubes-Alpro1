@@ -3,7 +3,7 @@
 
 #include "../header/user.h" 
 
-void logout(User *current_user, boolean *isLogin) {
+void logout(User *currentUser, boolean *isLogin) {
     if (*isLogin == FALSE) {
         printf(RED BOLD "Logout gagal!\n" RESET);
         printf(YELLOW "Anda belum login, silahkan login terlebih dahulu sebelum melakukan logout!\n\n" RESET);
@@ -23,7 +23,7 @@ void logout(User *current_user, boolean *isLogin) {
     } while (strcmp(answer, "y") != 0  && strcmp(answer, "n") != 0);
     
     if (strcmp(answer, "y") == 0) {
-        current_user = NULL;
+        currentUser = NULL;
         *isLogin = FALSE;
         printf(GREEN "Sampai jumpa!\n\n\n" RESET);
 

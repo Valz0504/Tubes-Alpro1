@@ -55,10 +55,10 @@ void FileUser(const char *filePath, UserList *users){// membuat/overwrite file u
             strcpy(peran, "pasien");
             fprintf(fp,
                 "%d;%s;%s;%s;%d;%s;%.1f;%d;%d;%d;%.1f;%d;%.1f;%d;%d;%d;%d\n",
-                u.id, u.username, u.password, peran, u.aura, u.riwayat_penyakit,
-                u.suhu_tubuh, u.tekanan_darah_sistolik, u.tekanan_darah_diastolik,
-                u.detak_jantung, u.saturasi_oksigen, u.kadar_gula_darah,
-                u.berat_badan, u.tinggi_badan, u.kadar_kolesterol,
+                u.id, u.username, u.password, peran, u.aura, u.riwayatPenyakit,
+                u.suhuTubuh, u.tekananDarahSistolik, u.tekananDarahDiastolik,
+                u.detakJantung, u.saturasiOksigen, u.kadarGulaDarah,
+                u.beratBadan, u.tinggiBadan, u.kadarKolesterol,
                 u.trombosit, u.nyawa
             );
         } 
@@ -100,19 +100,19 @@ void FilePenyakit(const char *filePath, PenyakitList *sakit){// membuat/overwrit
         printf(RED "Gagal membuat file di path: %s\n" RESET, filePath);
         return;
     }
-    fprintf(fp, "id,nama,suhu_tubuh_Min,suhu_tubuh_Max,tekanan_sistolik_Min,tekanan_sistolik_Max,"
-        "tekanan_diastolik_Min,tekanan_diastolik_Max,detak_jantung_Min,detak_jantung_Max,saturasi_Min,saturasi_Max,kadar_gula_Min,"
-        "kadar_gula_Max,berat_badan_Min,berat_badan_Max,tinggi_badan_Min,tinggi_badan_Max,kolesterol_Min,"
-        "kolesterol_Max,trombosit_Min,trombosit_Max\n");
+    fprintf(fp, "id,nama,suhuTubuhMin,suhuTubuhMax,tekananSistolikMin,tekananSistolikMax,"
+        "tekananDiastolikMin,tekananDiastolikMax,detakJantungMin,detakJantungMax,saturasiMin,saturasiMax,kadarGulaMin,"
+        "kadarGulaMax,beratBadanMin,beratBadanMax,tinggiBadanMin,tinggiBadanMax,kolesterolMin,"
+        "kolesterolMax,trombositMin,trombositMax\n");
     for(int i = 0; i < sakit->Neff; i++){
         Penyakit S = sakit->data[i];
         fprintf(fp, "%d;%s;%f;%f;%d;%d;%d;%d;%d;%d;%f;%f;%d;%d;%f;%f;%d;%d;%d;%d;%d;%d\n",
-             S.id, S.nama, S.suhu_tubuh_Min, S.suhu_tubuh_Max, S.tekanan_sistolik_Min
-            , S.tekanan_sistolik_Max, S.tekanan_diastolik_Min, S.tekanan_diastolik_Max
-            , S.detak_jantung_Min, S.detak_jantung_Max, S.saturasi_Min, S.saturasi_Max
-            , S.kadar_gula_Min, S.kadar_gula_Max, S.berat_badan_Min, S.berat_badan_Max
-            , S.tinggi_badan_Min, S.tinggi_badan_Max, S.kolesterol_Min, S.kolesterol_Max
-            , S.trombosit_Min, S.trombosit_Max);
+             S.id, S.nama, S.suhuTubuhMin, S.suhuTubuhMax, S.tekananSistolikMin
+            , S.tekananSistolikMax, S.tekananDiastolikMin, S.tekananDiastolikMax
+            , S.detakJantungMin, S.detakJantungMax, S.saturasiMin, S.saturasiMax
+            , S.kadarGulaMin, S.kadarGulaMax, S.beratBadanMin, S.beratBadanMax
+            , S.tinggiBadanMin, S.tinggiBadanMax, S.kolesterolMin, S.kolesterolMax
+            , S.trombositMin, S.trombositMax);
     }
     fclose(fp);
 }
@@ -127,9 +127,9 @@ void FileObat_Penyakit(const char *filePath, Obat_PenyakitList *obat_penyakit) {
 
     for (int i = 0; i < obat_penyakit->length; i++) {
         MapEntryList *entry = &obat_penyakit->buffer[i];
-        for (int j = 0; j < entry->jumlah_obat; j++) {
-            int idObat = entry->urutan_obat[j];
-            int idPenyakit = entry->id_penyakit;
+        for (int j = 0; j < entry->jumlahObat; j++) {
+            int idObat = entry->urutanObat[j];
+            int idPenyakit = entry->idPenyakit;
             int urutanMinum = j + 1;
             fprintf(fp, "%d;%d;%d\n", idObat, idPenyakit, urutanMinum);
         }
@@ -150,7 +150,7 @@ void FileConfig(const char *filePath, Matrix *Hospital, UserList *dataBaseUser){
     for(int i = 0; i < Hospital->rows; i++){
         for(int j = 0; j < Hospital->cols ; j++){
             // Tulis dokter
-            User *I = findUser(dataBaseUser, Hospital->data[i][j].nama_dokter);
+            User *I = findUser(dataBaseUser, Hospital->data[i][j].namaDokter);
             if(I != NULL){
                 fprintf(fp, "%d ", I->id);
                 dokter = I->id;

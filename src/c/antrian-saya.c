@@ -30,7 +30,7 @@ void antrianSaya(User *current_user, Matrix *denah, boolean *isLogin) {
                             return;
                         }
                         printf(CYAN BOLD "=== Status Antrian Anda ===\n" RESET);
-                        printf(GRAY "Dokter: " RESET YELLOW "%s\n" RESET, denah->data[i][j].nama_dokter);
+                        printf(GRAY "Dokter: " RESET YELLOW "%s\n" RESET, denah->data[i][j].namaDokter);
                         printf(GRAY "Ruangan: " RESET YELLOW "%c%d\n" RESET, 'A' + i, j + 1);
                         printf(GRAY "Posisi Antrian: " RESET YELLOW "%d dari %d\n\n" RESET, posisiPasien, panjangAntriLuar);
                         ditemukan = 1;

@@ -2,13 +2,13 @@
 #include <string.h>
 #include "../header/user.h"
 
-void lihatUser(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
-    if (!(*isLogin) || current_user->role != ROLE_MANAGER) {
+void lihatUser(UserList *dataBaseUser, User *currentUser, boolean *isLogin) {
+    if (!(*isLogin) || currentUser->role != ROLE_MANAGER) {
         printf(RED "Login sebagai Manager terlebih dahulu!\n\n" RESET);
         return;
     }
 
-    if (current_user->role == ROLE_MANAGER) {
+    if (currentUser->role == ROLE_MANAGER) {
         int urutan, arahSort;
         printf(CYAN "Urutkan berdasarkan?\n" RESET);
         printf(GRAY "1. ID\n2. Nama\n" RESET);
@@ -39,20 +39,20 @@ void lihatUser(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
         for (int i = 0; i < temp.Neff; i++) {
             User u = temp.data[i];
             printf(GRAY " %-3d " RESET " | " GRAY "%-18s" RESET " | " YELLOW "%-9s" RESET " | " YELLOW "%-20s" RESET " |\n",
-                u.id, u.username, roleToStr(u.role), u.riwayat_penyakit);
+                u.id, u.username, roleToStr(u.role), u.riwayatPenyakit);
         }
         printf(BLUE BOLD "+-----+--------------------+-----------+----------------------+\n\n" RESET);
         dealocateListDin(&temp);
     }
 }
 
-void lihatPasien(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
-    if (!(*isLogin) || current_user->role != ROLE_MANAGER) {
+void lihatPasien(UserList *dataBaseUser, User *currentUser, boolean *isLogin) {
+    if (!(*isLogin) || currentUser->role != ROLE_MANAGER) {
         printf(RED "Login sebagai Manager terlebih dahulu!\n\n" RESET);
         return;
     }
 
-    if (current_user->role == ROLE_MANAGER) {
+    if (currentUser->role == ROLE_MANAGER) {
         int urutan, arahSort;
         printf(CYAN "Urutkan berdasarkan?\n" RESET);
         printf(GRAY "1. ID\n2. Nama\n" RESET);
@@ -84,7 +84,7 @@ void lihatPasien(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
         for (int i = 0; i < temp.Neff; i++) {
             User u = temp.data[i];
             printf(GRAY " %-3d " RESET " | " GRAY "%-18s" RESET " | " YELLOW "%-20s" RESET " |\n",
-                u.id, u.username, u.riwayat_penyakit);
+                u.id, u.username, u.riwayatPenyakit);
         }
         printf(BLUE BOLD "+-----+--------------------+----------------------+\n\n" RESET);
 
@@ -92,13 +92,13 @@ void lihatPasien(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
     }
 }
 
-void lihatDokter(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
-    if (!(*isLogin) || current_user->role != ROLE_MANAGER) {
+void lihatDokter(UserList *dataBaseUser, User *currentUser, boolean *isLogin) {
+    if (!(*isLogin) || currentUser->role != ROLE_MANAGER) {
         printf(RED "Login sebagai Manager terlebih dahulu!\n\n" RESET);
         return;
     }
 
-    if (current_user->role == ROLE_MANAGER) {
+    if (currentUser->role == ROLE_MANAGER) {
         int urutan, arahSort;
         printf(CYAN "Urutkan berdasarkan?\n" RESET);
         printf(GRAY "1. ID\n2. Nama\n3. Aura\n" RESET);

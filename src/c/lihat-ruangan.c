@@ -3,7 +3,7 @@
 #include <string.h>
 #include "../header/user.h"
 
-void lihatRuangan(Matrix denah, UserList dataBaseUser, User current_user, boolean *isLogin) {
+void lihatRuangan(Matrix denah, UserList dataBaseUser, User currentUser, boolean *isLogin) {
     if (!(*isLogin)) {
         printf(RED "Silakan login terlebih dahulu!\n\n" RESET);
         return;
@@ -22,10 +22,10 @@ void lihatRuangan(Matrix denah, UserList dataBaseUser, User current_user, boolea
         printf(BLUE BOLD "--- Detail Ruangan %s ---\n" RESET, kode);
         printf(GRAY "Kapasitas : " YELLOW "%d\n" RESET, denah.kapasitasRuangan);
 
-        if (strcmp(denah.data[row][col].nama_dokter, "") == 0) {
+        if (strcmp(denah.data[row][col].namaDokter, "") == 0) {
             printf(GRAY "Dokter    : " RESET RED "-\n" RESET);
         } else {
-            printf(GRAY "Dokter    : " RESET CYAN "%s\n" RESET, denah.data[row][col].nama_dokter);
+            printf(GRAY "Dokter    : " RESET CYAN "%s\n" RESET, denah.data[row][col].namaDokter);
         }
 
         printf(GRAY "Pasien di dalam ruangan:\n" RESET);

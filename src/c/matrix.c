@@ -9,14 +9,14 @@ void CreateMatrix(int rows, int cols, int kapasitas, Matrix *M) {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             M->data[i][j].serving = FALSE;
-            strcpy(M->data[i][j].nama_dokter, "");
+            strcpy(M->data[i][j].namaDokter, "");
             initQueue(&(M->data[i][j].antrian));
         }
     }
 }
 
 boolean isRuanganKosong(Ruangan r) {
-    return strcmp(r.nama_dokter, "") == 0;
+    return strcmp(r.namaDokter, "") == 0;
 }
 
 boolean getPosisiRuangan(Matrix *denah, char ruang[], int *row, int *col) {
@@ -36,10 +36,10 @@ boolean getPosisiRuangan(Matrix *denah, char ruang[], int *row, int *col) {
 }
 
 
-boolean isDokterSudahAssign(Matrix *denah, char nama_dokter[]) {
+boolean isDokterSudahAssign(Matrix *denah, char namaDokter[]) {
     for (int i = 0; i < denah->rows; i++) {
         for (int j = 0; j < denah->cols; j++) {
-            if (strcmp(denah->data[i][j].nama_dokter, nama_dokter) == 0) {
+            if (strcmp(denah->data[i][j].namaDokter, namaDokter) == 0) {
                 return TRUE;
             }
         }
@@ -47,10 +47,10 @@ boolean isDokterSudahAssign(Matrix *denah, char nama_dokter[]) {
     return FALSE;
 }
 
-void getRuanganDokter(Matrix *denah, char nama_dokter[], char *ruangan) {
+void getRuanganDokter(Matrix *denah, char namaDokter[], char *ruangan) {
     for (int i = 0; i < denah->rows; i++) {
         for (int j = 0; j < denah->cols; j++) {
-            if (strcmp(denah->data[i][j].nama_dokter, nama_dokter) == 0) {
+            if (strcmp(denah->data[i][j].namaDokter, namaDokter) == 0) {
                 ruangan[0] = 'A' + i;
                 sprintf(ruangan + 1, "%d", j + 1);
                 return;

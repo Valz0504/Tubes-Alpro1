@@ -2,7 +2,7 @@
 #include "../header/user.h"
 #include "../header/coloring.h"
 
-void helpMenu(User current_user, boolean *isLogin) {
+void helpMenu(User currentUser, boolean *isLogin) {
     printf(CYAN BOLD "==========[ HELP MENU ]==========\n\n" RESET);
     if (!(*isLogin)) {
         printf(YELLOW "Kamu belum login sebagai role apapun. Silakan login terlebih dahulu.\n\n" RESET);
@@ -10,10 +10,10 @@ void helpMenu(User current_user, boolean *isLogin) {
         printf(GRAY BOLD "  %-18s " YELLOW ": Membuat akun baru\n" RESET, "REGISTER");
         printf(GRAY BOLD "  %-18s " YELLOW ": Lupa password akun? Gunakan command ini\n\n" RESET, "LUPA_PASSWORD");
     } else {
-        if (current_user.role == 0 || current_user.role == 1) {
-            printf(GREEN BOLD"Halo %s %s!\n" RESET, roleToStr(current_user.role), current_user.username);
+        if (currentUser.role == 0 || currentUser.role == 1) {
+            printf(GREEN BOLD"Halo %s %s!\n" RESET, roleToStr(currentUser.role), currentUser.username);
             printf(CYAN "Berikut adalah hal-hal yang dapat kamu lakukan sekarang:\n\n" RESET);
-            if (current_user.role == 0) {
+            if (currentUser.role == 0) {
                 printf(GRAY BOLD "  %-18s " YELLOW ": Keluar dari akun yang sedang digunakan\n" RESET, "LOGOUT");
                 printf(GRAY BOLD "  %-18s " YELLOW ": Mendaftarkan diri untuk pemeriksaan dokter\n" RESET, "DAFTAR_CHECKUP");
                 printf(GRAY BOLD "  %-18s " YELLOW ": Melihat status antrian dari dokter yang kamu pilih untuk check-up\n" RESET, "ANTRIAN");
@@ -23,7 +23,7 @@ void helpMenu(User current_user, boolean *isLogin) {
                 printf(GRAY BOLD "  %-18s " YELLOW ": Melihat keseluruhan bangunan dari rumah sakit\n" RESET, "LIHAT_DENAH");
                 printf(GRAY BOLD "  %-18s " YELLOW ": Melihat nama dokter & pasien di ruangan\n" RESET, "LIHAT_RUANGAN");
                 printf(GRAY BOLD "  %-18s " YELLOW ": Keluar dari Rumah Sakit\n\n" RESET, "EXIT");
-            } else if (current_user.role == 1) {
+            } else if (currentUser.role == 1) {
                 printf(GRAY BOLD "  %-18s " YELLOW ": Keluar dari akun yang sedang digunakan\n" RESET, "LOGOUT");
                 printf(GRAY BOLD "  %-18s " YELLOW ": Diagnosis penyakit pasien\n" RESET, "DIAGNOSIS");
                 printf(GRAY BOLD "  %-18s " YELLOW ": Memberikan obat sesuai penyakit\n" RESET, "NGOBATIN");
@@ -31,8 +31,8 @@ void helpMenu(User current_user, boolean *isLogin) {
                 printf(GRAY BOLD "  %-18s " YELLOW ": Melihat nama dokter & pasien di ruangan\n" RESET, "LIHAT_RUANGAN");
                 printf(GRAY BOLD "  %-18s " YELLOW ": Keluar dari Rumah Sakit\n\n" RESET, "EXIT");
             }
-        } else if (current_user.role == 2) {
-            printf(GREEN BOLD"Halo Manager %s!\n" RESET, current_user.username);
+        } else if (currentUser.role == 2) {
+            printf(GREEN BOLD"Halo Manager %s!\n" RESET, currentUser.username);
             printf(CYAN "Berikut adalah hal-hal yang dapat kamu lakukan sekarang:\n\n" RESET);
             printf(GRAY BOLD "  %-18s " YELLOW ": Keluar dari akun yang sedang digunakan\n" RESET, "LOGOUT");
             printf(GRAY BOLD "  %-18s " YELLOW ": Mendaftarkan dokter baru ke sistem\n" RESET, "TAMBAH_DOKTER");

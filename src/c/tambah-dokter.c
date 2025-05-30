@@ -9,16 +9,16 @@ void assignDokter(Matrix *denah, UserList *list, User *current_user, boolean *is
         if (current_user->role == ROLE_MANAGER) {
             printf(CYAN BOLD "=== ASSIGN DOKTER ===\n" RESET);
     
-            char nama_dokter[100], ruang[100];    
+            char namaDokter[100], ruang[100];    
             printf(YELLOW "Username: " RESET);
-            scanf("%s", nama_dokter);
+            scanf("%s", namaDokter);
             printf(YELLOW "Ruangan: " RESET);
             scanf("%s", ruang);
             
-            // cek apakah nama_dokter nya ada 
-            User *dokter = findUser(list, nama_dokter);
+            // cek apakah namaDokter nya ada 
+            User *dokter = findUser(list, namaDokter);
             if (dokter == NULL) {
-                printf(RED "Tidak ada dokter dengan nama %s.\n\n" RESET, nama_dokter);
+                printf(RED "Tidak ada dokter dengan nama %s.\n\n" RESET, namaDokter);
                 return;
             }
 
@@ -29,8 +29,8 @@ void assignDokter(Matrix *denah, UserList *list, User *current_user, boolean *is
 
             int row, col;
             if (getPosisiRuangan(denah, ruang, &row, &col)) {
-                if (strcmp(nama_dokter, denah->data[row][col].nama_dokter) == 0) {
-                    printf(BLUE "Dokter %s sudah diassign ke ruangan ini!\n\n" RESET, nama_dokter);
+                if (strcmp(namaDokter, denah->data[row][col].namaDokter) == 0) {
+                    printf(BLUE "Dokter %s sudah diassign ke ruangan ini!\n\n" RESET, namaDokter);
                     return;
                 }
 
@@ -39,22 +39,22 @@ void assignDokter(Matrix *denah, UserList *list, User *current_user, boolean *is
                     kosong = TRUE;
                 }
                 
-                if (kosong && !isDokterSudahAssign(denah, nama_dokter)) {
-                    strcpy(denah->data[row][col].nama_dokter, nama_dokter);
-                    printf(GREEN BOLD"Dokter %s berhasil ditugaskan ke ruangan %s!\n\n" RESET, nama_dokter, ruang);
-                } else if (kosong && isDokterSudahAssign(denah, nama_dokter)) {
+                if (kosong && !isDokterSudahAssign(denah, namaDokter)) {
+                    strcpy(denah->data[row][col].namaDokter, namaDokter);
+                    printf(GREEN BOLD"Dokter %s berhasil ditugaskan ke ruangan %s!\n\n" RESET, namaDokter, ruang);
+                } else if (kosong && isDokterSudahAssign(denah, namaDokter)) {
                     char ruangan_asal[10];
-                    getRuanganDokter(denah, nama_dokter, ruangan_asal);
-                    printf(BLUE "Dokter %s sudah diassign ke ruangan %s!\n\n" RESET, nama_dokter, ruangan_asal);
-                } else if (!kosong && !isDokterSudahAssign(denah, nama_dokter)) {
-                    printf(BLUE "Ruangan %s sudah ditempati dokter %s!\n" RESET, ruang, denah->data[row][col].nama_dokter);
-                    printf(RED "Silakan cari ruangan lain untuk dokter %s.\n\n" RESET, nama_dokter);
-                } else if (!kosong && isDokterSudahAssign(denah, nama_dokter)) {
+                    getRuanganDokter(denah, namaDokter, ruangan_asal);
+                    printf(BLUE "Dokter %s sudah diassign ke ruangan %s!\n\n" RESET, namaDokter, ruangan_asal);
+                } else if (!kosong && !isDokterSudahAssign(denah, namaDokter)) {
+                    printf(BLUE "Ruangan %s sudah ditempati dokter %s!\n" RESET, ruang, denah->data[row][col].namaDokter);
+                    printf(RED "Silakan cari ruangan lain untuk dokter %s.\n\n" RESET, namaDokter);
+                } else if (!kosong && isDokterSudahAssign(denah, namaDokter)) {
                     char ruangan_asal[10];
-                    getRuanganDokter(denah, nama_dokter, ruangan_asal);
+                    getRuanganDokter(denah, namaDokter, ruangan_asal);
 
-                    printf(BLUE "Dokter %s sudah diassign ke ruangan %s!\n" RESET, nama_dokter, ruangan_asal);
-                    printf(RED "Ruangan %s juga sudah ditempati dokter %s!\n\n" RESET, ruang, denah->data[row][col].nama_dokter);
+                    printf(BLUE "Dokter %s sudah diassign ke ruangan %s!\n" RESET, namaDokter, ruangan_asal);
+                    printf(RED "Ruangan %s juga sudah ditempati dokter %s!\n\n" RESET, ruang, denah->data[row][col].namaDokter);
                 }
             } else {
                 printf(RED "Nama ruangan tidak valid!\n\n" RESET);

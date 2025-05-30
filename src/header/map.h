@@ -11,9 +11,9 @@
 #define VAL_UNDEF -1
 
 typedef struct {
-    int id_penyakit;
-    int *urutan_obat;
-    int jumlah_obat;
+    int idPenyakit;
+    int *urutanObat;
+    int jumlahObat;
 } MapEntryList;
 
 typedef struct {

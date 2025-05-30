@@ -62,15 +62,15 @@ void lupa_password(UserList *list, boolean *isLogin) {
         printf(CYAN BOLD "=== GANTI PASSWORD ===\n" RESET);
     
         char username[100];
-        char kode_unik[100];
+        char kodeUnik[100];
         printf(YELLOW "Username: " RESET);
         scanf("%s", username);
         printf(YELLOW "Kode Unik: " RESET);
-        scanf("%s", kode_unik);
+        scanf("%s", kodeUnik);
     
         if (isUsernameExist(*list, username)) {
             User *user = findUser(list, username);
-            if (strcmp(kode_unik, RunLengthEncoding(username)) == 0) {
+            if (strcmp(kodeUnik, RunLengthEncoding(username)) == 0) {
                 char new_password[100];
                 
                 printf(GREEN BOLD"Halo %s %s, silakan daftarkan ulang password anda!\n" RESET, roleToStr(user->role), username);
