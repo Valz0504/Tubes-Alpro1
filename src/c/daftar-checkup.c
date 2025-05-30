@@ -37,9 +37,9 @@ void daftarCheckUp(User *currentUser, UserList *user1, boolean *isLogin, Matrix 
         }
 
         float suhu;
-        int tekanan_sis, tekanan_dis, jantung;
+        int tekanansis, tekanandis, jantung;
         float saturasi;
-        int gula_darah;
+        int guladarah;
         float berat;
         int tinggi, kolesterol, trombosit;
 
@@ -56,11 +56,11 @@ void daftarCheckUp(User *currentUser, UserList *user1, boolean *isLogin, Matrix 
 
         do {
             printf(YELLOW "Tekanan Darah (sistol/diastol, contoh 120 80): " RESET);
-            scanf("%d %d", &tekanan_sis, &tekanan_dis);
-            if (tekanan_dis < 0 || tekanan_sis < 0) {
+            scanf("%d %d", &tekanansis, &tekanandis);
+            if (tekanandis < 0 || tekanansis < 0) {
                 printf(RED "Tekanan darah harus berupa angka positif\n" RESET);
             }
-        } while (tekanan_dis < 0 || tekanan_sis < 0);
+        } while (tekanandis < 0 || tekanansis < 0);
 
         do {
             printf(YELLOW "Detak Jantung (bpm): " RESET);
@@ -80,11 +80,11 @@ void daftarCheckUp(User *currentUser, UserList *user1, boolean *isLogin, Matrix 
 
         do {
             printf(YELLOW "Kadar Gula Darah (mg/dL): " RESET);
-            scanf("%d", &gula_darah);
-            if (gula_darah < 0) {
+            scanf("%d", &guladarah);
+            if (guladarah < 0) {
                 printf(RED "Kadar Gula Darah harus berupa angka positif\n" RESET);
             }
-        } while (gula_darah < 0);
+        } while (guladarah < 0);
 
         do {
             printf(YELLOW "Berat Badan (kg): " RESET);
@@ -121,11 +121,11 @@ void daftarCheckUp(User *currentUser, UserList *user1, boolean *isLogin, Matrix 
         printf("\n");
 
         pasien->suhuTubuh = suhu;
-        pasien->tekananDarahSistolik = tekanan_sis;
-        pasien->tekananDarahDiastolik = tekanan_dis;
+        pasien->tekananDarahSistolik = tekanansis;
+        pasien->tekananDarahDiastolik = tekanandis;
         pasien->detakJantung = jantung;
         pasien->saturasiOksigen = saturasi;
-        pasien->kadarGulaDarah = gula_darah;
+        pasien->kadarGulaDarah = guladarah;
         pasien->beratBadan = berat;
         pasien->tinggiBadan = tinggi;
         pasien->kadarKolesterol = kolesterol;
