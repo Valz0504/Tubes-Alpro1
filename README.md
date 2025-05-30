@@ -2,7 +2,6 @@
 
 ## 👥 Anggota Kelompok
 
-Nama Lengkap - NIM
 Nathan Adhika Santosa - 13524041  
 Emilio Justin - 13524043  
 Keisha Rizka Syofyani - 13524073  
