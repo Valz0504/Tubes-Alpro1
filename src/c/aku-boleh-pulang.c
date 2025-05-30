@@ -14,7 +14,7 @@ void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *da
         boolean isFront = FALSE;
         boolean isInQueue = FALSE;
 
-        // cari tau apakah pasien sudah ada di antrian atau tidak
+        // cari apakah pasien sudah ada di antrian atau tidak
         for (int i = 0; i < denah->rows; i++) { 
             for (int j = 0; j < denah->cols; j++) {
                 Queue *antrian = &denah->data[i][j].antrian;
@@ -34,6 +34,7 @@ void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *da
                 }
             }
         }
+
         // jika di belum ada di antrian tidak bisa pulangdok
         if (!isInQueue) {
             printf(YELLOW "Kamu belum berada di antrian mana pun!\n\n" RESET);
@@ -96,7 +97,11 @@ void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *da
             pasien->nyawa = 3;
             
             int idPasien;
+
+            // keluarkan pasien dari antrian
             dequeue(antrianPasien, &idPasien);
+
+            // kosongin perut pasien
             emptyStack(&pasien->perut);
             denah->data[row][col].serving = FALSE;
 

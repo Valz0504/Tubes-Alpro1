@@ -16,6 +16,8 @@ void lihatRuangan(Matrix denah, UserList dataBaseUser, User current_user, boolea
     row = kode[0] - 'A';
     col = atoi(&kode[1]) - 1;
 
+
+    // tampilih detail ruangan
     if (row >= 0 && row < denah.rows && col >= 0 && col < denah.cols) {
         printf(BLUE BOLD "--- Detail Ruangan %s ---\n" RESET, kode);
         printf(GRAY "Kapasitas : " YELLOW "%d\n" RESET, denah.kapasitasRuangan);

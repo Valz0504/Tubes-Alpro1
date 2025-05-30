@@ -5,13 +5,14 @@
 
 #define MAX_SIZE 100
 
-/* MAP */
+
+// tempat penyimpanan supaya bisa generate RLE
 int size = 0;
 char keys[MAX_SIZE][100];
 int values[MAX_SIZE];
 
 void insertToMap(char key[]) {
-    /* Masukin masing masing char dari key ke map */
+    // masukin satu per satu huruf ke dalam penyimpanan
     if (size == 0) {
         strcpy(keys[size], key);
         values[size] = 1;
@@ -28,7 +29,7 @@ void insertToMap(char key[]) {
 }
 
 char* RunLengthEncoding(char username[]) {
-    // reset keys values
+    // reset penyimpanan agar bisa dipakai lagi sama yang baru
     size = 0;
     for (int i = 0; i < MAX_SIZE; i++) {
         keys[i][0] = '\0';
@@ -52,14 +53,6 @@ char* RunLengthEncoding(char username[]) {
         strncat(rle, keys[i], 1);
     }
     return rle;
-}
-
-void SetNewPassword(UserList *l, char username[], char pass[]) {
-    for (int i = 0; i < l->Neff; i++) {
-        if (strcmp(l->data[i].username, username) == 0) {
-            strcpy(l->data[i].password, pass);
-        }
-    }
 }
 
 void lupa_password(UserList *list, boolean *isLogin) {

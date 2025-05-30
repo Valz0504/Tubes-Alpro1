@@ -18,9 +18,9 @@ int main(int argc, char* argv[]) {
     Obat_PenyakitList dataObatPenyakit;
     Matrix denahRS;
     Set nama_unik;
-    
     initSet(&nama_unik, 5);
-
+    
+    
     // LOAD DATA from file folder
     LOAD(argv[1], &dataBaseUser, &dataPenyakit, &dataObat, &dataObatPenyakit, &nama_unik, &denahRS);
     

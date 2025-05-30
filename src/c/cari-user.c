@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "../header/user.h"
 
+
+// beberapa prosedur untuk ngeprint tabel supaya bagus
 void printUserTableHeader() {
     printf(BLUE BOLD "+-----+----------------------+-----------+----------------------+\n" RESET);
     printf(BLUE BOLD "| ID  | Nama                 | Role      | Penyakit             |\n" RESET);
@@ -52,7 +54,7 @@ void cariUser(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
 
         User *u;
         switch (pilihan) {
-            case 1: {
+            case 1: {        // cari berdasarkan ID
                 int nomor_id;
                 printf(GRAY "\n>> Masukkan nomor ID user: " RESET);
                 scanf("%d", &nomor_id);
@@ -68,7 +70,7 @@ void cariUser(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
                 }
                 break;
             }
-            case 2: {
+            case 2: {     // cari berdasarkan nama
                 char username[100];
                 printf(GRAY "\n>> Masukkan nama user: " RESET);
                 scanf("%s", username);
@@ -110,7 +112,7 @@ void cariPasien(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
         User *u;
 
         switch (pilihan) {
-            case 1: {
+            case 1: {      // cari berdasarkan ID
                 int nomor_id;
                 printf(GRAY "\n>> Masukkan nomor ID user: " RESET);
                 scanf("%d", &nomor_id);
@@ -130,7 +132,7 @@ void cariPasien(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
                 }
                 break;
             }
-            case 2: {
+            case 2: {       // cari berdasarkan nama
                 char username[100];
                 printf(GRAY "\n>> Masukkan nama user: " RESET);
                 scanf("%s", username);
@@ -280,7 +282,7 @@ void cariDokter(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
 
         User *u;
         switch (pilihan) {
-            case 1: {
+            case 1: {      // cari berdasarkan ID
                 int nomor_id;
                 printf(GRAY "\n>> Masukkan nomor ID user: " RESET);
                 scanf("%d", &nomor_id);
@@ -300,7 +302,7 @@ void cariDokter(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
                 }
                 break;
             }
-            case 2: {
+            case 2: {      // cari berdasarkan nama
                 char username[100];
                 printf(GRAY "\n>> Masukkan nama user: " RESET);
                 scanf("%s", username);

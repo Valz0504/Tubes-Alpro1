@@ -88,8 +88,8 @@ void minumObat(User *current_user, UserList *dataBaseUser, ObatList *dataObat, b
 void minumPenawar(User *current_user, UserList *dataBaseUser, ObatList *dataObat, Matrix *denah, boolean *isLogin); // pasien
 void bolehPulangGaa(User *current_user, UserList *dataBaseUser, PenyakitList *dataPenyakit, ObatList *dataObat, Obat_PenyakitList *dataObatPenyakit, Matrix *denah, boolean *isLogin); // pasien
 void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitList *obat_penyakit, Matrix *Hospital); 
-void skipAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, boolean *isLogin);
-void cancelAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, boolean *isLogin);
+void skipAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, boolean *isLogin); // pasien
+void cancelAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, boolean *isLogin); // pasien
 
 /* EXIT */
 void EXIT(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitList *obat_penyakit, Matrix *Hospital, boolean *exit);
@@ -133,9 +133,6 @@ boolean isUsernameExist(UserList l, char username[]);
 void AddUser(UserList *l, User *u);
 char* roleToStr(Role role); 
 void toLower(char *str);
-
-// Tambahan untuk Config
-void sortUserListByID(UserList *l);
 
 #endif
 

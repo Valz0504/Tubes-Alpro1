@@ -13,7 +13,7 @@ int folder_exist(const char *folderPath) {//cari keberadaan folder
 int file_exist(const char *folderPath) {//cari keberadaan file
     DIR *dir = opendir(folderPath);
     if (!dir) {
-        return 0; // Gagal buka folder
+        return 0;
     }
 
     struct dirent *entry;
@@ -138,7 +138,7 @@ void FileObat_Penyakit(const char *filePath, Obat_PenyakitList *obat_penyakit) {
     fclose(fp);
 }
 
-void FileConfig(const char *filePath, Matrix *Hospital, UserList *dataBaseUser){ //BELUM SELESAI, belum ada data ruangan? // membuat/overwrite file config
+void FileConfig(const char *filePath, Matrix *Hospital, UserList *dataBaseUser){ // membuat/overwrite file config
     FILE *fp = fopen(filePath, "w");
     if (fp == NULL) {
         printf(RED "Gagal membuat file di path: %s\n" RESET, filePath);
@@ -196,7 +196,6 @@ void FileConfig(const char *filePath, Matrix *Hospital, UserList *dataBaseUser){
 
     fprintf(fp, "%d\n", y);
     for (int i = 0; i < dataBaseUser->Neff; i++) {
-        // printf("[DEBUG] isiPerut:%d\n", dataBaseUser->data[i].perut.length);
         if (dataBaseUser->data[i].perut.length > 0) {
             fprintf(fp, "%d ", dataBaseUser->data[i].id);
             int val;
@@ -212,7 +211,7 @@ void FileConfig(const char *filePath, Matrix *Hospital, UserList *dataBaseUser){
 }
 
 
-void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitList *obat_penyakit, Matrix *Hospital){//obatlist, dll perlu tidak?
+void SAVE(UserList *user1, ObatList *Obat, PenyakitList *sakit, Obat_PenyakitList *obat_penyakit, Matrix *Hospital){
     char nama_folder[50];
     char pathUser[256];
     char base[50] = "./data";

@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "../header/user.h"
-#include "../header/penyakit.h"
-#include "../header/matrix.h"
 
 void EXIT(UserList *databaseuser, ObatList *DataObat, PenyakitList *Datapenyakit, Obat_PenyakitList *Data_obat_penyakit, Matrix *Hospital, boolean *run_program){
     char input[100];

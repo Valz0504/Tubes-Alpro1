@@ -23,10 +23,10 @@ void lihatUser(UserList *dataBaseUser, User *current_user, boolean *isLogin) {
         UserList temp;
         copyList(*dataBaseUser, &temp);
 
-        if (urutan == 1) {
+        if (urutan == 1) {    // lihat berdasarkan ID
             if (arahSort == 1) sortListByID(&temp, 1);
             else if (arahSort == 2) sortListByID(&temp, 0);
-        } else if (urutan == 2) {
+        } else if (urutan == 2) {    // lihat berdasarkan namaq
             if (arahSort == 1) sortListByUsername(&temp, 1);
             else if (arahSort == 2) sortListByUsername(&temp, 0);
         } else {

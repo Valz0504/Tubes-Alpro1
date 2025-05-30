@@ -34,9 +34,11 @@ void minumPenawar(User *current_user, UserList *dataBaseUser, ObatList *dataObat
             pop(&pasien->perut, &value);
             Obat *obat = getObatbyId(dataObat, value);
             insertLast(&pasien->inventory, value);
-            printf(GREEN BOLD"Uwekkk!!!\n %s keluar dari tubuhmu dan kembali ke inventory, tapi...\n\n" RESET, obat->nama);
+            printf(GREEN BOLD"Uwekkk!!!\n%s keluar dari tubuhmu dan kembali ke inventory, tapi...\n\n" RESET, obat->nama);
 
             pasien->nyawa--;
+
+            // kasus pasien mati
             if (pasien->nyawa == 0) {
                 printDead();
                 printf(RED "[Dokter]: 'Tidakkk, kenapa kamu salah minum obat sampe 3 kaliii...'\n" RESET);
@@ -62,6 +64,8 @@ void minumPenawar(User *current_user, UserList *dataBaseUser, ObatList *dataObat
                         }
                     }
                 }
+
+                // keluarkan dari antrian dan hapus usernya
                 int idPasien;
                 dequeue(antrianPasien, &idPasien);
                 denah->data[row][col].serving = FALSE;

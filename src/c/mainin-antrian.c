@@ -56,6 +56,7 @@ void skipAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, bool
         return;
     }
 
+    // hapus pasiennya dari antrian
     Node *curr = antrianPasien->head;
     Node *prev = NULL;
     while (curr != NULL) {
@@ -75,6 +76,7 @@ void skipAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, bool
         curr = curr->next;
     }
 
+    // sisipkan pasiennya menjadi yang pertama di luar ruangan
     Node *nodePasien = (Node *)malloc(sizeof(Node));
     nodePasien->info = current_user->id;
     nodePasien->next = NULL;
@@ -103,7 +105,7 @@ void cancelAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, bo
     }
     
     if (current_user->role != ROLE_PASIEN) {
-        printf(RED "Anda bukan pasien! Tidak bisa skip antrian!\n\n" RESET);
+        printf(RED "Anda bukan pasien! Tidak bisa cancel antrian!\n\n" RESET);
         return;
     }
 
@@ -146,6 +148,7 @@ void cancelAntrian(UserList *dataBaseUser, User *current_user, Matrix *denah, bo
         return;
     }
 
+    // hapus pasien dari antrian
     Node *curr = antrianPasien->head;
     Node *prev = NULL;
     while (curr != NULL) {

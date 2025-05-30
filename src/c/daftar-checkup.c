@@ -7,16 +7,19 @@ void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix
         return;
     }
 
-    if (current_user->role == ROLE_PASIEN) {
+    User *pasien = findUser(user1, current_user->username);
+
+    if (pasien->role == ROLE_PASIEN) {
 
         boolean foundInAntrian = FALSE;
+        // cari tahu dulu apakah pasiennya udah di antrian atau belum
         for (int i = 0; i < Hospital->rows; i++) {
             for (int j = 0; j < Hospital->cols; j++) {
                 Queue antrian = Hospital->data[i][j].antrian;
                 Node *curr = antrian.head;
 
                 while (curr != NULL) {
-                    if (curr->info == current_user->id) {
+                    if (curr->info == pasien->id) {
                         foundInAntrian = TRUE;
                         break;
                     }
@@ -42,6 +45,7 @@ void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix
 
         printf(CYAN BOLD "Silakan masukkan data check-up Anda:\n" RESET);
 
+        // pemasukan data pasien
         do {
             printf(YELLOW "Suhu Tubuh (Celcius): " RESET);
             scanf("%f", &suhu);
@@ -116,21 +120,22 @@ void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix
 
         printf("\n");
 
-        current_user->suhu_tubuh = suhu;
-        current_user->tekanan_darah_sistolik = tekanan_sis;
-        current_user->tekanan_darah_diastolik = tekanan_dis;
-        current_user->detak_jantung = jantung;
-        current_user->saturasi_oksigen = saturasi;
-        current_user->kadar_gula_darah = gula_darah;
-        current_user->berat_badan = berat;
-        current_user->tinggi_badan = tinggi;
-        current_user->kadar_kolesterol = kolesterol;
-        current_user->trombosit = trombosit;
+        pasien->suhu_tubuh = suhu;
+        pasien->tekanan_darah_sistolik = tekanan_sis;
+        pasien->tekanan_darah_diastolik = tekanan_dis;
+        pasien->detak_jantung = jantung;
+        pasien->saturasi_oksigen = saturasi;
+        pasien->kadar_gula_darah = gula_darah;
+        pasien->berat_badan = berat;
+        pasien->tinggi_badan = tinggi;
+        pasien->kadar_kolesterol = kolesterol;
+        pasien->trombosit = trombosit;
 
         int Antrian;
         int dokter_available[100][4];
         int asalan = 0;
 
+        // nyari ruangan yang memiliki dokter dan antriannya masih muat
         for (int i = 0; i < Hospital->rows; i++) {
             for (int j = 0; j < Hospital->cols; j++) {
                 Queue *A = &Hospital->data[i][j].antrian;
@@ -139,10 +144,8 @@ void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix
 
                 if (!isRuanganKosong(*R) && Antrian < Hospital->kapasitasRuangan + Hospital->kapasitasLuar) {
                     User *dokternya = findUser(user1, Hospital->data[i][j].nama_dokter);
-                    // printf(GRAY "Mencari dokter \"%s\" ...\n" RESET, Hospital->data[i][j].nama_dokter);
 
                     if (dokternya == NULL) {
-                        // printf(RED "[ERROR] Dokter tidak ditemukan!\n" RESET);
                         continue;
                     }
 
@@ -178,7 +181,7 @@ void daftarCheckUp(User *current_user, UserList *user1, boolean *isLogin, Matrix
         User *C = findUserByID(user1, dokter_available[pilihanDokter - 1][0]);
         getRuanganDokter(Hospital, C->username, ruangan);
 
-        enqueue(B, current_user->id);
+        enqueue(B, pasien->id);
         printf(GREEN BOLD"\nPendaftaran check-up berhasil!\n" RESET);
         printf(GREEN BOLD"Anda terdaftar pada antrian Dr. %s di ruangan %s.\n" RESET, C->username, ruangan);
         printf(GREEN BOLD"Posisi antrian Anda: %d\n\n" RESET, countQueue(*B));

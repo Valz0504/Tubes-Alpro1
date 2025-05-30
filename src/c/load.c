@@ -28,28 +28,27 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
         char buffer[128];
         int idx = 0, field = 0, i = 0;
 
+        // parse satu-satu data user
         while (line[i] != '\0' && line[i] != '\n') {
             if (line[i] == ';') {
                 buffer[idx] = '\0';
 
                 switch (field) {
-                    case 0: 
+                    case 0: // id
                         u.id = atoi(buffer);
                         if (u.id > userList->currMaxId) {
                             userList->currMaxId = u.id;
                         }
                         break;
-                    case 1: 
+                    case 1: // username
                         strncpy(u.username, buffer, sizeof(u.username));
                         toLower(buffer); 
                         insertSet(set, buffer);
                         break;
-                    case 2: 
+                    case 2: // password
                         strncpy(u.password, buffer, sizeof(u.password)); 
-                        // u.password[sizeof(u.password)-1] = '\0';
-                        // u.password[strcspn(u.password, "\r\n")] = '\0';
                         break;
-                    case 3: 
+                    case 3: //role
                         if (strcmp(buffer, "pasien") == 0) {
                             u.role = ROLE_PASIEN;
                             break;
@@ -61,9 +60,9 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
                             break;
                         }
                         break;
-                    case 4:
+                    case 4:  // aura
                         u.aura = atoi(buffer); break;
-                    case 5: 
+                    case 5:  // riwayat penyakit
                         if (strlen(buffer) == 0) {
                             strncpy(u.riwayat_penyakit, "-", sizeof(u.riwayat_penyakit));
                         } else {
@@ -93,13 +92,9 @@ void loadDataUser(const char *filename, UserList *userList, Set *set) {
         // Ambil field terakhir (setelah koma terakhir)
         buffer[idx] = '\0';
         if (field == 16) u.nyawa = atoi(buffer);
-        // printf("[DEBUG] password as read: '%s' %d\n", u.password, strlen(u.password));
-
-        // printf("[DEBUG]username:%s password:%s nyawa:%d\n", u.username, u.password, u.nyawa);
 
         initStack(&u.perut);
         AddUser(userList, &u);
-        // printf("[DEBUG] isiPerut:%d\n", userList->data[userList->Neff-1].perut.length);
     }
 
     fclose(fileUser);
@@ -132,6 +127,7 @@ void loadDataPenyakit(const char *filename, PenyakitList *listPenyakit) {
 
         memset(p, 0, sizeof(Penyakit));
 
+        // parse satu-satu atribut penyakit
         while (line[i] != '\0' && line[i] != '\n') {
             if (line[i] == ';') {
                 buffer[idx] = '\0';
@@ -208,6 +204,7 @@ void loadDataObat(const char *fileName, ObatList *listObat){
         char namaobat[128];
         int i = 0, j = 0;
 
+        // parse satu satu atribut obat
         while (line[i] != ';' && line[i] != '\0') {
             idobat[j++] = line[i++]; 
         }
@@ -498,7 +495,6 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
     while (buffer[index] >= '0' && buffer[index] <= '9') {
         jumlahPasienPerut = jumlahPasienPerut * 10 + (buffer[index++] - '0');
     }
-    // printf("[DEBUG]bykpasiendahmakanobat:%d\n", jumlahPasienPerut);
 
     // Baca data stack obat dalam perut
     for (int i = 0; i < jumlahPasienPerut; i++) {
@@ -507,7 +503,7 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
             break;
         }
 
-        buffer[strcspn(buffer, "\r\n")] = '\0'; // hapus newline
+        buffer[strcspn(buffer, "\r\n")] = '\0';
         index = 0;
 
         // Ambil ID pasien
@@ -515,7 +511,6 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
         while (buffer[index] >= '0' && buffer[index] <= '9') {
             pasienId = pasienId * 10 + (buffer[index++] - '0');
         }
-        // printf("[DEBUG]pasienid:%d\n", pasienId);
 
         // Cari user berdasarkan ID
         User *user = findUserByID(userList, pasienId);
@@ -546,7 +541,6 @@ void loadConfig(const char *filename, Matrix *denah, UserList *userList) {
         // Masukkan ke perut
         for (int s = stackLen - 1; s >= 0; s--) {
             push(&user->perut, obatStack[s]);
-            // printf("[DEBUG]obatyangmasuk:%d\n", user->perut.data[user->perut.top]);
         }
     }
 
