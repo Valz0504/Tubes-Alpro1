@@ -15,10 +15,21 @@ void lihatUser(UserList *dataBaseUser, User *currentUser, boolean *isLogin) {
         printf(GRAY ">> Pilihan: " RESET);
         scanf("%d", &urutan);
 
-        printf(CYAN "Urutan sort?\n" RESET);
-        printf(GRAY "1. A-Z\n2. Z-A\n" RESET);
+        printf(CYAN "\nUrutan sort?\n" RESET);
+        if (urutan == 1) {
+            printf(GRAY "1. Menaik\n2. Menurun\n" RESET);
+        } else if (urutan == 2) {
+            printf(GRAY "1. A-Z\n2. Z-A\n" RESET);
+        } else {
+            printf(RED "\nMasukan tidak valid!\n\n" RESET);
+            return;
+        }
         printf(GRAY ">> Pilihan: " RESET);
         scanf("%d", &arahSort);
+        if (arahSort < 1 || arahSort > 2) {
+            printf(RED "\nMasukan tidak valid!\n\n" RESET);
+            return;
+        }
 
         UserList temp;
         copyList(*dataBaseUser, &temp);
@@ -59,10 +70,21 @@ void lihatPasien(UserList *dataBaseUser, User *currentUser, boolean *isLogin) {
         printf(GRAY ">> Pilihan: " RESET);
         scanf("%d", &urutan);
 
-        printf(CYAN "Urutan sort?\n" RESET);
-        printf(GRAY "1. A-Z\n2. Z-A\n" RESET);
+        printf(CYAN "\nUrutan sort?\n" RESET);
+        if (urutan == 1) {
+            printf(GRAY "1. Menaik\n2. Menurun\n" RESET);
+        } else if (urutan == 2) {
+            printf(GRAY "1. A-Z\n2. Z-A\n" RESET);
+        } else {
+            printf(RED "\nMasukan tidak valid!\n\n" RESET);
+            return;
+        }
         printf(GRAY ">> Pilihan: " RESET);
         scanf("%d", &arahSort);
+        if (arahSort < 1 || arahSort > 2) {
+            printf(RED "\nMasukan tidak valid!\n\n" RESET);
+            return;
+        }
 
         UserList temp;
         CreateListDin(&temp, dataBaseUser->capacity);
@@ -105,10 +127,21 @@ void lihatDokter(UserList *dataBaseUser, User *currentUser, boolean *isLogin) {
         printf(GRAY ">> Pilihan: " RESET);
         scanf("%d", &urutan);
 
-        printf(CYAN "Urutan sort?\n" RESET);
-        printf(GRAY "1. A-Z\n2. Z-A\n" RESET);
+        printf(CYAN "\nUrutan sort?\n" RESET);
+        if (urutan == 1 || urutan == 3) {
+            printf(GRAY "1. Menaik\n2. Menurun\n" RESET);
+        } else if (urutan == 2) {
+            printf(GRAY "1. A-Z\n2. Z-A\n" RESET);
+        } else {
+            printf(RED "\nMasukan tidak valid!\n\n" RESET);
+            return;
+        }
         printf(GRAY ">> Pilihan: " RESET);
         scanf("%d", &arahSort);
+        if (arahSort < 1 || arahSort > 2) {
+            printf(RED "\nMasukan tidak valid!\n\n" RESET);
+            return;
+        }
 
         UserList temp;
         CreateListDin(&temp, dataBaseUser->capacity);

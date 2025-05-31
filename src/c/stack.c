@@ -31,6 +31,5 @@ void emptyStack(Stack *s) {
     while (s->length > 0) {
         int value;
         pop(s, &value);
-        s->length--;
     }
 }

@@ -53,6 +53,12 @@ void bolehPulangGaa(User *currentUser, UserList *dataBaseUser, PenyakitList *dat
             return;
         }
 
+        // jika inventory kosong dan perut kosong berarti belum diobati
+        if (pasien->inventory.jumlahObat == 0 && pasien->perut.length == 0) {
+            printf(YELLOW "Kamu belum diobati oleh dokter.\n\n" RESET);
+            return;
+        }
+
         // jika pasien sehat tidak bisa pulangdok
         printf(CYAN "Dokter sedang memeriksa keadaanmu...\n\n" RESET);
         sleep(1);

@@ -49,6 +49,7 @@ void diagnosis(User *currentUser, UserList *listUser, PenyakitList *listPenyakit
         }
         if (denah->data[row][col].serving) {
             printf(RED BOLD "Anda sudah mendiagnosis %s.\n\n" RESET, pasien->username);
+            printf(RED BOLD "Selesaikan pengobatan dengan pasien %s baru diagnosis pasien berikutnya!\n\n" RESET, pasien->username);
             return;
         }
 

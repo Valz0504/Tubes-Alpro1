@@ -45,7 +45,7 @@ void antrianSaya(User *current_user, Matrix *denah, boolean *isLogin) {
         }
 
         if (!ditemukan) {
-            printf(RED "\nAnda belum terdaftar dalam antrian check-up!\n" RESET);
+            printf(RED "Anda belum terdaftar dalam antrian check-up!\n" RESET);
             printf(CYAN "Silahkan daftar terlebih dahulu dengan command " YELLOW BOLD "DAFTAR_CHECKUP\n\n" RESET);
         }
     } else {
