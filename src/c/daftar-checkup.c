@@ -43,6 +43,37 @@ void daftarCheckUp(User *currentUser, UserList *user1, boolean *isLogin, Matrix 
         float berat;
         int tinggi, kolesterol, trombosit;
 
+        int Antrian;
+        int dokterAvailable[100][4];
+        int dokterYangAda = 0;
+
+        // nyari ruangan yang memiliki dokter dan antriannya masih muat
+        for (int i = 0; i < Hospital->rows; i++) {
+            for (int j = 0; j < Hospital->cols; j++) {
+                Queue *AntrianRuang = &Hospital->data[i][j].antrian;
+                Ruangan *Ruang = &Hospital->data[i][j];
+                Antrian = countQueue(*AntrianRuang);
+
+                if (!isRuanganKosong(*Ruang) && Antrian < Hospital->kapasitasRuangan + Hospital->kapasitasLuar) {
+                    User *dokternya = findUser(user1, Hospital->data[i][j].namaDokter);
+
+                    if (dokternya == NULL) {
+                        continue;
+                    }
+
+                    dokterAvailable[dokterYangAda][0] = dokternya->id;
+                    dokterAvailable[dokterYangAda][1] = Antrian;
+                    dokterAvailable[dokterYangAda][2] = i;
+                    dokterAvailable[dokterYangAda][3] = j;
+                    dokterYangAda++;
+                }
+            }
+        }
+
+        if (dokterYangAda == 0) {
+            printf(YELLOW "Saat ini tidak ada dokter yang sedang bertugas, maaf yaa :(\n\n" RESET);
+            return;
+        }
         printf(CYAN BOLD "Silakan masukkan data check-up Anda:\n" RESET);
 
         // pemasukan data pasien
@@ -131,32 +162,6 @@ void daftarCheckUp(User *currentUser, UserList *user1, boolean *isLogin, Matrix 
         pasien->kadarKolesterol = kolesterol;
         pasien->trombosit = trombosit;
 
-        int Antrian;
-        int dokterAvailable[100][4];
-        int dokterYangAda = 0;
-
-        // nyari ruangan yang memiliki dokter dan antriannya masih muat
-        for (int i = 0; i < Hospital->rows; i++) {
-            for (int j = 0; j < Hospital->cols; j++) {
-                Queue *AntrianRuang = &Hospital->data[i][j].antrian;
-                Ruangan *Ruang = &Hospital->data[i][j];
-                Antrian = countQueue(*AntrianRuang);
-
-                if (!isRuanganKosong(*Ruang) && Antrian < Hospital->kapasitasRuangan + Hospital->kapasitasLuar) {
-                    User *dokternya = findUser(user1, Hospital->data[i][j].namaDokter);
-
-                    if (dokternya == NULL) {
-                        continue;
-                    }
-
-                    dokterAvailable[dokterYangAda][0] = dokternya->id;
-                    dokterAvailable[dokterYangAda][1] = Antrian;
-                    dokterAvailable[dokterYangAda][2] = i;
-                    dokterAvailable[dokterYangAda][3] = j;
-                    dokterYangAda++;
-                }
-            }
-        }
 
         char ruangan[10];
         printf(CYAN "\nBerikut adalah daftar dokter yang tersedia:\n" RESET);

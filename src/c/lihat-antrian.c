@@ -10,10 +10,12 @@ void lihatAntrian(UserList *dataBaseUser, User *currentUser, Matrix *denah, bool
     if (currentUser->role == ROLE_MANAGER) {
         denahRumahSakit(*denah, isLogin);
 
+        int adaAntrian = 0;
         // cari setiap indeks yang ada dokternya
         for (int i = 0; i < denah->rows; i++) {
             for (int j = 0; j < denah->cols; j++) {
                 if (!isRuanganKosong(denah->data[i][j])) {
+                    adaAntrian = 1;
                     printf(BLUE BOLD "============ %c%d ============\n" RESET, 'A' + i, j + 1);
                     printf(GRAY "Kapasitas   : " RESET YELLOW "%d\n" RESET, denah->kapasitasRuangan);
                     printf(GRAY "Dokter      : " RESET CYAN "%s\n" RESET, denah->data[i][j].namaDokter);
@@ -51,6 +53,11 @@ void lihatAntrian(UserList *dataBaseUser, User *currentUser, Matrix *denah, bool
                     printf("\n");
                 }
             }
+        }
+
+        if (!adaAntrian) {
+            printf(YELLOW "Tidak ada satu pun ruangan yang memiliki pasien ataupun dokter!\n\n" RESET);
+            return;
         }
 
     } else {
